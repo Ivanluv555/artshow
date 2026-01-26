@@ -1,0 +1,8 @@
+body { font-family: Arial, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'PingFang SC', 'Microsoft YaHei'; margin: 0; padding: 0; }
+header { background: #1f2937; color: white; padding: 12px 20px; }
+header h1 { display: inline-block; margin: 0 16px 0 0; }
+header nav a { color: #d1d5db; margin-right: 12px; text-decoration: none; }
+main { padding: 20px; }
+pre { background: #f3f4f6; padding: 12px; overflow: auto; }
+form label { display: block; margin-bottom: 8px; }
+button { padding: 6px 12px; }

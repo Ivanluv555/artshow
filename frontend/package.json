@@ -1,0 +1,13 @@
+{
+  "name": "artshow-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview --port 3000"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
