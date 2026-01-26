@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HyAllApplication<hy-all>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "org.hyjava.hyall.HyAllApplication",
+            "projectName": "hy-all",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

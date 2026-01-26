@@ -1,0 +1,37 @@
+package org.hyjava.hyall.module.instructor.pojo;
+import org.hyjava.hyall.common.core.result.Result;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Table(name = "course_instructor")
+public class Instructor {
+    @Id
+    @Column(name = "instructor_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
+    private int id;
+
+    @Column(name = "name")
+    @Getter
+    @Setter
+    private String name;
+
+    @Column(name = "title")
+    @Getter
+    @Setter
+    private String title;
+
+    @Column(name = "avatar_url")
+    @Getter
+    @Setter
+    private String avatarUrl;
+
+    @Column(name = "bio")
+    @Getter
+    @Setter
+    private String bio;
+}
