@@ -4,12 +4,9 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.chapter.pojo.Chapter;
 import org.ivan.artshow.module.chapter.pojo.dto.ChapterDTO;
 import org.ivan.artshow.module.chapter.service.IChapterService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/chapter")
 /**
  * ChapterController - 控制器
  *
@@ -18,9 +15,14 @@ import org.springframework.web.bind.annotation.*;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/chapter")
 public class ChapterController {
-    @Autowired
-    IChapterService  chapterService;
+    private final IChapterService chapterService;
+
+    public ChapterController(IChapterService chapterService) {
+        this.chapterService = chapterService;
+    }
     @PostMapping
     public Result<Chapter> addChapter(@RequestBody @Validated ChapterDTO chapter){
         Chapter nchapter = chapterService.addChapter(chapter);

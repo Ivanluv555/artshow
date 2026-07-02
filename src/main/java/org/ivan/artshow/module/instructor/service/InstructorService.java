@@ -7,12 +7,10 @@ import org.ivan.artshow.module.instructor.pojo.Instructor;
 import org.ivan.artshow.module.instructor.pojo.dto.InstructorDTO;
 import org.ivan.artshow.module.instructor.repository.InstructorRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * InstructorService - 业务服务接口
  *
@@ -21,9 +19,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class InstructorService implements IInstructorService {
-    @Autowired
-    InstructorRepository instructorRepository;
+    private final InstructorRepository instructorRepository;
+
+    public InstructorService(InstructorRepository instructorRepository) {
+        this.instructorRepository = instructorRepository;
+    }
 
     @Override
     public Instructor addInstructor(InstructorDTO instructor) {

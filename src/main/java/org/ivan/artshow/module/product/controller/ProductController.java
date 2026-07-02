@@ -4,13 +4,10 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.product.pojo.dto.ProductDTO;
 import org.ivan.artshow.module.product.pojo.Product;
 import org.ivan.artshow.module.product.service.IProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/product")
 /**
  * ProductController - 控制器
  *
@@ -19,9 +16,14 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/product")
 public class ProductController {
-    @Autowired
-    private IProductService productService;
+    private final IProductService productService;
+
+    public ProductController(IProductService productService) {
+        this.productService = productService;
+    }
 
     @PostMapping
     public Result<Product> addOneProduct(@RequestBody ProductDTO product) {

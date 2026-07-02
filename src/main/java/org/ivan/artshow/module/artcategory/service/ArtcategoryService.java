@@ -7,12 +7,10 @@ import org.ivan.artshow.module.artcategory.pojo.Artcategory;
 import org.ivan.artshow.module.artcategory.pojo.dto.ArtcategoryDTO;
 import org.ivan.artshow.module.artcategory.repository.ArtcategoryRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * ArtcategoryService - 业务服务实现类
  *
@@ -21,9 +19,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class ArtcategoryService implements IArtcategoryService {
-    @Autowired
-    ArtcategoryRepository artCateRepository;
+    private final ArtcategoryRepository artCateRepository;
+
+    public ArtcategoryService(ArtcategoryRepository artCateRepository) {
+        this.artCateRepository = artCateRepository;
+    }
 
     @Override
     public Artcategory addCate(ArtcategoryDTO artcategory) {

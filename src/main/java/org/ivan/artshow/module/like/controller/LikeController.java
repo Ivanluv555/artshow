@@ -6,8 +6,6 @@ import org.ivan.artshow.module.like.pojo.dto.LikeDTO;
 import org.ivan.artshow.module.like.service.LikeService;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/like")
 /**
  * LikeController - 控制器
  *
@@ -16,34 +14,36 @@ import org.springframework.web.bind.annotation.*;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/like")
 public class LikeController {
-    private final LikeService likeservice;
+    private final LikeService likeService;
 
-    LikeController(LikeService likeservice) {
-        this.likeservice = likeservice;
+    public LikeController(LikeService likeService) {
+        this.likeService = likeService;
     }
 
     @PostMapping
     public Result<Like> addLike(@RequestBody LikeDTO like) {
-        Like nLike = likeservice.addLike(like);
+        Like nLike = likeService.addLike(like);
         return Result.success(nLike);
     }
 
     @DeleteMapping
     public Result<Like> deleteLike(@RequestParam Integer likeId) {
-        likeservice.deleteLike(likeId);
+        likeService.deleteLike(likeId);
         return Result.success(null);
     }
 
     @GetMapping
     public Result<Like> getLike(@RequestParam Integer likeId) {
-        Like nlike = likeservice.queryLike(likeId);
+        Like nlike = likeService.queryLike(likeId);
         return Result.success(nlike);
     }
 
     @PutMapping
     public Result<Like> updateLike(@RequestBody LikeDTO like) {
-        Like nLike = likeservice.updateLike(like);
+        Like nLike = likeService.updateLike(like);
         return Result.success(nLike);
     }
 }

@@ -9,14 +9,12 @@ import org.ivan.artshow.module.course.pojo.dto.ChapterCompleteDTO;
 import org.ivan.artshow.module.course.pojo.dto.EnrollRequestDTO;
 import org.ivan.artshow.module.course.repository.UserCourseChapterCompletedRepository;
 import org.ivan.artshow.module.course.repository.UserCourseEnrollmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
-@Service
 /**
  * CourseEnrollmentService - 业务服务实现类
  *
@@ -25,13 +23,17 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class CourseEnrollmentService implements ICourseEnrollmentService {
 
-    @Autowired
-    UserCourseEnrollmentRepository enrollmentRepository;
+    private final UserCourseEnrollmentRepository enrollmentRepository;
+    private final UserCourseChapterCompletedRepository completedRepository;
 
-    @Autowired
-    UserCourseChapterCompletedRepository completedRepository;
+    public CourseEnrollmentService(UserCourseEnrollmentRepository enrollmentRepository,
+                                   UserCourseChapterCompletedRepository completedRepository) {
+        this.enrollmentRepository = enrollmentRepository;
+        this.completedRepository = completedRepository;
+    }
 
     @Override
     @Transactional

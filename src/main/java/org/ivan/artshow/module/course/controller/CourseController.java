@@ -4,7 +4,6 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.course.pojo.Course;
 import org.ivan.artshow.module.course.pojo.dto.CourseDTO;
 import org.ivan.artshow.module.course.service.ICourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/course")
 public class CourseController {
-    @Autowired
-    ICourseService courseService;
+    private final ICourseService courseService;
+
+    public CourseController(ICourseService courseService) {
+        this.courseService = courseService;
+    }
 
     /**
      * 添加课程

@@ -4,14 +4,11 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.order.pojo.Order;
 import org.ivan.artshow.module.order.pojo.dto.OrderDTO;
 import org.ivan.artshow.module.order.service.IOrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/order")
 /**
  * OrderController - 控制器
  *
@@ -20,9 +17,14 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/order")
 public class OrderController {
-    @Autowired
-    IOrderService orderService;
+    private final IOrderService orderService;
+
+    public OrderController(IOrderService orderService) {
+        this.orderService = orderService;
+    }
     @PostMapping
     public Result<Order> addOrder(@RequestBody @Validated OrderDTO order) {
         Order norder= orderService.addOrder(order);

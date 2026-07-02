@@ -5,12 +5,10 @@ import org.ivan.artshow.module.product.pojo.dto.ProductDTO;
 import org.ivan.artshow.module.product.pojo.Product;
 import org.ivan.artshow.module.product.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * ProductService - 业务服务实现类
  *
@@ -19,9 +17,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class ProductService implements IProductService {
-    @Autowired
-    ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Override
     public Product addOneProduct(ProductDTO product) {

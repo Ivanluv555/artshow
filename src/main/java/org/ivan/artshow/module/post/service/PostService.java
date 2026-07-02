@@ -8,12 +8,10 @@ import org.ivan.artshow.module.post.pojo.Post;
 import org.ivan.artshow.module.post.pojo.dto.PostDTO;
 import org.ivan.artshow.module.post.repository.PostRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * PostService - 业务服务实现类
  *
@@ -22,9 +20,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class PostService implements IPostService{
-    @Autowired
-    PostRepository postRepository;
+    private final PostRepository postRepository;
+
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
 
     @Override
     public Post addPost(PostDTO post){

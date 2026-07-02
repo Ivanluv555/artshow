@@ -5,12 +5,10 @@ import org.ivan.artshow.module.collection.pojo.Collection;
 import org.ivan.artshow.module.collection.pojo.dto.CollectionDTO;
 import org.ivan.artshow.module.collection.repository.CollectionRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * CollectionService - 业务服务实现类
  *
@@ -19,9 +17,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class CollectionService implements ICollectionService{
-    @Autowired
-    CollectionRepository collectionRepository;
+    private final CollectionRepository collectionRepository;
+
+    public CollectionService(CollectionRepository collectionRepository) {
+        this.collectionRepository = collectionRepository;
+    }
 
     @Override
     public Collection addCollection(CollectionDTO collection){

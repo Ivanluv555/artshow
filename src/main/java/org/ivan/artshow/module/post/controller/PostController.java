@@ -4,14 +4,11 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.post.pojo.Post;
 import org.ivan.artshow.module.post.pojo.dto.PostDTO;
 import org.ivan.artshow.module.post.service.IPostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/post")
 /**
  * PostController - 控制器
  *
@@ -20,9 +17,14 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/post")
 public class PostController {
-    @Autowired
-    IPostService postService;
+    private final IPostService postService;
+
+    public PostController(IPostService postService) {
+        this.postService = postService;
+    }
     @PostMapping
     public Result<Post> addPost(@RequestBody @Validated PostDTO post)
     {

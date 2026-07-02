@@ -4,12 +4,9 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.comment.pojo.Comment;
 import org.ivan.artshow.module.comment.pojo.dto.CommentDTO;
 import org.ivan.artshow.module.comment.service.ICommentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/comment")
 /**
  * CommentController - 控制器
  *
@@ -18,9 +15,14 @@ import org.springframework.web.bind.annotation.*;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/comment")
 public class CommentController {
-    @Autowired
-    ICommentService commentService;
+    private final ICommentService commentService;
+
+    public CommentController(ICommentService commentService) {
+        this.commentService = commentService;
+    }
     @PostMapping
     public Result<Comment> addComment(@RequestBody @Validated CommentDTO comment) {
         Comment ncomment= commentService.addComment(comment);

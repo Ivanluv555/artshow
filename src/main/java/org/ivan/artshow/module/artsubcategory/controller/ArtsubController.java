@@ -4,13 +4,10 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.artsubcategory.pojo.Artsubcategory;
 import org.ivan.artshow.module.artsubcategory.pojo.dto.ArtsubcategoryDTO;
 import org.ivan.artshow.module.artsubcategory.service.ArtsubService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/artsub")
 /**
  * ArtsubController - 控制器
  *
@@ -19,9 +16,14 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/artsub")
 public class ArtsubController {
-    @Autowired
-    ArtsubService artSubService;
+    private final ArtsubService artSubService;
+
+    public ArtsubController(ArtsubService artSubService) {
+        this.artSubService = artSubService;
+    }
 
     @PostMapping
     public Result<Artsubcategory> addArtSub(@RequestBody ArtsubcategoryDTO artSubCategory) {

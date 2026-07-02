@@ -5,10 +5,8 @@ import org.ivan.artshow.module.orderitem.pojo.Orderitem;
 import org.ivan.artshow.module.orderitem.pojo.dto.OrderitemDTO;
 import org.ivan.artshow.module.orderitem.repository.OrderitemRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
 /**
  * OrderitemService - 业务服务实现类
  *
@@ -17,9 +15,13 @@ import org.springframework.stereotype.Service;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class OrderitemService implements IOrderitemService {
-    @Autowired
-    OrderitemRepository orderItemRepository;
+    private final OrderitemRepository orderItemRepository;
+
+    public OrderitemService(OrderitemRepository orderItemRepository) {
+        this.orderItemRepository = orderItemRepository;
+    }
 
     @Override
     public Orderitem addOrderItem(OrderitemDTO orderItem){

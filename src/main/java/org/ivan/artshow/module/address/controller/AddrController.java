@@ -4,7 +4,6 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.address.pojo.Address;
 import org.ivan.artshow.module.address.pojo.dto.AddressDTO;
 import org.ivan.artshow.module.address.service.IAddrService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/address")
 public class AddrController {
-    @Autowired
-    IAddrService addrservice;
+    private final IAddrService addrService;
+
+    public AddrController(IAddrService addrService) {
+        this.addrService = addrService;
+    }
 
     /**
      * 添加用户地址
@@ -28,7 +30,7 @@ public class AddrController {
      */
     @PostMapping
     public Result<Address> addUserAddress(@RequestBody @Validated AddressDTO address) {
-        Address naddress = addrservice.addUserAddress(address);
+        Address naddress = addrService.addUserAddress(address);
         return Result.success(naddress);
     }
 
@@ -38,7 +40,7 @@ public class AddrController {
      */
     @DeleteMapping
     public void deleteUserAddress(@RequestParam Integer addressId) {
-        addrservice.deleteUserAddress(addressId);
+        addrService.deleteUserAddress(addressId);
     }
 
     /**
@@ -48,7 +50,7 @@ public class AddrController {
      */
     @PutMapping
     public Result<Address> updateUserAddress(@RequestBody @Validated AddressDTO address) {
-        Address naddress = addrservice.updateUserAddress(address);
+        Address naddress = addrService.updateUserAddress(address);
         return Result.success(naddress);
     }
 
@@ -59,7 +61,7 @@ public class AddrController {
      */
     @GetMapping
     public Result<Address> queryUserAddress(@RequestParam Integer addressId) {
-        Address naddress = addrservice.queryUserAddress(addressId);
+        Address naddress = addrService.queryUserAddress(addressId);
         return Result.success(naddress);
     }
 }

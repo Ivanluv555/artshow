@@ -7,12 +7,10 @@ import org.ivan.artshow.module.badge.pojo.Badge;
 import org.ivan.artshow.module.badge.pojo.dto.BadgeDTO;
 import org.ivan.artshow.module.badge.repository.BadgeRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * BadgeService - 业务服务实现类
  *
@@ -21,9 +19,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class BadgeService implements IBadgeService{
-    @Autowired
-    BadgeRepository badgeRepository;
+    private final BadgeRepository badgeRepository;
+
+    public BadgeService(BadgeRepository badgeRepository) {
+        this.badgeRepository = badgeRepository;
+    }
 
     @Override
     public Badge addBadge(BadgeDTO badge){

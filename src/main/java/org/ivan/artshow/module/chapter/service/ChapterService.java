@@ -5,10 +5,8 @@ import org.ivan.artshow.module.chapter.pojo.Chapter;
 import org.ivan.artshow.module.chapter.pojo.dto.ChapterDTO;
 import org.springframework.beans.BeanUtils;
 import org.ivan.artshow.module.chapter.repository.ChapterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
 /**
  * ChapterService - 业务服务实现类
  *
@@ -17,9 +15,13 @@ import org.springframework.stereotype.Service;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class ChapterService implements IChapterService {
-    @Autowired
-    ChapterRepository chapterRepository;
+    private final ChapterRepository chapterRepository;
+
+    public ChapterService(ChapterRepository chapterRepository) {
+        this.chapterRepository = chapterRepository;
+    }
     @Override
     public Chapter addChapter(ChapterDTO chapter) {
         Chapter nChapter = new Chapter();

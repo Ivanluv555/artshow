@@ -4,14 +4,11 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.collection.pojo.Collection;
 import org.ivan.artshow.module.collection.pojo.dto.CollectionDTO;
 import org.ivan.artshow.module.collection.service.ICollectionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/collection")
 /**
  * CollectionController - 控制器
  *
@@ -20,10 +17,15 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/collection")
 public class CollectionController {
 
-    @Autowired
-    ICollectionService collectionService;
+    private final ICollectionService collectionService;
+
+    public CollectionController(ICollectionService collectionService) {
+        this.collectionService = collectionService;
+    }
 
     // 1. ADD (Create) -> POST /collection
     @PostMapping

@@ -7,12 +7,10 @@ import org.ivan.artshow.module.artsubcategory.pojo.dto.ArtsubcategoryDTO;
 import org.ivan.artshow.module.artsubcategory.repository.ArtsubRepository;
 import org.ivan.artshow.module.artsubcategory.pojo.Artsubcategory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * ArtsubService - 业务服务实现类
  *
@@ -21,9 +19,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class ArtsubService implements IArtsubService {
-    @Autowired
-    private ArtsubRepository artSubRepository;
+    private final ArtsubRepository artSubRepository;
+
+    public ArtsubService(ArtsubRepository artSubRepository) {
+        this.artSubRepository = artSubRepository;
+    }
 
     @Override
     public Artsubcategory addArtSub(ArtsubcategoryDTO artSubCategory) {

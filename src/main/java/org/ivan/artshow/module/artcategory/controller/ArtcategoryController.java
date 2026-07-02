@@ -4,14 +4,11 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.artcategory.pojo.Artcategory;
 import org.ivan.artshow.module.artcategory.pojo.dto.ArtcategoryDTO;
 import org.ivan.artshow.module.artcategory.service.IArtcategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/artcate")
 /**
  * ArtcategoryController - 控制器
  *
@@ -20,9 +17,14 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/artcate")
 public class ArtcategoryController {
-    @Autowired
-    IArtcategoryService artCateService;
+    private final IArtcategoryService artCateService;
+
+    public ArtcategoryController(IArtcategoryService artCateService) {
+        this.artCateService = artCateService;
+    }
 
     @PostMapping
     public Result<Artcategory> addCate(@RequestBody @Validated ArtcategoryDTO artcategory) {

@@ -4,15 +4,12 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.shopcartitem.pojo.Sci;
 import org.ivan.artshow.module.shopcartitem.pojo.dto.SciDTO;
 import org.ivan.artshow.module.shopcartitem.service.ISciService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@RestController
-@RequestMapping("/sci")
 /**
  * SciController - 控制器
  *
@@ -21,9 +18,14 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/sci")
 public class SciController {
-    @Autowired
-    ISciService sciService;
+    private final ISciService sciService;
+
+    public SciController(ISciService sciService) {
+        this.sciService = sciService;
+    }
     @PostMapping
     public Result<Sci> addSci(@RequestBody @Validated SciDTO sci) {
         Sci nsci = sciService.addSci(sci);

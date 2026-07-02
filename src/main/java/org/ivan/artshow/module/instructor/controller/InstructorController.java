@@ -4,13 +4,10 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.instructor.pojo.Instructor;
 import org.ivan.artshow.module.instructor.pojo.dto.InstructorDTO;
 import org.ivan.artshow.module.instructor.service.InstructorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/instructor")
 /**
  * InstructorController - 控制器
  *
@@ -19,9 +16,14 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/instructor")
 public class InstructorController {
-    @Autowired
-    InstructorService instructorService;
+    private final InstructorService instructorService;
+
+    public InstructorController(InstructorService instructorService) {
+        this.instructorService = instructorService;
+    }
 
     @PostMapping
     public Result<Instructor> addInstructor(@RequestBody InstructorDTO instructor) {

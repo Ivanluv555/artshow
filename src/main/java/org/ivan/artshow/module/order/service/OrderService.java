@@ -11,14 +11,12 @@ import org.ivan.artshow.module.order.pojo.dto.OrderDTO;
 import org.ivan.artshow.module.order.repository.OrderRepository;
 import org.ivan.artshow.module.order.repository.OrderShippingAddressRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
-@Service
 /**
  * OrderService - 业务服务实现类
  *
@@ -27,13 +25,19 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class OrderService implements IOrderService {
-    @Autowired
-    OrderRepository orderRepository;
-    @Autowired
-    AddRepository addRepository;
-    @Autowired
-    OrderShippingAddressRepository shippingAddressRepository;
+    private final OrderRepository orderRepository;
+    private final AddRepository addRepository;
+    private final OrderShippingAddressRepository shippingAddressRepository;
+
+    public OrderService(OrderRepository orderRepository,
+                        AddRepository addRepository,
+                        OrderShippingAddressRepository shippingAddressRepository) {
+        this.orderRepository = orderRepository;
+        this.addRepository = addRepository;
+        this.shippingAddressRepository = shippingAddressRepository;
+    }
 
     @Override
     @Transactional

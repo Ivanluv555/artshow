@@ -6,13 +6,10 @@ import org.ivan.artshow.module.course.pojo.UserCourseEnrollment;
 import org.ivan.artshow.module.course.pojo.dto.ChapterCompleteDTO;
 import org.ivan.artshow.module.course.pojo.dto.EnrollRequestDTO;
 import org.ivan.artshow.module.course.service.ICourseEnrollmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/course/enroll") // 定义统一路由前缀
 /**
  * CourseEnrollmentController - 控制器
  *
@@ -21,10 +18,15 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@RestController
+@RequestMapping("/course/enroll")
 public class CourseEnrollmentController {
 
-    @Autowired
-    ICourseEnrollmentService enrollmentService;
+    private final ICourseEnrollmentService enrollmentService;
+
+    public CourseEnrollmentController(ICourseEnrollmentService enrollmentService) {
+        this.enrollmentService = enrollmentService;
+    }
 
     // 1. 报名课程
     // POST /course/enroll

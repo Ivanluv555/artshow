@@ -7,12 +7,10 @@ import org.ivan.artshow.module.shopcartitem.pojo.Sci;
 import org.ivan.artshow.module.shopcartitem.pojo.dto.SciDTO;
 import org.ivan.artshow.module.shopcartitem.repository.SciRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 /**
  * SciService - 业务服务实现类
  *
@@ -21,9 +19,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class SciService implements ISciService {
-    @Autowired
-    SciRepository sciRepository;
+    private final SciRepository sciRepository;
+
+    public SciService(SciRepository sciRepository) {
+        this.sciRepository = sciRepository;
+    }
 
     @Override
     public Sci addSci(SciDTO sciDTO) {

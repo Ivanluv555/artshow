@@ -5,10 +5,8 @@ import org.ivan.artshow.module.comment.pojo.Comment;
 import org.ivan.artshow.module.comment.pojo.dto.CommentDTO;
 import org.ivan.artshow.module.comment.repository.CommentRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
 /**
  * CommentService - 业务服务实现类
  *
@@ -17,10 +15,14 @@ import org.springframework.stereotype.Service;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class CommentService implements ICommentService
 {
-    @Autowired
-    CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
+
+    public CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
 
     @Override
     public Comment addComment(CommentDTO comment){

@@ -4,7 +4,6 @@ import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.user.pojo.User;
 import org.ivan.artshow.module.user.pojo.dto.UserDTO;
 import org.ivan.artshow.module.user.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +32,11 @@ import java.util.List;
 @RequestMapping("/user")
 @Validated
 public class UserController {
-    @Autowired
-    IUserService userService;
+    private final IUserService userService;
+
+    public UserController(IUserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * 添加用户

@@ -7,10 +7,8 @@ import org.ivan.artshow.module.like.pojo.Like;
 import org.ivan.artshow.module.like.pojo.dto.LikeDTO;
 import org.ivan.artshow.module.like.repository.LikeRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
 /**
  * LikeService - 业务服务实现类
  *
@@ -19,9 +17,13 @@ import org.springframework.stereotype.Service;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public class LikeService implements ILikeService {
-    @Autowired
-    LikeRepository likeRepository;
+    private final LikeRepository likeRepository;
+
+    public LikeService(LikeRepository likeRepository) {
+        this.likeRepository = likeRepository;
+    }
 
     @Override
     public Like addLike(LikeDTO like) {

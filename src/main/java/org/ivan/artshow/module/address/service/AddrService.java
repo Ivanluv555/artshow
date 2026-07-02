@@ -7,7 +7,6 @@ import org.ivan.artshow.module.address.pojo.Address;
 import org.ivan.artshow.module.address.pojo.dto.AddressDTO;
 import org.ivan.artshow.module.address.repository.AddRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,8 +18,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AddrService implements IAddrService {
-    @Autowired
-    AddRepository addRepository;
+    private final AddRepository addRepository;
+
+    public AddrService(AddRepository addRepository) {
+        this.addRepository = addRepository;
+    }
 
     @Override
     public Address addUserAddress(AddressDTO addressDTO) {
