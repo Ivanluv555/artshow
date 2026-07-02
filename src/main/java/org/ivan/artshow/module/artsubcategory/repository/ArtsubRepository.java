@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.artsubcategory.repository;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.artsubcategory.pojo.Artsubcategory;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.comment.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.comment.pojo.Comment;
 import org.ivan.artshow.module.comment.pojo.dto.CommentDTO;

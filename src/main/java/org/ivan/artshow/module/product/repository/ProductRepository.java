@@ -1,18 +1,16 @@
 package org.ivan.artshow.module.product.repository;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.product.pojo.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 /**
  * ProductRepository - 数据访问接口
- *
- * <p>ProductRepository继承JpaRepository，提供数据库操作方法。</p>
+ * ProductRepository继承JpaRepository，不需要写注解咯
+ * 提供数据库操作方法
  *
  * @author Ivan Horn
  * @since 1.0.0
  */
+
 public interface ProductRepository extends JpaRepository<Product,Integer> {
 }

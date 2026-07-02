@@ -1,13 +1,10 @@
 package org.ivan.artshow.module.order.repository;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.order.pojo.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 /**
  * OrderRepository - 数据访问接口
  *

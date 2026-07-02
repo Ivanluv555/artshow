@@ -2,11 +2,9 @@ package org.ivan.artshow.module.course.repository;
 
 import org.ivan.artshow.module.course.pojo.UserCourseEnrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 /**
  * UserCourseEnrollmentRepository - 数据访问接口
  *

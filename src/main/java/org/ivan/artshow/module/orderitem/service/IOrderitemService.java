@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.orderitem.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.orderitem.pojo.Orderitem;
 import org.ivan.artshow.module.orderitem.pojo.dto.OrderitemDTO;

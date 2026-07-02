@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.like.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.like.pojo.Like;
 import org.ivan.artshow.module.like.pojo.dto.LikeDTO;

@@ -1,11 +1,8 @@
 package org.ivan.artshow.module.post.repository;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.post.pojo.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 /**
  * PostRepository - 数据访问接口
  *

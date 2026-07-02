@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.instructor.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.instructor.pojo.Instructor;
 import org.ivan.artshow.module.instructor.pojo.dto.InstructorDTO;

@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.shopcartitem.repository;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.shopcartitem.pojo.Sci;
 import org.springframework.data.jpa.repository.JpaRepository;

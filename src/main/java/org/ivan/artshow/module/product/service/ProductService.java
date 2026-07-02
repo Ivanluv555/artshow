@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.product.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.product.pojo.dto.ProductDTO;
 import org.ivan.artshow.module.product.pojo.Product;

@@ -1,6 +1,4 @@
 package org.ivan.artshow.module.order.service;
-import org.ivan.artshow.common.core.result.Result;
-
 
 import org.ivan.artshow.module.order.pojo.Order;
 import org.ivan.artshow.module.order.pojo.dto.OrderDTO;

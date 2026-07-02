@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.product.pojo;
-import org.ivan.artshow.common.core.result.Result;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,7 +9,7 @@ import lombok.Setter;
 /**
  * Product - 实体类
  *
- * <p>Product对应数据库表，使用JPA注解映射表结构。</p>
+ * Product对应数据库表，使用JPA注解映射表结构
  *
  * @author Ivan Horn
  * @since 1.0.0

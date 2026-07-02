@@ -1,11 +1,8 @@
 package org.ivan.artshow.module.collection.repository;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.collection.pojo.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 /**
  * CollectionRepository - 数据访问接口
  *

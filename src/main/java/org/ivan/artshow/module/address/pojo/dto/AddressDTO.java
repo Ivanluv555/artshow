@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.address.pojo.dto;
-import org.ivan.artshow.common.core.result.Result;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.badge.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.badge.pojo.Badge;
 import org.ivan.artshow.module.badge.pojo.dto.BadgeDTO;

@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.user.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.user.pojo.User;
 import org.ivan.artshow.module.user.pojo.dto.UserDTO;

@@ -1,6 +1,5 @@
 package org.ivan.artshow.module.like.pojo;
 
-import org.ivan.artshow.common.core.result.Result;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,6 @@
 package org.ivan.artshow.module.user.pojo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.ivan.artshow.common.core.result.Result;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

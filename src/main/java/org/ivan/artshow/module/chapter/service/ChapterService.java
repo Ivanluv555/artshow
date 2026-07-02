@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.chapter.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.chapter.pojo.Chapter;
 import org.ivan.artshow.module.chapter.pojo.dto.ChapterDTO;

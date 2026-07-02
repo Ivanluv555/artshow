@@ -1,5 +1,4 @@
 package org.ivan.artshow.module.artsubcategory.service;
-import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.artsubcategory.pojo.Artsubcategory;
 import org.ivan.artshow.module.artsubcategory.pojo.dto.ArtsubcategoryDTO;
