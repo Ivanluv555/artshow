@@ -8,11 +8,11 @@
         <version>3.3.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.hyjava</groupId>
-    <artifactId>hy-all</artifactId>
+    <groupId>org.ivan</groupId>
+    <artifactId>artshow</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>hy-all</name>
-    <description>hy-all</description>
+    <name>artshow</name>
+    <description>Artshow - Art Exhibition and Course Management System</description>
     <url/>
     <licenses>
         <license/>
@@ -120,6 +120,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>org.ivan.artshow.ArtshowApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

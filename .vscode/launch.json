@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ArtshowApplication",
+            "request": "launch",
+            "mainClass": "org.ivan.artshow.ArtshowApplication",
+            "projectName": "artshow"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-HyAllApplication<hy-all>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

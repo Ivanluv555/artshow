@@ -69,3 +69,20 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+# Maven
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.nib
+effective-pom-*.log
