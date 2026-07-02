@@ -42,6 +42,9 @@ public class OrderService implements IOrderService {
     @Override
     @Transactional
     public Order addOrder(OrderDTO orderDTO) {
+        if (orderDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
 
         Order nOrder = new Order();
@@ -73,6 +76,9 @@ public class OrderService implements IOrderService {
 
     @Override
     public void deleteOrder(Integer orderId) {
+        if (orderId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
@@ -86,6 +92,12 @@ public class OrderService implements IOrderService {
 
     @Override
     public Order updateOrder(OrderDTO orderDTO) {
+        if (orderDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        if (orderDTO.getOrderId() == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         // 订单通常不允许用户直接Update，通常是修改状态（取消/支付）
         // 这里仅做示例修复
         Integer currentUserId = UserContext.getUserId();
@@ -102,6 +114,9 @@ public class OrderService implements IOrderService {
 
     @Override
     public Order queryOrder(Integer orderId) {
+        if (orderId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
@@ -122,6 +137,9 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<Order> queryAllOrderBatch(List<Integer> userIdlist) {
+        if (userIdlist == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         // 管理员接口，暂时保持原样
         return orderRepository.findAllById(userIdlist);
     }

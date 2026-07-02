@@ -1,5 +1,7 @@
 package org.ivan.artshow.module.collection.service;
 
+import org.ivan.artshow.common.core.resultcode.ResultCodes;
+import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.module.collection.pojo.Collection;
 import org.ivan.artshow.module.collection.pojo.dto.CollectionDTO;
 import org.ivan.artshow.module.collection.repository.CollectionRepository;
@@ -26,27 +28,49 @@ public class CollectionService implements ICollectionService{
 
     @Override
     public Collection addCollection(CollectionDTO collection){
+        if (collection == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Collection ncollection = new Collection();
         BeanUtils.copyProperties(collection,ncollection);
         return collectionRepository.save(ncollection);
     }
 
     @Override
-    public void deleteCollection(Integer collectionId) {collectionRepository.deleteById(collectionId);}
+    public void deleteCollection(Integer collectionId) {
+        if (collectionId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        collectionRepository.deleteById(collectionId);
+    }
 
     @Override
     public Collection updateCollection(CollectionDTO Collection){
+        if (Collection == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer collectionId = Collection.getCollectionId();
-        Collection ncollection = collectionRepository.findById(collectionId).orElseThrow(()->new RuntimeException("没有这个帖子"+collectionId));
+        if (collectionId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        Collection ncollection = collectionRepository.findById(collectionId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(Collection,ncollection);
         return collectionRepository.save(ncollection);
     }
 
     @Override
-    public Collection queryCollection(Integer collectionId) {return collectionRepository.findById(collectionId).get();}
+    public Collection queryCollection(Integer collectionId) {
+        if (collectionId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        return collectionRepository.findById(collectionId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+    }
 
     @Override
     public List<Collection> queryAllCollectionBatch(List<Integer> collectionId){
+        if (collectionId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return collectionRepository.findAllById(collectionId);
     }
 }

@@ -38,8 +38,14 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
     @Override
     @Transactional
     public UserCourseEnrollment enrollCourse(EnrollRequestDTO enrollDTO) {
+        if (enrollDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer userId = UserContext.getUserId();
         Integer courseId = enrollDTO.getCourseId();
+        if (courseId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
 
         // 1. 检查是否重复报名
         UserCourseEnrollment existing = enrollmentRepository.findByUserIdAndCourseId(userId, courseId);
@@ -59,9 +65,15 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
     @Override
     @Transactional
     public UserCourseChapterCompleted completeChapter(ChapterCompleteDTO completeDTO) {
+        if (completeDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer userId = UserContext.getUserId();
         Integer courseId = completeDTO.getCourseId();
         Integer chapterId = completeDTO.getChapterId();
+        if (courseId == null || chapterId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
 
         // 1. 关键逻辑：必须先查 Enrollment 表，获取 enrollmentId
         UserCourseEnrollment enrollment = enrollmentRepository.findByUserIdAndCourseId(userId, courseId);

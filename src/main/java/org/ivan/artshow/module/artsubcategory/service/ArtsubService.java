@@ -28,26 +28,41 @@ public class ArtsubService implements IArtsubService {
 
     @Override
     public Artsubcategory addArtSub(ArtsubcategoryDTO artSubCategory) {
+        if (artSubCategory == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Artsubcategory artsub = new Artsubcategory();
         BeanUtils.copyProperties(artSubCategory,artsub);
-        return artsub;
+        return artSubRepository.save(artsub);
     }
 
     @Override
     public Artsubcategory updateArtSub(ArtsubcategoryDTO artsub) {
+        if (artsub == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer artsubId = artsub.getSubCateId();
+        if (artsubId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Artsubcategory nartsub = artSubRepository.findById(artsubId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(artsub,artsub);
-        return nartsub;
+        BeanUtils.copyProperties(artsub,nartsub);
+        return artSubRepository.save(nartsub);
     }
 
     @Override
     public void deleteArtSub(Integer artsubId) {
+        if (artsubId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         artSubRepository.deleteById(artsubId);
     }
 
     @Override
     public Artsubcategory queryArtSub(Integer artsubId) {
+        if (artsubId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return artSubRepository.findById(artsubId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 

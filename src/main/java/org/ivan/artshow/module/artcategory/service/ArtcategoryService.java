@@ -28,6 +28,9 @@ public class ArtcategoryService implements IArtcategoryService {
 
     @Override
     public Artcategory addCate(ArtcategoryDTO artcategory) {
+        if (artcategory == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Artcategory artCategory = new Artcategory();
         BeanUtils.copyProperties(artcategory,artCategory);
         return artCateRepository.save(artCategory);
@@ -35,7 +38,13 @@ public class ArtcategoryService implements IArtcategoryService {
 
     @Override
     public Artcategory updateCate(ArtcategoryDTO artcategory) {
+        if (artcategory == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer artcateId = artcategory.getCategoryId();
+        if (artcateId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Artcategory artCategory = artCateRepository.findById(artcateId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(artcategory,artCategory);
         return artCateRepository.save(artCategory);
@@ -43,11 +52,17 @@ public class ArtcategoryService implements IArtcategoryService {
 
     @Override
     public void deleteCate(Integer cateId) {
+        if (cateId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         artCateRepository.deleteById(cateId);
     }
 
     @Override
     public Artcategory queryCate(Integer cateId) {
+        if (cateId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return artCateRepository.findById(cateId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 

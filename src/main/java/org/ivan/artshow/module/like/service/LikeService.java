@@ -26,6 +26,9 @@ public class LikeService implements ILikeService {
 
     @Override
     public Like addLike(LikeDTO like) {
+        if (like == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Like nlike = new Like();
         BeanUtils.copyProperties(like,nlike);
         return likeRepository.save(nlike);
@@ -33,18 +36,31 @@ public class LikeService implements ILikeService {
 
     @Override
     public Like updateLike(LikeDTO like) {
+        if (like == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer LikeID = like.getId();
-        Like nlike = likeRepository.findById(LikeID).orElseThrow(() -> new RuntimeException("没这个东西" + LikeID));
+        if (LikeID == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        Like nlike = likeRepository.findById(LikeID).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(like, nlike);
         return likeRepository.save(nlike);
     }
 
     @Override
     public void deleteLike(Integer id) {
+        if (id == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         likeRepository.deleteById(id);
     }
 
     @Override
     public Like queryLike(Integer id) {
+        if (id == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return likeRepository.findById(id).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 }

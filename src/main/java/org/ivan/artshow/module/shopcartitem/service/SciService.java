@@ -29,6 +29,9 @@ public class SciService implements ISciService {
 
     @Override
     public Sci addSci(SciDTO sciDTO) {
+        if (sciDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
 
         Sci nSci = new Sci();
@@ -39,6 +42,9 @@ public class SciService implements ISciService {
 
     @Override
     public void deleteSci(Integer cartItemId) {
+        if (cartItemId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
 
         Sci sci = sciRepository.findById(cartItemId)
@@ -54,8 +60,14 @@ public class SciService implements ISciService {
 
     @Override
     public Sci updateSci(SciDTO sciDTO) {
+        if (sciDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
         Integer cartItemId = sciDTO.getCartItemId();
+        if (cartItemId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
 
         Sci oldSci = sciRepository.findById(cartItemId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
@@ -72,6 +84,9 @@ public class SciService implements ISciService {
 
     @Override
     public Sci querySci(Integer cartItemId) {
+        if (cartItemId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
         Sci sci = sciRepository.findById(cartItemId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
@@ -85,6 +100,9 @@ public class SciService implements ISciService {
 
     @Override
     public List<Sci> queryAllSciBatch(List<Integer> userIdList) {
+        if (userIdList == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         // 这个接口原本是给管理员用的。
         // 如果给普通用户用，必须改写为：return sciRepository.findByUserId(UserContext.getUserId());
         return sciRepository.findAllById(userIdList);

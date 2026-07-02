@@ -1,5 +1,7 @@
 package org.ivan.artshow.module.product.service;
 
+import org.ivan.artshow.common.core.resultcode.ResultCodes;
+import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.module.product.pojo.dto.ProductDTO;
 import org.ivan.artshow.module.product.pojo.Product;
 import org.ivan.artshow.module.product.repository.ProductRepository;
@@ -26,6 +28,9 @@ public class ProductService implements IProductService {
 
     @Override
     public Product addOneProduct(ProductDTO product) {
+        if (product == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Product nProduct = new Product();
         BeanUtils.copyProperties(product, nProduct);
         return productRepository.save(nProduct);
@@ -33,29 +38,47 @@ public class ProductService implements IProductService {
 
     @Override
     public Product updateOneProduct(ProductDTO product) {
+        if (product == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer productId = product.getId();
-        Product nProduct = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("没有这个东西" + productId));
+        if (productId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        Product nProduct = productRepository.findById(productId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(product, nProduct);
         return productRepository.save(nProduct);
     }
 
     @Override
     public Product queryOneProduct(Integer productId) {
-        return productRepository.findById(productId).get();
+        if (productId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        return productRepository.findById(productId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 
     @Override
     public void deleteOneProduct(Integer productId) {
+        if (productId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         productRepository.deleteById(productId);
     }
 
     @Override
     public void deleteProducts(Iterable<Integer> productIdList) {
+        if (productIdList == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         productRepository.deleteAllById(productIdList);
     }
 
     @Override
     public void addProducts(Iterable<Product> productList) {
+        if (productList == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         productRepository.saveAll(productList);
     }
 

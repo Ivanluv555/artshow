@@ -1,5 +1,7 @@
 package org.ivan.artshow.module.chapter.service;
 
+import org.ivan.artshow.common.core.resultcode.ResultCodes;
+import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.module.chapter.pojo.Chapter;
 import org.ivan.artshow.module.chapter.pojo.dto.ChapterDTO;
 import org.springframework.beans.BeanUtils;
@@ -23,23 +25,42 @@ public class ChapterService implements IChapterService {
     }
     @Override
     public Chapter addChapter(ChapterDTO chapter) {
+        if (chapter == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Chapter nChapter = new Chapter();
         BeanUtils.copyProperties(chapter,nChapter);
         return chapterRepository.save(nChapter);
     }
 
     @Override
-    public void deleteChapter(Integer chapterId) { chapterRepository.deleteById(chapterId);}
+    public void deleteChapter(Integer chapterId) {
+        if (chapterId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        chapterRepository.deleteById(chapterId);
+    }
 
     @Override
     public Chapter updateChapter(ChapterDTO Chapter) {
+        if (Chapter == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer chapterId = Chapter.getChapterId();
-        Chapter nChapter = chapterRepository.findById(chapterId).orElseThrow(()->new RuntimeException("要更新的章节不存在,ID:"+chapterId));
+        if (chapterId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        Chapter nChapter = chapterRepository.findById(chapterId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(Chapter,nChapter);
         return chapterRepository.save(nChapter);
     }
 
     @Override
-    public Chapter queryChapter(Integer chapterId) { return chapterRepository.findById(chapterId)
-            .orElseThrow(() -> new RuntimeException("章节不存在,ID:" + chapterId)); }
+    public Chapter queryChapter(Integer chapterId) {
+        if (chapterId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        return chapterRepository.findById(chapterId)
+            .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+    }
 }

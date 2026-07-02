@@ -29,6 +29,9 @@ public class UserService implements IUserService {
 
     @Override
     public User addUser(UserDTO user) {
+        if (user == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         User nUser = new User();
         BeanUtils.copyProperties(user, nUser);
         return userRepository.save(nUser);
@@ -36,6 +39,9 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteUser(Integer userId) {
+        if (userId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
         if (!currentUserId.equals(userId)) {
             throw new BizException(ResultCodes.UNAUTH);
@@ -45,6 +51,9 @@ public class UserService implements IUserService {
 
     @Override
     public User updateUser(UserDTO userDTO) {
+        if (userDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
         User nUser = userRepository.findById(currentUserId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
@@ -56,6 +65,9 @@ public class UserService implements IUserService {
 
     @Override
     public User queryUser(Integer userId) {
+        if (userId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return userRepository.findById(userId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
@@ -67,11 +79,17 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> queryAllUser(List<Integer> userIdList) {
+        if (userIdList == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return userRepository.findAllById(userIdList);
     }
 
     @Override
     public String login(String username, String password) {
+        if (username == null || password == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         User user = userRepository.findByUserName(username);
         if (user == null) {
             throw new BizException(ResultCodes.NOTFOUND);

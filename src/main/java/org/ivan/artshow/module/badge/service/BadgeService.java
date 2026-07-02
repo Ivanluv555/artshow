@@ -28,6 +28,9 @@ public class BadgeService implements IBadgeService{
 
     @Override
     public Badge addBadge(BadgeDTO badge){
+        if (badge == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Badge nbadge = new Badge();
         BeanUtils.copyProperties(badge,nbadge);
         return badgeRepository.save(nbadge);
@@ -35,18 +38,30 @@ public class BadgeService implements IBadgeService{
 
     @Override
     public void deleteBadge(Integer badgeId){
+        if (badgeId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         badgeRepository.deleteById(badgeId);
     }
 
     @Override
     public Badge updateBadge(BadgeDTO Badge){
+        if (Badge == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer BadgeId = Badge.getBadgeId();
+        if (BadgeId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Badge nbadge = badgeRepository.findById(BadgeId).orElseThrow(()-> new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(Badge,nbadge);
         return badgeRepository.save(nbadge);
     }
     @Override
     public Badge queryBadge(Integer badgeId) {
+        if (badgeId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return badgeRepository.findById(badgeId).orElseThrow(()-> new BizException(ResultCodes.NOTFOUND));
     }
 

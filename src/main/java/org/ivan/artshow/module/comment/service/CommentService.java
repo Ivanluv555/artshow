@@ -1,5 +1,7 @@
 package org.ivan.artshow.module.comment.service;
 
+import org.ivan.artshow.common.core.resultcode.ResultCodes;
+import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.module.comment.pojo.Comment;
 import org.ivan.artshow.module.comment.pojo.dto.CommentDTO;
 import org.ivan.artshow.module.comment.repository.CommentRepository;
@@ -25,21 +27,40 @@ public class CommentService implements ICommentService
 
     @Override
     public Comment addComment(CommentDTO comment){
+        if (comment == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Comment nComment = new Comment();
         BeanUtils.copyProperties(comment,nComment);
         return commentRepository.save(nComment);
     }
 
     @Override
-    public void deleteComment(Integer comment_id){commentRepository.deleteById(comment_id);}
+    public void deleteComment(Integer comment_id){
+        if (comment_id == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        commentRepository.deleteById(comment_id);
+    }
 
     @Override
-    public Comment queryComment(Integer comment_id){return commentRepository.findById(comment_id).get();}
+    public Comment queryComment(Integer comment_id){
+        if (comment_id == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        return commentRepository.findById(comment_id).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+    }
 
     @Override
     public Comment updateComment(CommentDTO Comment){
+        if (Comment == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer commentId = Comment.getCommentId();
-        Comment nComent=commentRepository.findById(commentId).orElseThrow(()->new RuntimeException("无结果"+commentId));
+        if (commentId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        Comment nComent=commentRepository.findById(commentId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(Comment,nComent);
         return commentRepository.save(nComent);
     }

@@ -1,5 +1,7 @@
 package org.ivan.artshow.module.course.service;
 
+import org.ivan.artshow.common.core.resultcode.ResultCodes;
+import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.module.course.pojo.Course;
 import org.ivan.artshow.module.course.pojo.dto.CourseDTO;
 import org.ivan.artshow.module.course.repository.CourseRepository;
@@ -25,6 +27,9 @@ public class CourseService implements ICourseService{
 
     @Override
     public Course addCourse(CourseDTO course) {
+        if (course == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Course nCourse = new Course();
         BeanUtils.copyProperties(course,nCourse);
         return courseRepository.save(nCourse);
@@ -32,24 +37,39 @@ public class CourseService implements ICourseService{
 
     @Override
     public void deleteCourse(Integer courseId) {
+        if (courseId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         courseRepository.deleteById(courseId);
     }
 
     @Override
     public Course updateCourse(CourseDTO Course) {
+        if (Course == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer courseId = Course.getCourseId();
-        Course nCourse = courseRepository.findById(courseId).orElseThrow(()->new RuntimeException("没有结果"+courseId));
+        if (courseId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        Course nCourse = courseRepository.findById(courseId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(Course,nCourse);
         return courseRepository.save(nCourse);
     }
 
     @Override
     public Course queryCourse(Integer courseId) {
-        return null;
+        if (courseId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        return courseRepository.findById(courseId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 
     @Override
     public List<Course> queryAllCourses(List<Integer> courseIdList) {
+        if (courseIdList == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return  courseRepository.findAllById(courseIdList);
     }
 

@@ -28,6 +28,9 @@ public class PostService implements IPostService{
 
     @Override
     public Post addPost(PostDTO post){
+        if (post == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Post nPost = new Post();
         BeanUtils.copyProperties(post,nPost);
         return postRepository.save(nPost);
@@ -35,12 +38,21 @@ public class PostService implements IPostService{
 
     @Override
     public void deletePost(Integer PostId){
+        if (PostId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         postRepository.deleteById(PostId);
     }
 
     @Override
     public Post updatePost(PostDTO Post){
+        if (Post == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer postId = Post.getPostId();
+        if (postId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Post post = postRepository.findById(postId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(Post,post);
         return postRepository.save(post);
@@ -48,6 +60,9 @@ public class PostService implements IPostService{
 
     @Override
     public Post queryPost(Integer postId){
+        if (postId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return postRepository.findById(postId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
     }
 

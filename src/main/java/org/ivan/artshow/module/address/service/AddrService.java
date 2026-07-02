@@ -26,6 +26,9 @@ public class AddrService implements IAddrService {
 
     @Override
     public Address addUserAddress(AddressDTO addressDTO) {
+        if (addressDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
         Address nAddress = new Address();
         BeanUtils.copyProperties(addressDTO, nAddress);
@@ -36,6 +39,9 @@ public class AddrService implements IAddrService {
     @Override
     public void deleteUserAddress(Integer addressId) {
         Integer currentUserId = UserContext.getUserId();
+        if (addressId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Address address = addRepository.findById(addressId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
         if (!address.getUserId().equals(currentUserId)) {
@@ -46,8 +52,14 @@ public class AddrService implements IAddrService {
 
     @Override
     public Address updateUserAddress(AddressDTO addressDTO) {
+        if (addressDTO == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer currentUserId = UserContext.getUserId();
         Integer addressId = addressDTO.getAddressId();
+        if (addressId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Address oldAddress = addRepository.findById(addressId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
         if (!oldAddress.getUserId().equals(currentUserId)) {
@@ -61,6 +73,9 @@ public class AddrService implements IAddrService {
     @Override
     public Address queryUserAddress(Integer addressId) {
         Integer currentUserId = UserContext.getUserId();
+        if (addressId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Address address = addRepository.findById(addressId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
         if (!address.getUserId().equals(currentUserId)) {

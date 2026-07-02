@@ -63,7 +63,12 @@ public enum ResultCodes {
     /**
      * 408 - 请求超时
      */
-    OVERTIME(408, "请求超时");
+    OVERTIME(408, "请求超时"), 
+
+    /**
+     * 500 - 空指针异常
+     */
+    NULLPOINT(500, "空指针异常");
 
     /**
      * 状态码

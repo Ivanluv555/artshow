@@ -28,6 +28,9 @@ public class InstructorService implements IInstructorService {
 
     @Override
     public Instructor addInstructor(InstructorDTO instructor) {
+        if (instructor == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
          Instructor ninstructor = new Instructor();
          BeanUtils.copyProperties(instructor,ninstructor);
          return instructorRepository.save(ninstructor);
@@ -35,7 +38,13 @@ public class InstructorService implements IInstructorService {
 
     @Override
     public Instructor updateInstructor(InstructorDTO instructor) {
+        if (instructor == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Integer instructorId = instructor.getId();
+        if (instructorId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         Instructor ninstructor = instructorRepository.findById(instructorId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
         BeanUtils.copyProperties(instructor,ninstructor);
         return instructorRepository.save(ninstructor);
@@ -43,11 +52,17 @@ public class InstructorService implements IInstructorService {
 
     @Override
     public void deleteInstructor(Integer instructorId) {
+        if (instructorId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         instructorRepository.deleteById(instructorId);
     }
 
     @Override
     public Instructor queryInstructor(Integer instructorId) {
+        if (instructorId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
         return instructorRepository.findById(instructorId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 
