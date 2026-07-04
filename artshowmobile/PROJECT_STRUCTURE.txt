@@ -1,0 +1,135 @@
+ArtShow Mobile - 完整项目结构
+=====================================
+
+artshowmobile/
+│
+├── 📱 核心应用代码 (lib/)
+│   ├── main.dart                          # 应用入口 + 启动页
+│   │
+│   ├── 📦 models/                         # 数据模型层
+│   │   ├── api_result.dart                # API 响应封装类
+│   │   ├── art_category.dart              # 艺术分类模型
+│   │   ├── course.dart                    # 课程模型
+│   │   ├── instructor.dart                # 讲师模型
+│   │   └── product.dart                   # 产品/艺术品模型
+│   │
+│   ├── 🔧 services/                       # 服务层
+│   │   ├── api_service.dart               # 后端 API 调用服务
+│   │   └── auth_service.dart              # 认证状态管理服务
+│   │
+│   ├── 📱 screens/                        # 页面层
+│   │   ├── login_screen.dart              # 登录页
+│   │   ├── home_screen.dart               # 主页 (产品展示)
+│   │   ├── courses_screen.dart            # 课程列表页
+│   │   ├── course_detail_screen.dart      # 课程详情页
+│   │   ├── instructors_screen.dart        # 讲师列表页
+│   │   └── instructor_detail_screen.dart  # 讲师详情页
+│   │
+│   ├── 🎨 widgets/                        # 可复用组件层
+│   │   ├── category_chip.dart             # 分类筛选标签组件
+│   │   ├── course_card.dart               # 课程展示卡片组件
+│   │   ├── instructor_card.dart           # 讲师展示卡片组件
+│   │   └── product_card.dart              # 产品展示卡片组件
+│   │
+│   └── 🛠️ utils/                          # 工具类
+│       └── constants.dart                 # 常量配置 (API URL 等)
+│
+├── 📄 配置文件
+│   ├── pubspec.yaml                       # Flutter 依赖配置
+│   ├── pubspec.lock                       # 依赖锁定文件
+│   └── analysis_options.yaml              # 代码分析规则
+│
+├── 📚 文档
+│   ├── README.md                          # 完整项目文档
+│   ├── QUICKSTART.md                      # 5分钟快速启动指南
+│   ├── SETUP.md                           # 详细设置和测试指南
+│   ├── DEVELOPMENT_SUMMARY.md             # 开发总结
+│   └── PROJECT_STRUCTURE.txt              # 本文件
+│
+├── 🧪 测试
+│   └── test/
+│       └── widget_test.dart               # Widget 测试
+│
+├── 🤖 Android 配置
+│   └── android/                           # Android 原生配置
+│
+├── 🍎 iOS 配置 (如果在 Mac 上)
+│   └── ios/                               # iOS 原生配置
+│
+└── 🌐 Web 配置
+    └── web/                               # Web 配置
+
+=====================================
+功能模块映射
+=====================================
+
+1. 用户认证流程:
+   login_screen.dart → auth_service.dart → api_service.dart → 后端 /user/login
+
+2. 主页展示:
+   home_screen.dart → api_service.dart → 后端 /product/list + /artcate/list
+   └── product_card.dart (产品卡片)
+   └── category_chip.dart (分类标签)
+
+3. 课程模块:
+   courses_screen.dart → api_service.dart → 后端 /course/list
+   └── course_card.dart
+   course_detail_screen.dart → api_service.dart → 后端 /course?courseId=X
+
+4. 讲师模块:
+   instructors_screen.dart → api_service.dart → 后端 /instructor/list
+   └── instructor_card.dart
+   instructor_detail_screen.dart → api_service.dart → 后端 /instructor?instructorId=X
+
+=====================================
+数据流向
+=====================================
+
+用户操作 → Screen (页面) → Service (服务层) → API → 后端
+                ↓
+            Widget (组件) ← Model (数据模型) ← API 响应
+
+=====================================
+状态管理
+=====================================
+
+Provider (全局)
+└── AuthService
+    ├── isLoggedIn (登录状态)
+    ├── token (JWT Token)
+    └── login/logout 方法
+
+=====================================
+API 配置
+=====================================
+
+位置: lib/utils/constants.dart
+
+ApiConstants.baseUrl:
+  • Android 模拟器: http://10.0.2.2:8888
+  • iOS 模拟器: http://localhost:8888
+  • 真实设备: http://你的IP:8888
+
+=====================================
+技术栈
+=====================================
+
+• Flutter: 3.12.2+
+• Dart: 3.12.2+
+• 状态管理: Provider
+• HTTP 客户端: http
+• 本地存储: shared_preferences
+• 图片缓存: cached_network_image
+• UI 组件: carousel_slider, pull_to_refresh
+
+=====================================
+代码统计
+=====================================
+
+• Dart 文件: 19 个
+• 代码行数: ~2000+ 行
+• 文档: 4 个完整文档
+• 测试: 1 个测试文件
+• 依赖包: 7 个核心依赖
+
+=====================================
