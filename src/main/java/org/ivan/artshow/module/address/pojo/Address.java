@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "user_address")
 /**
@@ -51,5 +53,10 @@ public class Address {
     @Getter
     @Setter
     private Boolean isDefault;
+
+    @Column(name = "created_at")
+    @Getter
+    @Setter
+    private Date createdAt;
 
 }

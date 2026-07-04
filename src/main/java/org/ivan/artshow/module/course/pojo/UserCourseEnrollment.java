@@ -37,4 +37,8 @@ public class UserCourseEnrollment {
     @Column(name = "award_date") //
     @Getter @Setter
     private Date awardDate;
+
+    @Column(name = "enrolled_at")
+    @Getter @Setter
+    private Date enrolledAt;
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "user_course_chapter_completed")
 /**
@@ -28,4 +30,8 @@ public class UserCourseChapterCompleted {
     @Column(name = "chapter_id") //
     @Getter @Setter
     private Integer chapterId;
+
+    @Column(name = "completed_at")
+    @Getter @Setter
+    private Date completedAt;
 }

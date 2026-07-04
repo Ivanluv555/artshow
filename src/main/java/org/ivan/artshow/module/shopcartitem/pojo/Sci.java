@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "shopping_cart_item")
 /**
@@ -19,14 +21,22 @@ public class Sci {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
+    @Column(name = "cart_item_id")
     private Integer cartItemId;
     @Getter
     @Setter
+    @Column(name = "user_id")
     private Integer userId;
     @Getter
     @Setter
+    @Column(name = "product_id")
     private Integer productId;
     @Getter
     @Setter
+    @Column(name = "quantity")
     private Integer quantity;
+    @Getter
+    @Setter
+    @Column(name = "created_at")
+    private Date createdAt;
 }

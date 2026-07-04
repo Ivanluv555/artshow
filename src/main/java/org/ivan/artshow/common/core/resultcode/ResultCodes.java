@@ -3,90 +3,74 @@ package org.ivan.artshow.common.core.resultcode;
 import lombok.Getter;
 
 /**
- * 响应状态码枚举
- *
- * <p>定义系统中使用的所有业务状态码和对应的错误消息。
- * 与HTTP状态码保持一致，便于前端统一处理。</p>
- *
- * <p>状态码分类：</p>
- * <ul>
- *   <li>2xx：成功状态</li>
- *   <li>4xx：客户端错误（未登录、无权限、请求错误等）</li>
- *   <li>5xx：服务器错误</li>
- * </ul>
- *
- * <p>使用示例：</p>
- * <pre>
- * throw new BizException(ResultCodes.NOTLOGIN);
- * return Result.error(ResultCodes.NOTFOUND);
- * </pre>
+ * Response Status Code Enum
  *
  * @author Ivan Horn
  * @since 1.0.0
  */
 public enum ResultCodes {
     /**
-     * 200 - 操作成功
+     * 200 - Operation successful
      */
-    SUCCESS(200, "成功"),
+    SUCCESS(200, "Success"),
 
     /**
-     * 400 - 请求错误（如登录失败）
+     * 400 - Request error (e.g. login failed)
      */
-    ERROR(400, "登录错误"),
+    ERROR(400, "Login failed"),
 
     /**
-     * 404 - 资源未找到
+     * 404 - Resource not found
      */
-    NOTFOUND(404, "没有找到资源"),
+    NOTFOUND(404, "Resource not found"),
 
     /**
-     * 401 - 未登录或令牌无效
+     * 401 - Not logged in or invalid token
      */
-    NOTLOGIN(401, "未登录"),
+    NOTLOGIN(401, "Not logged in"),
 
     /**
-     * 402 - 无权限访问
+     * 402 - No permission to access
      */
-    UNAUTH(402, "没有权限"),
+    UNAUTH(402, "No permission"),
 
     /**
-     * 403 - 服务器拒绝请求
+     * 403 - Server refused request
      */
-    REFUSE(403, "服务器拒绝连接"),
+    REFUSE(403, "Server refused connection"),
 
     /**
-     * 413 - 请求实体过大
+     * 413 - Request entity too large
      */
-    TOOLARGE(413, "请求实体过大"),
+    TOOLARGE(413, "Request entity too large"),
 
     /**
-     * 408 - 请求超时
+     * 408 - Request timeout
      */
-    OVERTIME(408, "请求超时"), 
+    OVERTIME(408, "Request timeout"),
 
     /**
-     * 500 - 空指针异常
+     * 500 - Null pointer exception
      */
-    NULLPOINT(500, "空指针异常");
+    NULLPOINT(500, "Null pointer exception");
 
     /**
-     * 状态码
+     * Status code
      */
     @Getter
     public final int code;
 
     /**
-     * 错误消息
+     * Error message
      */
     @Getter
     public final String msg;
 
     /**
-     * 构造函数
+     * Constructor
      *
-     * @param code 状态码
-     * @param msg 错误消息
+     * @param code Status code
+     * @param msg Error message
      */
     ResultCodes(int code, String msg) {
         this.code = code;

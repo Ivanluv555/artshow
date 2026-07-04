@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "art_category")
 /**
@@ -31,4 +33,9 @@ public class Artcategory {
     @Getter
     @Setter
     private String iconUrl;
+
+    @Column(name = "created_at")
+    @Getter
+    @Setter
+    private Date createdAt;
 }

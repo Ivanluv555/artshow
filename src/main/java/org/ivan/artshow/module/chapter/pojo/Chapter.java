@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "course_outline")
 /**
@@ -37,4 +39,8 @@ public class Chapter {
     @Setter
     @Column(name = "content")
     private String content;
+    @Getter
+    @Setter
+    @Column(name = "created_at")
+    private Date createdAt;
 }

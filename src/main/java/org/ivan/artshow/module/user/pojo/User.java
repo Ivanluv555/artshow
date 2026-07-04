@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  * 用户实体类
  *
@@ -59,4 +61,9 @@ public class User {
     @Getter
     @Setter
     private String userBio;
+
+    @Column(name="created_at")
+    @Getter
+    @Setter
+    private Date createdAt;
 }

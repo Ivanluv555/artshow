@@ -1,26 +1,28 @@
 package org.ivan.artshow.common.exception;
 
 import org.ivan.artshow.common.core.result.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 全局异常处理器
+ * Global Exception Handler
  *
- * <p>使用@RestControllerAdvice注解，统一处理系统中抛出的各种异常，
- * 将异常信息转换为标准的Result响应格式返回给前端。</p>
+ * <p>Uses @RestControllerAdvice annotation to uniformly handle various exceptions thrown in the system,
+ * converting exception information into standard Result response format for frontend.</p>
  *
- * <p>处理的异常类型：</p>
+ * <p>Handled Exception Types:</p>
  * <ul>
- *   <li>BizException：业务异常，返回业务定义的错误码和消息</li>
- *   <li>Exception：通用异常，返回500状态码和异常消息</li>
+ *   <li>BizException: Business exceptions, returns business-defined error code and message</li>
+ *   <li>Exception: Generic exceptions, returns 500 status code and exception message</li>
  * </ul>
  *
- * <p>优点：</p>
+ * <p>Advantages:</p>
  * <ul>
- *   <li>统一异常处理逻辑，避免在每个Controller中重复编写异常处理代码</li>
- *   <li>统一响应格式，便于前端统一处理</li>
- *   <li>集中记录异常日志，便于问题排查</li>
+ *   <li>Unified exception handling logic, avoiding repetitive code in each Controller</li>
+ *   <li>Unified response format, convenient for frontend processing</li>
+ *   <li>Centralized exception logging for easier troubleshooting</li>
  * </ul>
  *
  * @author Ivan Horn
@@ -29,33 +31,35 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     /**
-     * 处理通用异常
+     * Handle generic exceptions
      *
-     * <p>捕获所有未被特定处理器捕获的异常，返回500状态码和异常消息。
-     * 这是异常处理的兜底方案。</p>
+     * <p>Catches all exceptions not caught by specific handlers, returns 500 status code and exception message.
+     * This is the fallback exception handling mechanism.</p>
      *
-     * @param e 异常对象
-     * @return 包含错误信息的Result对象
+     * @param e Exception object
+     * @return Result object containing error information
      */
     @ExceptionHandler(Exception.class)
     public Result<String> handleException(Exception e) {
-        e.printStackTrace(); // 上线之前改成 log.error("...", e);
-        return Result.error(500, e.getMessage() != null ? e.getMessage() : "服务器通用错误");
+        log.error("Unhandled exception occurred", e);
+        return Result.error(500, e.getMessage() != null ? e.getMessage() : "Internal server error");
     }
 
     /**
-     * 处理业务异常
+     * Handle business exceptions
      *
-     * <p>捕获业务逻辑中主动抛出的BizException，
-     * 返回业务定义的错误码和错误消息。</p>
+     * <p>Catches BizException actively thrown in business logic,
+     * returns business-defined error code and message.</p>
      *
-     * @param e 业务异常对象
-     * @return 包含业务错误信息的Result对象
+     * @param e Business exception object
+     * @return Result object containing business error information
      */
     @ExceptionHandler(BizException.class)
     public Result<String> handleBizException(BizException e) {
-        // 直接返回业务异常中定义的 Code (如 404, 401) 和 Message
+        log.warn("Business exception: [{}] {}", e.getCode(), e.getMessage());
         return Result.error(e.getCode(), e.getMessage());
     }
 }

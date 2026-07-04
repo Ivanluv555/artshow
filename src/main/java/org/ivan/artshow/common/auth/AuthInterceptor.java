@@ -5,33 +5,35 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.common.utils.JwtUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * 认证拦截器
+ * Authentication Interceptor
  *
- * <p>实现Spring MVC的HandlerInterceptor接口，用于拦截需要认证的请求。
- * 在请求到达Controller之前，验证JWT令牌的有效性，并将用户ID存入上下文。</p>
+ * <p>Implements Spring MVC HandlerInterceptor to intercept requests requiring authentication.
+ * Validates JWT token before reaching the Controller and stores user ID in context.</p>
  *
- * <p>主要功能：</p>
+ * <p>Main Features:</p>
  * <ul>
- *   <li>从请求头中获取JWT令牌</li>
- *   <li>验证令牌的有效性</li>
- *   <li>解析令牌并提取用户ID</li>
- *   <li>将用户ID存入UserContext</li>
- *   <li>请求结束后清理ThreadLocal</li>
+ *   <li>Extract JWT token from request headers</li>
+ *   <li>Validate token validity</li>
+ *   <li>Parse token and extract user ID</li>
+ *   <li>Store user ID in UserContext</li>
+ *   <li>Clean up ThreadLocal after request completion</li>
  * </ul>
  *
- * <p>拦截器处理流程：</p>
+ * <p>Interceptor Processing Flow:</p>
  * <ol>
- *   <li>跳过OPTIONS预检请求</li>
- *   <li>从Authorization请求头获取令牌</li>
- *   <li>处理Bearer前缀</li>
- *   <li>验证并解析令牌</li>
- *   <li>存入用户上下文</li>
- *   <li>请求完成后清理上下文</li>
+ *   <li>Skip OPTIONS preflight requests</li>
+ *   <li>Get token from Authorization header</li>
+ *   <li>Handle Bearer prefix</li>
+ *   <li>Validate and parse token</li>
+ *   <li>Store in user context</li>
+ *   <li>Clean up context after request</li>
  * </ol>
  *
  * @author Ivan Horn
@@ -40,57 +42,77 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthInterceptor.class);
+
     /**
-     * 请求处理前的拦截方法
+     * Pre-handle method for request interception
      *
-     * @param request 当前HTTP请求
-     * @param response 当前HTTP响应
-     * @param handler 处理器方法对象
-     * @return true表示放行，false表示拦截
-     * @throws BizException 当令牌缺失或无效时抛出未登录异常
+     * @param request Current HTTP request
+     * @param response Current HTTP response
+     * @param handler Handler method object
+     * @return true to allow, false to block
+     * @throws BizException When token is missing or invalid
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        // 1. 比对请求类型
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+        String requestURI = request.getRequestURI();
+        String method = request.getMethod();
+
+        log.debug("Intercepting request: {} {}", method, requestURI);
+
+        // 1. Check request type
+        if ("OPTIONS".equalsIgnoreCase(method)) {
+            log.debug("Skipping OPTIONS preflight request");
             return true;
         }
 
-        // 2. 获取 Token (通常在 Header: Authorization)
+        // 2. Get Token from Authorization header
         String token = request.getHeader("Authorization");
+
+        log.debug("Authorization header: {}", token != null ? token.substring(0, Math.min(20, token.length())) + "..." : "null");
+
         if (!StringUtils.hasLength(token)) {
+            log.warn("Request {} missing Authorization header", requestURI);
             throw new BizException(ResultCodes.NOTLOGIN);
         }
 
-        // 3. 处理 "Bearer " 前缀（如果前端传了的话）
+        // 3. Handle "Bearer " prefix if present
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
+            log.debug("Token length after removing Bearer prefix: {}", token.length());
         }
 
-        // 4. 验证并解析
-        Integer userId = JwtUtils.parseToken(token);
+        // 4. Validate and parse token
+        try {
+            Integer userId = JwtUtils.parseToken(token);
+            log.debug("Token validated successfully, user ID: {}", userId);
 
-        // 5. 存入上下文
-        UserContext.setUserId(userId);
+            // 5. Store in context
+            UserContext.setUserId(userId);
 
-        return true; // 放行
+            return true; // Allow request
+        } catch (BizException e) {
+            log.error("Token validation failed: {}", e.getMessage());
+            throw e;
+        }
     }
 
     /**
-     * 请求完成后的清理方法
+     * Cleanup method after request completion
      *
-     * <p>无论请求是否成功，都会执行此方法。
-     * 用于清理ThreadLocal中的用户ID，防止内存泄漏。</p>
+     * <p>Executed regardless of request success or failure.
+     * Used to clean up user ID in ThreadLocal to prevent memory leaks.</p>
      *
-     * @param request 当前HTTP请求
-     * @param response 当前HTTP响应
-     * @param handler 处理器方法对象
-     * @param ex 异常对象（如果有）
+     * @param request Current HTTP request
+     * @param response Current HTTP response
+     * @param handler Handler method object
+     * @param ex Exception object (if any)
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        // 6. 请求结束，务必清理 ThreadLocal，防止内存泄漏
+        // 6. Clean up ThreadLocal to prevent memory leaks
         UserContext.remove();
+        log.debug("UserContext cleanup completed");
     }
 }

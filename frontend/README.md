@@ -1,30 +1,142 @@
-# ArtShow Frontend (Multi-page Vite)
+# Artshow Frontend
 
-说明：这是一个最小的多页面前端骨架（Vite + 原生 JS），用于与 Spring Boot 后端配合。构建输出直接放到 Spring Boot 静态目录 `src/main/resources/static`，因此后端可以直接提供生产文件。
+Vue 3 + Vite frontend for Artshow - Art Exhibition and Course Management System
 
-开发：
+## Features
+
+- 🎨 **Art Categories**: Browse and explore different art categories and subcategories
+- 📚 **Online Courses**: View and enroll in art courses
+- 🛍️ **Products**: Shop for art products and supplies
+- 💬 **Community**: Create posts, like, comment, and interact with other users
+- 👤 **User Profile**: Manage profile, view enrolled courses and orders
+- 🔐 **Authentication**: JWT-based login and registration
+
+## Tech Stack
+
+- **Vue 3** - Progressive JavaScript framework
+- **Vue Router** - Official router for Vue.js
+- **Element Plus** - Vue 3 UI component library
+- **Axios** - HTTP client
+- **Vite** - Next generation frontend tooling
+
+## Prerequisites
+
+- Node.js 16+ and npm
+
+## Installation
 
 ```bash
-cd frontend
+# Install dependencies
 npm install
+```
+
+## Development
+
+```bash
+# Start dev server at http://localhost:3000
 npm run dev
 ```
 
-- 开发时，Vite 会在 `http://localhost:5173` 提供多页面预览，开发代理会把 `/api` 请求代理到 `http://localhost:8080`（可在 `vite.config.js` 修改）。
+The dev server includes proxy configuration for API requests:
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:8888` (proxied through `/api`)
 
-构建（生产）并把文件放入后端静态目录：
+## Build
 
 ```bash
-cd frontend
+# Build for production
 npm run build
-# 然后运行后端（例如 ./mvnw spring-boot:run）
+
+# Preview production build
+npm run preview
 ```
 
-页面：
-- `/index.html` - 首页
-- `/login.html` - 登录
-- `/dashboard.html` - 仪表盘
-- `/product.html` - 商品列表示例
-- `/user.html` - 用户信息示例
+## Project Structure
 
-注意：示例 JS 使用 `/api/*` 路径调用后端 REST 接口，请根据后端实际路由调整。
+```
+frontend/
+├── src/
+│   ├── api/              # API modules
+│   │   ├── index.js      # API exports
+│   │   └── request.js    # Axios instance and interceptors
+│   ├── assets/           # Static assets
+│   ├── components/       # Reusable components
+│   ├── router/           # Vue Router configuration
+│   │   └── index.js
+│   ├── utils/            # Utility functions
+│   ├── views/            # Page components
+│   │   ├── Home.vue
+│   │   ├── Login.vue
+│   │   ├── Categories.vue
+│   │   ├── Courses.vue
+│   │   ├── Products.vue
+│   │   ├── Posts.vue
+│   │   └── Profile.vue
+│   ├── App.vue           # Root component
+│   └── main.js           # Application entry
+├── index.html            # HTML template
+├── package.json
+└── vite.config.js        # Vite configuration
+```
+
+## API Integration
+
+All API calls are handled through axios instances with:
+- Automatic Bearer token injection
+- Response interceptors for error handling
+- Base URL configuration through Vite proxy
+
+### Authentication
+
+After successful login, the JWT token is stored in localStorage and automatically included in all API requests.
+
+## Available Routes
+
+- `/` - Home page
+- `/login` - Login/Register page
+- `/categories` - Art categories
+- `/courses` - Online courses
+- `/products` - Art products shop
+- `/posts` - Community posts
+- `/profile` - User profile (requires authentication)
+
+## Configuration
+
+### Proxy Configuration
+
+Edit `vite.config.js` to change the backend API URL:
+
+```js
+server: {
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8888',
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api/, '')
+    }
+  }
+}
+```
+
+## Environment Variables
+
+Create a `.env` file for custom configuration:
+
+```
+VITE_API_BASE_URL=http://localhost:8888
+```
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## License
+
+MIT
+
+## Author
+
+Ivan Horn
