@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.badge.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "badge")
 /**
  * Badge - 实体类
  *
@@ -16,29 +12,66 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "badge")
 public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "badge_id")
-    @Getter
-    @Setter
     private Integer badgeId;
 
     @Column(name = "name")
-    @Getter
-    @Setter
     private String name;
+
     @Column(name="description")
-    @Getter
-    @Setter
     private String description;
+
     @Column(name="icon_url")
-    @Getter
-    @Setter
     private String iconUrl;
 
     @Column(name = "created_at")
-    @Getter
-    @Setter
     private Date createdAt;
+
+    public Badge() {
+    }
+
+    public Integer getBadgeId() {
+        return badgeId;
+    }
+
+    public void setBadgeId(Integer badgeId) {
+        this.badgeId = badgeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

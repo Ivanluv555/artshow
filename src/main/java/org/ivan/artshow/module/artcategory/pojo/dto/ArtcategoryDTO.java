@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.artcategory.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * ArtcategoryDTO - 数据传输对象
  *
@@ -11,16 +8,12 @@ import lombok.Setter;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class ArtcategoryDTO {
-    @Getter
-    @Setter
-    private Integer categoryId;
-
-    @Getter
-    @Setter
-    private String categoryName;
-
-    @Getter
-    @Setter
-    private String iconUrl;
+public record ArtcategoryDTO(
+        Integer categoryId,
+        String categoryName,
+        String iconUrl
+) {
+    public Integer getCategoryId() { return categoryId; }
+    public String getCategoryName() { return categoryName; }
+    public String getIconUrl() { return iconUrl; }
 }

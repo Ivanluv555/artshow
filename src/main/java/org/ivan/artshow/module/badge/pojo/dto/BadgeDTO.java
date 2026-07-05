@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.badge.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * BadgeDTO - 数据传输对象
  *
@@ -11,17 +8,14 @@ import lombok.Setter;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class BadgeDTO {
-    @Getter
-    @Setter
-    private Integer badgeId;
-    @Getter
-    @Setter
-    private String badgeName;
-    @Getter
-    @Setter
-    private String badgeDescription;
-    @Getter
-    @Setter
-    private String badgeImage;
+public record BadgeDTO(
+        Integer badgeId,
+        String badgeName,
+        String badgeDescription,
+        String badgeImage
+) {
+    public Integer getBadgeId() { return badgeId; }
+    public String getBadgeName() { return badgeName; }
+    public String getBadgeDescription() { return badgeDescription; }
+    public String getBadgeImage() { return badgeImage; }
 }

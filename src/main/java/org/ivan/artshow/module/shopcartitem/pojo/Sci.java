@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.shopcartitem.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "shopping_cart_item")
 /**
  * Sci - 实体类
  *
@@ -16,27 +12,66 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "shopping_cart_item")
 public class Sci {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     @Column(name = "cart_item_id")
     private Integer cartItemId;
-    @Getter
-    @Setter
+
     @Column(name = "user_id")
     private Integer userId;
-    @Getter
-    @Setter
+
     @Column(name = "product_id")
     private Integer productId;
-    @Getter
-    @Setter
+
     @Column(name = "quantity")
     private Integer quantity;
-    @Getter
-    @Setter
+
     @Column(name = "created_at")
     private Date createdAt;
+
+    public Sci() {
+    }
+
+    public Integer getCartItemId() {
+        return cartItemId;
+    }
+
+    public void setCartItemId(Integer cartItemId) {
+        this.cartItemId = cartItemId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

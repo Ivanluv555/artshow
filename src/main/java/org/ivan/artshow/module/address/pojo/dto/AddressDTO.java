@@ -1,7 +1,5 @@
 package org.ivan.artshow.module.address.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -12,27 +10,21 @@ import org.hibernate.validator.constraints.Length;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class AddressDTO {
-    @Getter
-    @Setter
-    private Integer addressId;
-    @Getter
-    @Setter
-    private Integer userId;
-    @Getter
-    @Setter
-    private String recipientName;
-    @Getter
-    @Setter
-    @Length(min = 11, max = 11, message = "Phone number must be 11 digits")
-    private String phone;
-    @Getter
-    @Setter
-    private String region;
-    @Getter
-    @Setter
-    private String detailAddress;
-    @Getter
-    @Setter
-    private Boolean isDefault;
+public record AddressDTO(
+        Integer addressId,
+        Integer userId,
+        String recipientName,
+        @Length(min = 11, max = 11, message = "Phone number must be 11 digits")
+        String phone,
+        String region,
+        String detailAddress,
+        Boolean isDefault
+) {
+    public Integer getAddressId() { return addressId; }
+    public Integer getUserId() { return userId; }
+    public String getRecipientName() { return recipientName; }
+    public String getPhone() { return phone; }
+    public String getRegion() { return region; }
+    public String getDetailAddress() { return detailAddress; }
+    public Boolean getIsDefault() { return isDefault; }
 }

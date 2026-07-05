@@ -2,8 +2,6 @@ package org.ivan.artshow.module.user.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
@@ -31,39 +29,84 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     @Column(name="user_id")
     private Integer userId;
 
     @Column(name="username")
-    @Getter
-    @Setter
     private String userName;
 
     @Column(name="password_hash")
-    @Getter
-    @Setter
     @JsonIgnore
     private String password;
 
     @Column(name="nickname")
-    @Getter
-    @Setter
     private String nickName;
 
     @Column(name="avatar_url")
-    @Getter
-    @Setter
     private String userAvatar;
 
     @Column(name="bio")
-    @Getter
-    @Setter
     private String userBio;
 
     @Column(name="created_at")
-    @Getter
-    @Setter
     private Date createdAt;
+
+    public User() {
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    public String getUserBio() {
+        return userBio;
+    }
+
+    public void setUserBio(String userBio) {
+        this.userBio = userBio;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.product.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * ProductDTO - 数据传输对象
  *
@@ -11,36 +8,22 @@ import lombok.Setter;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class ProductDTO {
-    @Getter
-    @Setter
-    private Integer id;
-
-    @Getter
-    @Setter
-    private Integer sellerId;
-
-    @Getter
-    @Setter
-    private String name;
-
-    @Getter
-    @Setter
-    private Double price;
-
-    @Getter
-    @Setter
-    private Integer stock;
-
-    @Getter
-    @Setter
-    private String imageUrl;
-
-    @Getter
-    @Setter
-    private String description;
-
-    @Getter
-    @Setter
-    private Boolean isCertified;
+public record ProductDTO(
+        Integer id,
+        Integer sellerId,
+        String name,
+        Double price,
+        Integer stock,
+        String imageUrl,
+        String description,
+        Boolean isCertified
+) {
+    public Integer getId() { return id; }
+    public Integer getSellerId() { return sellerId; }
+    public String getName() { return name; }
+    public Double getPrice() { return price; }
+    public Integer getStock() { return stock; }
+    public String getImageUrl() { return imageUrl; }
+    public String getDescription() { return description; }
+    public Boolean getIsCertified() { return isCertified; }
 }

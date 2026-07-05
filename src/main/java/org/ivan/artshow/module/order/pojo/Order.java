@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.order.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name="`order`")
 /**
  * Order - 实体类
  *
@@ -16,33 +12,77 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name="`order`")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     @Column(name="order_id")
     private Integer orderId;
+
     @Column(name="order_number")
-    @Getter
-    @Setter
     private String orderNumber;
+
     @Column(name="user_id")
-    @Getter
-    @Setter
     private Integer userId;
+
     @Column(name="total_price")
-    @Getter
-    @Setter
     private Double totalPrice;
+
     @Column(name="status")
-    @Getter
-    @Setter
     private String status;
+
     @Column(name="created_at")
-    @Getter
-    @Setter
     private Date createdAt;
 
+    public Order() {
+    }
 
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

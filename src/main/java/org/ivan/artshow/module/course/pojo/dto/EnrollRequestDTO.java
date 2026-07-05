@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.course.pojo.dto;
 
-import lombok.Data;
-
-@Data
 /**
  * EnrollRequestDTO - 数据传输对象
  *
@@ -11,6 +8,8 @@ import lombok.Data;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class EnrollRequestDTO {
-    private Integer courseId;
+public record EnrollRequestDTO(
+        Integer courseId
+) {
+    public Integer getCourseId() { return courseId; }
 }

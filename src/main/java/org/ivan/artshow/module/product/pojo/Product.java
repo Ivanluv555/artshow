@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.product.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "product")
 /**
  * Product - 实体类
  *
@@ -16,48 +12,121 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     @Column(name="product_id")
     private Integer id;
-    @Column(name = "seller_id")
-    @Getter
-    @Setter
-    private Integer sellerId;
-    @Column(name="name")
-    @Getter
-    @Setter
-    private String name;
-    @Column(name="price")
-    @Getter
-    @Setter
-    private Double price;
-    @Column(name="stock")
-    @Getter
-    @Setter
-    private Integer stock;
-    @Column(name="cover_image_url")
-    @Getter
-    @Setter
-    private String imageUrl;
-    @Column(name="description")
-    @Getter
-    @Setter
-    private String description;
-    @Column(name = "is_certified")
-    @Getter
-    @Setter
-    private Boolean isCertified;
-    @Column(name = "created_at")
-    @Getter
-    @Setter
-    private Date createdAt;
-    @Column(name = "updated_at")
-    @Getter
-    @Setter
-    private Date updatedAt;
-}
 
+    @Column(name = "seller_id")
+    private Integer sellerId;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="price")
+    private Double price;
+
+    @Column(name="stock")
+    private Integer stock;
+
+    @Column(name="cover_image_url")
+    private String imageUrl;
+
+    @Column(name="description")
+    private String description;
+
+    @Column(name = "is_certified")
+    private Boolean isCertified;
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    public Product() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Integer sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getIsCertified() {
+        return isCertified;
+    }
+
+    public void setIsCertified(Boolean isCertified) {
+        this.isCertified = isCertified;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+}

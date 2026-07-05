@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.shopcartitem.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * SciDTO - 数据传输对象
  *
@@ -11,17 +8,14 @@ import lombok.Setter;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class SciDTO {
-    @Getter
-    @Setter
-    private Integer cartItemId;
-    @Getter
-    @Setter
-    private Integer userId;
-    @Getter
-    @Setter
-    private Integer productId;
-    @Getter
-    @Setter
-    private Integer quantity;
+public record SciDTO(
+        Integer cartItemId,
+        Integer userId,
+        Integer productId,
+        Integer quantity
+) {
+    public Integer getCartItemId() { return cartItemId; }
+    public Integer getUserId() { return userId; }
+    public Integer getProductId() { return productId; }
+    public Integer getQuantity() { return quantity; }
 }

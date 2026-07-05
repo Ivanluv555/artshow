@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.like.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 
 /**
@@ -13,20 +10,14 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class LikeDTO {
-    @Getter
-    @Setter
-    private int id;
-
-    @Getter
-    @Setter
-    private int postId;
-
-    @Getter
-    @Setter
-    private int userId;
-
-    @Getter
-    @Setter
-    private Date createdAt;
+public record LikeDTO(
+        int id,
+        int postId,
+        int userId,
+        Date createdAt
+) {
+    public int getId() { return id; }
+    public int getPostId() { return postId; }
+    public int getUserId() { return userId; }
+    public Date getCreatedAt() { return createdAt; }
 }

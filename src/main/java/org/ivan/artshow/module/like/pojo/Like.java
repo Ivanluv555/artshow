@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.like.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "post_like")
 /**
  * Like - 实体类
  *
@@ -16,26 +12,55 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "post_like")
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "like_id")
-    @Getter
-    @Setter
     private Integer id;
 
     @Column(name = "post_id")
-    @Getter
-    @Setter
     private Integer postId;
 
     @Column(name = "user_id")
-    @Getter
-    @Setter
     private Integer userId;
 
     @Column(name = "created_at")
-    @Getter
-    @Setter
     private Date createdAt;
+
+    public Like() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

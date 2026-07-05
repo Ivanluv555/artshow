@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * InstructorService - 业务服务接口
- *
- * <p>InstructorService定义业务方法规范。</p>
- *
+ * InstructorService: 业务服务接口 定义业务方法规范
  * @author Ivan Horn
  * @since 1.0.0
  */

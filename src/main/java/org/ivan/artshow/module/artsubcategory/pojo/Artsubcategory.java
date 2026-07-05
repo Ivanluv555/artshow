@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.artsubcategory.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "art_subcategory")
 /**
  * Artsubcategory - 实体类
  *
@@ -16,51 +12,110 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "art_subcategory")
 public class Artsubcategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     @Column(name = "subcategory_id")
     private Integer subCateId;
 
     @Column(name = "category_id")
-    @Getter
-    @Setter
     private Integer categoryId;
 
     @Column(name = "name")
-    @Getter
-    @Setter
     private String name;
 
     @Column(name = "cover_image_url")
-    @Getter
-    @Setter
     private String coverImageUrl;
 
     @Column(name = "introduction")
-    @Getter
-    @Setter
     private String introdution;
 
     @Column(name = "history")
-    @Getter
-    @Setter
     private String history;
 
     @Column(name = "features")
-    @Getter
-    @Setter
     private String features;
 
     @Column(name = "cultural_meaning")
-    @Getter
-    @Setter
     private String culturalMeaning;
 
     @Column(name = "created_at")
-    @Getter
-    @Setter
     private Date createdAt;
+
+    public Artsubcategory() {
+    }
+
+    public Integer getSubCateId() {
+        return subCateId;
+    }
+
+    public void setSubCateId(Integer subCateId) {
+        this.subCateId = subCateId;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCoverImageUrl() {
+        return coverImageUrl;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
+    }
+
+    public String getIntrodution() {
+        return introdution;
+    }
+
+    public void setIntrodution(String introdution) {
+        this.introdution = introdution;
+    }
+
+    public String getHistory() {
+        return history;
+    }
+
+    public void setHistory(String history) {
+        this.history = history;
+    }
+
+    public String getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
+    }
+
+    public String getCulturalMeaning() {
+        return culturalMeaning;
+    }
+
+    public void setCulturalMeaning(String culturalMeaning) {
+        this.culturalMeaning = culturalMeaning;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

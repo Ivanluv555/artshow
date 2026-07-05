@@ -1,7 +1,5 @@
 package org.ivan.artshow.common.core.resultcode;
 
-import lombok.Getter;
-
 /**
  * Response Status Code Enum
  *
@@ -57,14 +55,12 @@ public enum ResultCodes {
     /**
      * Status code
      */
-    @Getter
-    public final int code;
+    private final int code;
 
     /**
      * Error message
      */
-    @Getter
-    public final String msg;
+    private final String msg;
 
     /**
      * Constructor
@@ -75,5 +71,13 @@ public enum ResultCodes {
     ResultCodes(int code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
     }
 }

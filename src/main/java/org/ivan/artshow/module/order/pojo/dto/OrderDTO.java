@@ -1,7 +1,5 @@
 package org.ivan.artshow.module.order.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
 import java.util.Date;
 
 /**
@@ -12,21 +10,21 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class OrderDTO {
-    @Getter @Setter
-    private Integer orderId;
-    @Getter @Setter
-    private String orderNumber;
-    @Getter @Setter
-    private Integer userId;
-    @Getter @Setter
-    private Double totalPrice;
-    @Getter @Setter
-    private String status;
-    @Getter @Setter
-    private Date createdAt;
-
-    // 新增：前端下单必须传这个地址ID
-    @Getter @Setter
-    private Integer addressId;
+public record OrderDTO(
+        Integer orderId,
+        String orderNumber,
+        Integer userId,
+        Double totalPrice,
+        String status,
+        Date createdAt,
+        // 新增：前端下单必须传这个地址ID
+        Integer addressId
+) {
+    public Integer getOrderId() { return orderId; }
+    public String getOrderNumber() { return orderNumber; }
+    public Integer getUserId() { return userId; }
+    public Double getTotalPrice() { return totalPrice; }
+    public String getStatus() { return status; }
+    public Date getCreatedAt() { return createdAt; }
+    public Integer getAddressId() { return addressId; }
 }

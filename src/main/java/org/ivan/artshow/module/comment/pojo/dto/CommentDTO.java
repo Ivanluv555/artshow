@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.comment.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 
 /**
@@ -13,20 +10,16 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class CommentDTO {
-    @Getter
-    @Setter
-    private Integer commentId;
-    @Getter
-    @Setter
-    private Integer postId;
-    @Getter
-    @Setter
-    private Integer userId;
-    @Getter
-    @Setter
-    private String content;
-    @Getter
-    @Setter
-    private Date createdAt;
+public record CommentDTO(
+        Integer commentId,
+        Integer postId,
+        Integer userId,
+        String content,
+        Date createdAt
+) {
+    public Integer getCommentId() { return commentId; }
+    public Integer getPostId() { return postId; }
+    public Integer getUserId() { return userId; }
+    public String getContent() { return content; }
+    public Date getCreatedAt() { return createdAt; }
 }

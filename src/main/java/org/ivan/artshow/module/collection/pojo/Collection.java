@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.collection.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "post_collection")
 /**
  * Collection - 实体类
  *
@@ -16,24 +12,55 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "post_collection")
 public class Collection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     @Column(name = "collection_id")
     private Integer collectionId;
+
     @Column(name = "post_id")
-    @Getter
-    @Setter
     private Integer postId;
+
     @Column(name = "user_id")
-    @Getter
-    @Setter
     private Integer userId;
+
     @Column(name = "create_at")
-    @Getter
-    @Setter
     private Date createAt;
 
+    public Collection() {
+    }
+
+    public Integer getCollectionId() {
+        return collectionId;
+    }
+
+    public void setCollectionId(Integer collectionId) {
+        this.collectionId = collectionId;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
 }

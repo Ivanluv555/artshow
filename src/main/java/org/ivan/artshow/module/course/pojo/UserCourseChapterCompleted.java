@@ -1,13 +1,8 @@
 package org.ivan.artshow.module.course.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 
-@Entity
-@Table(name = "user_course_chapter_completed")
 /**
  * UserCourseChapterCompleted - 实体类
  *
@@ -16,22 +11,55 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "user_course_chapter_completed")
 public class UserCourseChapterCompleted {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "completion_id") // 修正主键名
-    @Getter @Setter
     private Integer completionId;
 
     @Column(name = "enrollment_id") //
-    @Getter @Setter
     private Integer enrollmentId;
 
     @Column(name = "chapter_id") //
-    @Getter @Setter
     private Integer chapterId;
 
     @Column(name = "completed_at")
-    @Getter @Setter
     private Date completedAt;
+
+    public UserCourseChapterCompleted() {
+    }
+
+    public Integer getCompletionId() {
+        return completionId;
+    }
+
+    public void setCompletionId(Integer completionId) {
+        this.completionId = completionId;
+    }
+
+    public Integer getEnrollmentId() {
+        return enrollmentId;
+    }
+
+    public void setEnrollmentId(Integer enrollmentId) {
+        this.enrollmentId = enrollmentId;
+    }
+
+    public Integer getChapterId() {
+        return chapterId;
+    }
+
+    public void setChapterId(Integer chapterId) {
+        this.chapterId = chapterId;
+    }
+
+    public Date getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(Date completedAt) {
+        this.completedAt = completedAt;
+    }
 }

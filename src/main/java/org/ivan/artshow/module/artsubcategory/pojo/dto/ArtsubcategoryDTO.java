@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.artsubcategory.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * ArtsubcategoryDTO - 数据传输对象
  *
@@ -11,36 +8,22 @@ import lombok.Setter;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class ArtsubcategoryDTO {
-    @Getter
-    @Setter
-    private Integer subCateId;
-
-    @Getter
-    @Setter
-    private Integer categoryId;
-
-    @Getter
-    @Setter
-    private String name;
-
-    @Getter
-    @Setter
-    private String coverImageUrl;
-
-    @Getter
-    @Setter
-    private String introduction;
-
-    @Getter
-    @Setter
-    private String history;
-
-    @Getter
-    @Setter
-    private String features;
-
-    @Getter
-    @Setter
-    private String culturalMeaning;
+public record ArtsubcategoryDTO(
+        Integer subCateId,
+        Integer categoryId,
+        String name,
+        String coverImageUrl,
+        String introduction,
+        String history,
+        String features,
+        String culturalMeaning
+) {
+    public Integer getSubCateId() { return subCateId; }
+    public Integer getCategoryId() { return categoryId; }
+    public String getName() { return name; }
+    public String getCoverImageUrl() { return coverImageUrl; }
+    public String getIntroduction() { return introduction; }
+    public String getHistory() { return history; }
+    public String getFeatures() { return features; }
+    public String getCulturalMeaning() { return culturalMeaning; }
 }

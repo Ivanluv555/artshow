@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.course.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * CourseDTO - 数据传输对象
  *
@@ -11,29 +8,22 @@ import lombok.Setter;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class CourseDTO {
-    @Getter
-    @Setter
-    private Integer courseId;
-    @Getter
-    @Setter
-    private Integer instructorId;
-    @Getter
-    @Setter
-    private String title;
-    @Getter
-    @Setter
-    private String coverImageUrl;
-    @Getter
-    @Setter
-    private Double price;
-    @Getter
-    @Setter
-    private String type;
-    @Getter
-    @Setter
-    private Integer studentCount;
-    @Getter
-    @Setter
-    private String description;
+public record CourseDTO(
+        Integer courseId,
+        Integer instructorId,
+        String title,
+        String coverImageUrl,
+        Double price,
+        String type,
+        Integer studentCount,
+        String description
+) {
+    public Integer getCourseId() { return courseId; }
+    public Integer getInstructorId() { return instructorId; }
+    public String getTitle() { return title; }
+    public String getCoverImageUrl() { return coverImageUrl; }
+    public Double getPrice() { return price; }
+    public String getType() { return type; }
+    public Integer getStudentCount() { return studentCount; }
+    public String getDescription() { return description; }
 }

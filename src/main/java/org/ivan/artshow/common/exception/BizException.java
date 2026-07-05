@@ -1,6 +1,5 @@
 package org.ivan.artshow.common.exception;
 
-import lombok.Getter;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 
 /**
@@ -32,8 +31,7 @@ public class BizException extends RuntimeException {
     /**
      * 错误码
      */
-    @Getter
-    public Integer code;
+    private Integer code;
 
     /**
      * 构造业务异常
@@ -43,5 +41,9 @@ public class BizException extends RuntimeException {
     public BizException (ResultCodes code) {
         super(code.getMsg());
         this.code = code.getCode();
+    }
+
+    public Integer getCode() {
+        return code;
     }
 }

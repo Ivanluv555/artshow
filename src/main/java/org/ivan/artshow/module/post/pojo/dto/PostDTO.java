@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.post.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 
 /**
@@ -13,26 +10,20 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class PostDTO {
-    @Getter
-    @Setter
-    private Integer postId;
-    @Getter
-    @Setter
-    private Integer userId;
-    @Getter
-    @Setter
-    private Integer subcategoryId;
-    @Getter
-    @Setter
-    private String title;
-    @Getter
-    @Setter
-    private String description;
-    @Getter
-    @Setter
-    private String imageUrl;
-    @Getter
-    @Setter
-    private Date createdAt;
+public record PostDTO(
+        Integer postId,
+        Integer userId,
+        Integer subcategoryId,
+        String title,
+        String description,
+        String imageUrl,
+        Date createdAt
+) {
+    public Integer getPostId() { return postId; }
+    public Integer getUserId() { return userId; }
+    public Integer getSubcategoryId() { return subcategoryId; }
+    public String getTitle() { return title; }
+    public String getDescription() { return description; }
+    public String getImageUrl() { return imageUrl; }
+    public Date getCreatedAt() { return createdAt; }
 }

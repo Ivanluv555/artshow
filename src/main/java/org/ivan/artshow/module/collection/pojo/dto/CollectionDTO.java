@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.collection.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
 
 /**
@@ -13,17 +10,14 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class CollectionDTO {
-    @Getter
-    @Setter
-    private Integer collectionId;
-    @Getter
-    @Setter
-    private Integer postId;
-    @Getter
-    @Setter
-    private Integer userId;
-    @Getter
-    @Setter
-    private Date createAt;
+public record CollectionDTO(
+        Integer collectionId,
+        Integer postId,
+        Integer userId,
+        Date createAt
+) {
+    public Integer getCollectionId() { return collectionId; }
+    public Integer getPostId() { return postId; }
+    public Integer getUserId() { return userId; }
+    public Date getCreateAt() { return createAt; }
 }

@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.orderitem.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * OrderitemDTO - 数据传输对象
  *
@@ -11,27 +8,20 @@ import lombok.Setter;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class OrderitemDTO {
-    @Getter
-    @Setter
-    private Integer orderItemId;
-    @Getter
-    @Setter
-    private Integer orderId;
-    @Getter
-    @Setter
-    private Integer productId;
-    @Getter
-    @Setter
-    private Integer quantity;
-    @Getter
-    @Setter
-    private Double priceAtPurchase;
-    @Getter
-    @Setter
-    private String productNameSnapshot;
-    @Getter
-    @Setter
-    private String productImageSnapshot;
-
+public record OrderitemDTO(
+        Integer orderItemId,
+        Integer orderId,
+        Integer productId,
+        Integer quantity,
+        Double priceAtPurchase,
+        String productNameSnapshot,
+        String productImageSnapshot
+) {
+    public Integer getOrderItemId() { return orderItemId; }
+    public Integer getOrderId() { return orderId; }
+    public Integer getProductId() { return productId; }
+    public Integer getQuantity() { return quantity; }
+    public Double getPriceAtPurchase() { return priceAtPurchase; }
+    public String getProductNameSnapshot() { return productNameSnapshot; }
+    public String getProductImageSnapshot() { return productImageSnapshot; }
 }

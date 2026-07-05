@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.comment.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "post_comment")
 /**
  * Comment - 实体类
  *
@@ -16,27 +12,66 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "post_comment")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     @Column(name = "comment_id")
     private Integer commentId;
-    @Getter
-    @Setter
+
     @Column(name = "post_id")
     private Integer postId;
-    @Getter
-    @Setter
+
     @Column(name = "user_id")
     private Integer userId;
-    @Getter
-    @Setter
+
     @Column(name = "content")
     private String content;
-    @Getter
-    @Setter
+
     @Column(name = "created_at")
     private Date createdAt;
+
+    public Comment() {
+    }
+
+    public Integer getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

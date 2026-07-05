@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.post.pojo;
 
 import jakarta.persistence.*;
-import lombok.Setter;
-import lombok.Getter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "post")
 /**
  * Post - 实体类
  *
@@ -16,37 +12,88 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     @Column(name = "post_id")
     private Integer postId;
+
     @Column(name = "user_id")
-    @Getter
-    @Setter
     private Integer userId;
+
     @Column(name = "subcategory_id")
-    @Getter
-    @Setter
     private Integer subcategoryId;
+
     @Column(name = "title")
-    @Getter
-    @Setter
     private String title;
+
     @Column(name = "description")
-    @Getter
-    @Setter
     private String description;
+
     @Column(name = "image_url")
-    @Getter
-    @Setter
     private String imageUrl;
+
     @Column(name = "created_at")
-    @Getter
-    @Setter
     private Date createdAt;
 
+    public Post() {
+    }
 
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getSubcategoryId() {
+        return subcategoryId;
+    }
+
+    public void setSubcategoryId(Integer subcategoryId) {
+        this.subcategoryId = subcategoryId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

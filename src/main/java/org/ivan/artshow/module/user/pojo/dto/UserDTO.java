@@ -1,8 +1,5 @@
 package org.ivan.artshow.module.user.pojo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * UserDTO - 数据传输对象
  *
@@ -11,23 +8,18 @@ import lombok.Setter;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public class UserDTO {
-    @Getter
-    @Setter
-    private Integer userId;
-    @Getter
-    @Setter
-    private String userName;
-    @Getter
-    @Setter
-    private String password;
-    @Getter
-    @Setter
-    private String nickName;
-    @Getter
-    @Setter
-    private String userAvatar;
-    @Getter
-    @Setter
-    private String userBio;
+public record UserDTO(
+        Integer userId,
+        String userName,
+        String password,
+        String nickName,
+        String userAvatar,
+        String userBio
+) {
+    public Integer getUserId() { return userId; }
+    public String getUserName() { return userName; }
+    public String getPassword() { return password; }
+    public String getNickName() { return nickName; }
+    public String getUserAvatar() { return userAvatar; }
+    public String getUserBio() { return userBio; }
 }

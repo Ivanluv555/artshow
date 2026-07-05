@@ -1,13 +1,9 @@
 package org.ivan.artshow.module.instructor.pojo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "course_instructor")
 /**
  * Instructor - 实体类
  *
@@ -16,36 +12,77 @@ import java.util.Date;
  * @author Ivan Horn
  * @since 1.0.0
  */
+@Entity
+@Table(name = "course_instructor")
 public class Instructor {
     @Id
     @Column(name = "instructor_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private int id;
 
     @Column(name = "name")
-    @Getter
-    @Setter
     private String name;
 
     @Column(name = "title")
-    @Getter
-    @Setter
     private String title;
 
     @Column(name = "avatar_url")
-    @Getter
-    @Setter
     private String avatarUrl;
 
     @Column(name = "bio")
-    @Getter
-    @Setter
     private String bio;
 
     @Column(name = "created_at")
-    @Getter
-    @Setter
     private Date createdAt;
+
+    public Instructor() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

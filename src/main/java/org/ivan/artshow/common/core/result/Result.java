@@ -1,8 +1,5 @@
 package org.ivan.artshow.common.core.result;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 
 /**
@@ -34,9 +31,6 @@ import org.ivan.artshow.common.core.resultcode.ResultCodes;
  * @author Ivan Horn
  * @since 1.0.0
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Result<T> {
     /**
      * 状态码（200表示成功，其他表示失败）
@@ -52,6 +46,39 @@ public class Result<T> {
      * 响应数据
      */
     private T data;
+
+    public Result() {
+    }
+
+    public Result(Integer code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
     /**
      * 成功响应（带数据）
