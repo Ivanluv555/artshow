@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: artshow
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:validate}
+    show-sql: ${SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://47.237.188.77:3306/wChina?serverTimezone=UTC}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:WaterChina@242526}
+
+  jackson:
+    mapper:
+      accept-case-insensitive-properties: true
+
+server:
+  port: 8888
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+# JWT
+jwt:
+  secret: ${JWT_SECRET:artshow_local_dev_secret_key_must_be_very_long_123456789}
+
+# Logging configuration
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+
+# SpringDoc OpenAPI configuration
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
