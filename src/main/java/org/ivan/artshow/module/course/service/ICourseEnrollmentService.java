@@ -24,4 +24,11 @@ public interface ICourseEnrollmentService {
 
     // 查询我的课程列表
     List<UserCourseEnrollment> queryMyCourses();
+
+    /**
+     * 检查用户是否已购买课程
+     * @param courseId 课程ID
+     * @return true表示已购买
+     */
+    boolean hasPurchasedCourse(Integer courseId);
 }

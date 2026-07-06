@@ -21,4 +21,43 @@ public interface IOrderService {
     public List<Order> queryAllOrderBatch(List<Integer> userIdlist);
     List<Order> findAllOrders();
     List<Order> findMyOrders();
+
+    /**
+     * 从购物车创建订单（完整流程）
+     * @param cartItemIds 购物车项ID列表
+     * @param addressId 收货地址ID
+     * @return 创建的订单
+     */
+    Order createOrderFromCart(List<Integer> cartItemIds, Integer addressId);
+
+    /**
+     * 直接购买课程（创建课程订单）
+     * @param courseId 课程ID
+     * @return 创建的订单
+     */
+    Order purchaseCourse(Integer courseId);
+
+    /**
+     * 取消订单（恢复库存）
+     * @param orderId 订单ID
+     */
+    void cancelOrder(Integer orderId);
+
+    /**
+     * 支付订单
+     * @param orderId 订单ID
+     */
+    void payOrder(Integer orderId);
+
+    /**
+     * 发货
+     * @param orderId 订单ID
+     */
+    void shipOrder(Integer orderId);
+
+    /**
+     * 完成订单
+     * @param orderId 订单ID
+     */
+    void completeOrder(Integer orderId);
 }

@@ -34,6 +34,11 @@ public class BizException extends RuntimeException {
     private Integer code;
 
     /**
+     * 自定义错误消息（可选）
+     */
+    private String customMessage;
+
+    /**
      * 构造业务异常
      *
      * @param code 错误码枚举，包含错误码和错误消息
@@ -43,7 +48,23 @@ public class BizException extends RuntimeException {
         this.code = code.getCode();
     }
 
+    /**
+     * 构造业务异常（带自定义消息）
+     *
+     * @param code 错误码枚举
+     * @param customMessage 自定义错误消息（覆盖默认消息）
+     */
+    public BizException (ResultCodes code, String customMessage) {
+        super(customMessage);
+        this.code = code.getCode();
+        this.customMessage = customMessage;
+    }
+
     public Integer getCode() {
         return code;
+    }
+
+    public String getCustomMessage() {
+        return customMessage;
     }
 }

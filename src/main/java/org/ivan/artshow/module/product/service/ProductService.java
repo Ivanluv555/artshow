@@ -7,14 +7,12 @@ import org.ivan.artshow.module.product.pojo.Product;
 import org.ivan.artshow.module.product.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * ProductService - 业务服务实现类
- *
- * <p>ProductService实现具体的业务逻辑。</p>
- *
  * @author Ivan Horn
  * @since 1.0.0
  */
@@ -85,6 +83,47 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> findAllProducts() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public boolean checkStock(Integer productId, Integer quantity) {
+        if (productId == null || quantity == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        if (quantity <= 0) {
+            throw new BizException(ResultCodes.INVALID_PARAM, "购买数量必须大于0");
+        }
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在"));
+        return product.getStock() != null && product.getStock() >= quantity;
+    }
+
+    @Override
+    @Transactional
+    public boolean deductStock(Integer productId, Integer quantity) {
+        if (productId == null || quantity == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        if (quantity <= 0) {
+            throw new BizException(ResultCodes.INVALID_PARAM, "扣减数量必须大于0");
+        }
+        int affectedRows = productRepository.deductStock(productId, quantity);
+        return affectedRows > 0;
+    }
+
+    @Override
+    @Transactional
+    public void restoreStock(Integer productId, Integer quantity) {
+        if (productId == null || quantity == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        if (quantity <= 0) {
+            throw new BizException(ResultCodes.INVALID_PARAM, "恢复数量必须大于0");
+        }
+        int affectedRows = productRepository.restoreStock(productId, quantity);
+        if (affectedRows == 0) {
+            throw new BizException(ResultCodes.NOTFOUND, "商品不存在");
+        }
     }
 }
 

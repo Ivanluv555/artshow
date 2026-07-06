@@ -107,4 +107,26 @@ public class SciService implements ISciService {
         // 如果给普通用户用，必须改写为：return sciRepository.findByUserId(UserContext.getUserId());
         return sciRepository.findAllById(userIdList);
     }
+
+    @Override
+    public List<Sci> findMyCart() {
+        Integer currentUserId = UserContext.getUserId();
+        return sciRepository.findByUserId(currentUserId);
+    }
+
+    @Override
+    public void clearMyCart() {
+        Integer currentUserId = UserContext.getUserId();
+        List<Sci> myCart = sciRepository.findByUserId(currentUserId);
+        if (!myCart.isEmpty()) {
+            sciRepository.deleteAll(myCart);
+        }
+    }
+
+    @Override
+    public int getCartItemCount() {
+        Integer currentUserId = UserContext.getUserId();
+        List<Sci> myCart = sciRepository.findByUserId(currentUserId);
+        return myCart.size();
+    }
 }

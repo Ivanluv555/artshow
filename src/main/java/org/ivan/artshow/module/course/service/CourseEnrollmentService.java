@@ -3,12 +3,15 @@ package org.ivan.artshow.module.course.service;
 import org.ivan.artshow.common.auth.UserContext;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 import org.ivan.artshow.common.exception.BizException;
+import org.ivan.artshow.module.course.pojo.Course;
 import org.ivan.artshow.module.course.pojo.UserCourseChapterCompleted;
 import org.ivan.artshow.module.course.pojo.UserCourseEnrollment;
 import org.ivan.artshow.module.course.pojo.dto.ChapterCompleteDTO;
 import org.ivan.artshow.module.course.pojo.dto.EnrollRequestDTO;
+import org.ivan.artshow.module.course.repository.CourseRepository;
 import org.ivan.artshow.module.course.repository.UserCourseChapterCompletedRepository;
 import org.ivan.artshow.module.course.repository.UserCourseEnrollmentRepository;
+import org.ivan.artshow.module.orderitem.repository.OrderitemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +31,17 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
 
     private final UserCourseEnrollmentRepository enrollmentRepository;
     private final UserCourseChapterCompletedRepository completedRepository;
+    private final CourseRepository courseRepository;
+    private final OrderitemRepository orderitemRepository;
 
     public CourseEnrollmentService(UserCourseEnrollmentRepository enrollmentRepository,
-                                   UserCourseChapterCompletedRepository completedRepository) {
+                                   UserCourseChapterCompletedRepository completedRepository,
+                                   CourseRepository courseRepository,
+                                   OrderitemRepository orderitemRepository) {
         this.enrollmentRepository = enrollmentRepository;
         this.completedRepository = completedRepository;
+        this.courseRepository = courseRepository;
+        this.orderitemRepository = orderitemRepository;
     }
 
     @Override
@@ -47,17 +56,33 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
             throw new BizException(ResultCodes.NULLPOINT);
         }
 
-        // 1. 检查是否重复报名
+        // 1. 检查课程是否存在
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "课程不存在"));
+
+        // 2. 检查是否重复报名
         UserCourseEnrollment existing = enrollmentRepository.findByUserIdAndCourseId(userId, courseId);
         if (existing != null) {
-            throw new BizException(ResultCodes.OVERTIME);
+            throw new BizException(ResultCodes.INVALID_PARAM, "您已经报名过该课程");
         }
 
-        // 2. 创建报名记录
+        // 3. 检查课程类型（核心逻辑）
+        if ("paid".equalsIgnoreCase(course.getType())) {
+            // 付费课程：检查用户是否已购买
+            boolean hasPurchased = orderitemRepository.existsPaidCourseByUserIdAndCourseId(userId, courseId);
+            if (!hasPurchased) {
+                throw new BizException(ResultCodes.INVALID_PARAM,
+                    "该课程为付费课程，请先购买后再报名");
+            }
+        }
+        // 免费课程：直接允许报名
+
+        // 4. 创建报名记录
         UserCourseEnrollment enrollment = new UserCourseEnrollment();
         enrollment.setUserId(userId);
         enrollment.setCourseId(courseId);
         enrollment.setCertificateAwarded(false); // 默认未获得证书
+        enrollment.setEnrolledAt(new Date());
 
         return enrollmentRepository.save(enrollment);
     }
@@ -78,13 +103,13 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
         // 1. 关键逻辑：必须先查 Enrollment 表，获取 enrollmentId
         UserCourseEnrollment enrollment = enrollmentRepository.findByUserIdAndCourseId(userId, courseId);
         if (enrollment == null) {
-            throw new BizException(ResultCodes.NOTFOUND);
+            throw new BizException(ResultCodes.NOTFOUND, "您还未报名该课程");
         }
 
         // 2. 检查该章节是否已经打过卡
         boolean isCompleted = completedRepository.existsByEnrollmentIdAndChapterId(enrollment.getEnrollmentId(), chapterId);
         if (isCompleted) {
-            throw new BizException(ResultCodes.NOTFOUND);
+            throw new BizException(ResultCodes.INVALID_PARAM, "该章节已完成");
         }
 
         // 3. 保存打卡记录
@@ -98,5 +123,14 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
     public List<UserCourseEnrollment> queryMyCourses() {
         Integer userId = UserContext.getUserId();
         return enrollmentRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public boolean hasPurchasedCourse(Integer courseId) {
+        if (courseId == null) {
+            throw new BizException(ResultCodes.NULLPOINT);
+        }
+        Integer userId = UserContext.getUserId();
+        return orderitemRepository.existsPaidCourseByUserIdAndCourseId(userId, courseId);
     }
 }

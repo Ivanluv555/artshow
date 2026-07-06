@@ -6,25 +6,46 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 /**
- * IProductService - 业务服务接口
- *
- * <p>IProductService定义业务方法规范。</p>
- *
- * @author Ivan Horn
+  IProductService - 业务服务接口
+  @author Ivan Horn
  * @since 1.0.0
  */
+@Service
 public interface IProductService {
-    public Product addOneProduct(ProductDTO product);
-    public void addProducts(Iterable<Product> productList);
+    Product addOneProduct(ProductDTO product);
+    void addProducts(Iterable<Product> productList);
 
-    public void deleteOneProduct(Integer productId);
-    public void deleteProducts(Iterable<Integer> productIdList);
+    void deleteOneProduct(Integer productId);
+    void deleteProducts(Iterable<Integer> productIdList);
 
-    public Product updateOneProduct(ProductDTO product);
+    Product updateOneProduct(ProductDTO product);
 
-    public Product queryOneProduct(Integer productId);
+    Product queryOneProduct(Integer productId);
 
     List<Product> findAllProducts();
+
+    /**
+     * 检查商品库存是否充足
+     * @param productId 商品ID
+     * @param quantity 需要的数量
+     * @return true表示库存充足
+     */
+    boolean checkStock(Integer productId, Integer quantity);
+
+    /**
+     * 扣减商品库存（原子操作）
+     * @param productId 商品ID
+     * @param quantity 扣减数量
+     * @return true表示扣减成功，false表示库存不足
+     */
+    boolean deductStock(Integer productId, Integer quantity);
+
+    /**
+     * 恢复商品库存（取消订单时使用）
+     * @param productId 商品ID
+     * @param quantity 恢复数量
+     */
+    void restoreStock(Integer productId, Integer quantity);
 }

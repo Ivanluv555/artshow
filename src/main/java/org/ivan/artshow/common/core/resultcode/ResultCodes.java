@@ -50,7 +50,17 @@ public enum ResultCodes {
     /**
      * 500 - Null pointer exception
      */
-    NULLPOINT(500, "Null pointer exception");
+    NULLPOINT(500, "Null pointer exception"),
+
+    /**
+     * 400 - Invalid parameter
+     */
+    INVALID_PARAM(400, "Invalid parameter"),
+
+    /**
+     * 400 - Insufficient stock
+     */
+    INSUFFICIENT_STOCK(400, "Insufficient stock");
 
     /**
      * Status code

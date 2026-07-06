@@ -54,4 +54,34 @@ public class SciController {
         List<Sci> list = sciService.queryAllSciBatch(userIdList);
         return Result.success(list);
     }
+
+    /**
+     * 查询我的购物车
+     * GET /sci/my
+     */
+    @GetMapping("/my")
+    public Result<List<Sci>> getMyCart() {
+        List<Sci> myCart = sciService.findMyCart();
+        return Result.success(myCart);
+    }
+
+    /**
+     * 清空我的购物车
+     * DELETE /sci/my
+     */
+    @DeleteMapping("/my")
+    public Result<Void> clearMyCart() {
+        sciService.clearMyCart();
+        return Result.success(null);
+    }
+
+    /**
+     * 获取购物车商品种类数
+     * GET /sci/count
+     */
+    @GetMapping("/count")
+    public Result<Integer> getCartItemCount() {
+        int count = sciService.getCartItemCount();
+        return Result.success(count);
+    }
 }

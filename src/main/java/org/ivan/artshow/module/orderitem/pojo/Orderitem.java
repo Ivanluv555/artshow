@@ -6,6 +6,7 @@ import jakarta.persistence.*;
  * Orderitem - 实体类
  *
  * <p>Orderitem对应数据库表，使用JPA注解映射表结构。</p>
+ * <p>订单项可以关联商品(product_id)或课程(course_id)，二者至少有一个不为空。</p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -23,6 +24,9 @@ public class Orderitem {
 
     @Column(name="product_id")
     private Integer productId;
+
+    @Column(name="course_id")
+    private Integer courseId;
 
     @Column(name="quantity")
     private Integer quantity;
@@ -61,6 +65,14 @@ public class Orderitem {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 
     public Integer getQuantity() {

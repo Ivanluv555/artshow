@@ -63,4 +63,88 @@ public class OrderController {
     public Result<List<Order>> queryMyOrders() {
         return Result.success(orderService.findMyOrders());
     }
+
+    /**
+     * 从购物车创建订单
+     * POST /order/create-from-cart
+     */
+    @PostMapping("/create-from-cart")
+    public Result<Order> createOrderFromCart(@RequestBody CreateOrderRequest request) {
+        Order order = orderService.createOrderFromCart(request.getCartItemIds(), request.getAddressId());
+        return Result.success(order);
+    }
+
+    /**
+     * 直接购买课程
+     * POST /order/purchase-course/{courseId}
+     */
+    @PostMapping("/purchase-course/{courseId}")
+    public Result<Order> purchaseCourse(@PathVariable Integer courseId) {
+        Order order = orderService.purchaseCourse(courseId);
+        return Result.success(order);
+    }
+
+    /**
+     * 取消订单
+     * PUT /order/{orderId}/cancel
+     */
+    @PutMapping("/{orderId}/cancel")
+    public Result<Void> cancelOrder(@PathVariable Integer orderId) {
+        orderService.cancelOrder(orderId);
+        return Result.success(null);
+    }
+
+    /**
+     * 支付订单
+     * PUT /order/{orderId}/pay
+     */
+    @PutMapping("/{orderId}/pay")
+    public Result<Void> payOrder(@PathVariable Integer orderId) {
+        orderService.payOrder(orderId);
+        return Result.success(null);
+    }
+
+    /**
+     * 发货
+     * PUT /order/{orderId}/ship
+     */
+    @PutMapping("/{orderId}/ship")
+    public Result<Void> shipOrder(@PathVariable Integer orderId) {
+        orderService.shipOrder(orderId);
+        return Result.success(null);
+    }
+
+    /**
+     * 完成订单
+     * PUT /order/{orderId}/complete
+     */
+    @PutMapping("/{orderId}/complete")
+    public Result<Void> completeOrder(@PathVariable Integer orderId) {
+        orderService.completeOrder(orderId);
+        return Result.success(null);
+    }
+
+    /**
+     * 创建订单请求对象
+     */
+    public static class CreateOrderRequest {
+        private List<Integer> cartItemIds;
+        private Integer addressId;
+
+        public List<Integer> getCartItemIds() {
+            return cartItemIds;
+        }
+
+        public void setCartItemIds(List<Integer> cartItemIds) {
+            this.cartItemIds = cartItemIds;
+        }
+
+        public Integer getAddressId() {
+            return addressId;
+        }
+
+        public void setAddressId(Integer addressId) {
+            this.addressId = addressId;
+        }
+    }
 }

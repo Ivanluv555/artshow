@@ -48,4 +48,12 @@ public class CourseEnrollmentController {
     public Result<List<UserCourseEnrollment>> getMyCourses() {
         return Result.success(enrollmentService.queryMyCourses());
     }
+
+    // 4. 检查是否已购买课程
+    // GET /course/enroll/check-purchased/{courseId}
+    @GetMapping("/check-purchased/{courseId}")
+    public Result<Boolean> checkPurchased(@PathVariable Integer courseId) {
+        boolean hasPurchased = enrollmentService.hasPurchasedCourse(courseId);
+        return Result.success(hasPurchased);
+    }
 }
