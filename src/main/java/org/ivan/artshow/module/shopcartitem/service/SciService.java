@@ -32,7 +32,7 @@ public class SciService implements ISciService {
         if (sciDTO == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
 
         Sci nSci = new Sci();
         BeanUtils.copyProperties(sciDTO, nSci);
@@ -41,11 +41,11 @@ public class SciService implements ISciService {
     }
 
     @Override
-    public void deleteSci(Integer cartItemId) {
+    public void deleteSci(Long cartItemId) {
         if (cartItemId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
 
         Sci sci = sciRepository.findById(cartItemId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
@@ -63,8 +63,8 @@ public class SciService implements ISciService {
         if (sciDTO == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
-        Integer cartItemId = sciDTO.getCartItemId();
+        Long currentUserId = UserContext.getUserId();
+        Long cartItemId = sciDTO.getCartItemId();
         if (cartItemId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -83,11 +83,11 @@ public class SciService implements ISciService {
     }
 
     @Override
-    public Sci querySci(Integer cartItemId) {
+    public Sci querySci(Long cartItemId) {
         if (cartItemId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         Sci sci = sciRepository.findById(cartItemId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
 
@@ -99,7 +99,7 @@ public class SciService implements ISciService {
     }
 
     @Override
-    public List<Sci> queryAllSciBatch(List<Integer> userIdList) {
+    public List<Sci> queryAllSciBatch(List<Long> userIdList) {
         if (userIdList == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -110,13 +110,13 @@ public class SciService implements ISciService {
 
     @Override
     public List<Sci> findMyCart() {
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         return sciRepository.findByUserId(currentUserId);
     }
 
     @Override
     public void clearMyCart() {
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         List<Sci> myCart = sciRepository.findByUserId(currentUserId);
         if (!myCart.isEmpty()) {
             sciRepository.deleteAll(myCart);
@@ -125,7 +125,7 @@ public class SciService implements ISciService {
 
     @Override
     public int getCartItemCount() {
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         List<Sci> myCart = sciRepository.findByUserId(currentUserId);
         return myCart.size();
     }

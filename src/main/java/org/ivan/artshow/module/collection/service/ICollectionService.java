@@ -16,7 +16,7 @@ import java.util.List;
 public interface ICollectionService {
     public Collection addCollection(CollectionDTO collection);
     public Collection updateCollection(CollectionDTO Collection);
-    public Collection queryCollection(Integer collectionId);
-    public void deleteCollection(Integer collectionId);
-    public List<Collection> queryAllCollectionBatch(List<Integer> collectionId);
+    public Collection queryCollection(Long collectionId);
+    public void deleteCollection(Long collectionId);
+    public List<Collection> queryAllCollectionBatch(List<Long> collectionId);
 }

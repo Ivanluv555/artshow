@@ -9,9 +9,9 @@ package org.ivan.artshow.module.course.pojo.dto;
  * @since 1.0.0
  */
 public record ChapterCompleteDTO(
-        Integer courseId,  // 前端只知道课程ID
-        Integer chapterId  // 和章节ID
+        Long courseId,  // 前端只知道课程ID
+        Long chapterId  // 和章节ID
 ) {
-    public Integer getCourseId() { return courseId; }
-    public Integer getChapterId() { return chapterId; }
+    public Long getCourseId() { return courseId; }
+    public Long getChapterId() { return chapterId; }
 }

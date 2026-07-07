@@ -30,7 +30,7 @@ public class CommentController {
     }
 
     @DeleteMapping
-    public void deleteComment(@RequestParam Integer commentId) {
+    public void deleteComment(@RequestParam Long commentId) {
         commentService.deleteComment(commentId);
     }
 
@@ -41,7 +41,7 @@ public class CommentController {
     }
 
     @GetMapping
-    public Result<Comment>  queryComment(@RequestParam  Integer commentId) {
+    public Result<Comment>  queryComment(@RequestParam  Long commentId) {
         Comment ncomment= commentService.queryComment(commentId);
         return Result.success(ncomment);
     }

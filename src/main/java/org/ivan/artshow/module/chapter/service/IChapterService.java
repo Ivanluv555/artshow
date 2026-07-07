@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0
  */
 public interface IChapterService {
-    public Chapter queryChapter(Integer chapterId);
-    public void deleteChapter(Integer chapterId);
+    public Chapter queryChapter(Long chapterId);
+    public void deleteChapter(Long chapterId);
     public Chapter updateChapter(ChapterDTO Chapter);
     public Chapter addChapter(ChapterDTO chapter);
 }

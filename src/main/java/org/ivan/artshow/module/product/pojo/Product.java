@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.product.pojo;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
@@ -16,9 +17,10 @@ import java.util.Date;
 @Table(name = "product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @GeneratedValue(generator = "snowflake")
     @Column(name="product_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "seller_id")
     private Integer sellerId;
@@ -50,11 +52,11 @@ public class Product {
     public Product() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

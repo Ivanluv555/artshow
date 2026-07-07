@@ -33,7 +33,7 @@ public class SciController {
     }
 
     @DeleteMapping
-    public void deleteSci(@RequestParam Integer cartItemId) {
+    public void deleteSci(@RequestParam Long cartItemId) {
         sciService.deleteSci(cartItemId);
     }
 
@@ -44,13 +44,13 @@ public class SciController {
     }
 
     @GetMapping
-    public Result<Sci> querySci(@RequestParam Integer cartItemId) {
+    public Result<Sci> querySci(@RequestParam Long cartItemId) {
         Sci nsci = sciService.querySci(cartItemId);
         return Result.success(nsci);
     }
 
     @PostMapping("/batch")
-    public Result<List<Sci>> queryAllSciBatch(@RequestBody List<Integer> userIdList) {
+    public Result<List<Sci>> queryAllSciBatch(@RequestBody List<Long> userIdList) {
         List<Sci> list = sciService.queryAllSciBatch(userIdList);
         return Result.success(list);
     }

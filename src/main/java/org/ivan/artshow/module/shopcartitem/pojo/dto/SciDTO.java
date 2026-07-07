@@ -9,12 +9,12 @@ package org.ivan.artshow.module.shopcartitem.pojo.dto;
  * @since 1.0.0
  */
 public record SciDTO(
-        Integer cartItemId,
+        Long cartItemId,
         Integer userId,
         Integer productId,
         Integer quantity
 ) {
-    public Integer getCartItemId() { return cartItemId; }
+    public Long getCartItemId() { return cartItemId; }
     public Integer getUserId() { return userId; }
     public Integer getProductId() { return productId; }
     public Integer getQuantity() { return quantity; }

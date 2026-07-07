@@ -9,14 +9,14 @@ package org.ivan.artshow.module.chapter.pojo.dto;
  * @since 1.0.0
  */
 public record ChapterDTO(
-        Integer chapterId,
-        Integer courseId,
+        Long chapterId,
+        Long courseId,
         Integer chapterStandId,
         String title,
         String content
 ) {
-    public Integer getChapterId() { return chapterId; }
-    public Integer getCourseId() { return courseId; }
+    public Long getChapterId() { return chapterId; }
+    public Long getCourseId() { return courseId; }
     public Integer getChapterStandId() { return chapterStandId; }
     public String getTitle() { return title; }
     public String getContent() { return content; }

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  */
 public interface ILikeService {
     public Like addLike(LikeDTO like);
-    public void deleteLike(Integer id);
+    public void deleteLike(Long id);
     public Like updateLike(LikeDTO like);
-    public Like queryLike(Integer id);
+    public Like queryLike(Long id);
 }

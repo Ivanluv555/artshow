@@ -9,7 +9,7 @@ package org.ivan.artshow.module.course.pojo.dto;
  * @since 1.0.0
  */
 public record CourseDTO(
-        Integer courseId,
+        Long courseId,
         Integer instructorId,
         String title,
         String coverImageUrl,
@@ -18,7 +18,7 @@ public record CourseDTO(
         Integer studentCount,
         String description
 ) {
-    public Integer getCourseId() { return courseId; }
+    public Long getCourseId() { return courseId; }
     public Integer getInstructorId() { return instructorId; }
     public String getTitle() { return title; }
     public String getCoverImageUrl() { return coverImageUrl; }

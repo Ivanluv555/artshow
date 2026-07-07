@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
  * @since 1.0.0
  */
 public record AddressDTO(
-        Integer addressId,
+        Long addressId,
         Integer userId,
         String recipientName,
         @Length(min = 11, max = 11, message = "Phone number must be 11 digits")
@@ -20,7 +20,7 @@ public record AddressDTO(
         String detailAddress,
         Boolean isDefault
 ) {
-    public Integer getAddressId() { return addressId; }
+    public Long getAddressId() { return addressId; }
     public Integer getUserId() { return userId; }
     public String getRecipientName() { return recipientName; }
     public String getPhone() { return phone; }

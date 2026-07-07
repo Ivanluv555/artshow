@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.chapter.pojo;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
@@ -16,12 +17,13 @@ import java.util.Date;
 @Table(name = "course_outline")
 public class Chapter {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @GeneratedValue(generator = "snowflake")
     @Column(name = "chapter_id")
-    private Integer chapterId;
+    private Long chapterId;
 
     @Column(name = "course_id")
-    private Integer courseId;
+    private Long courseId;
 
     @Column(name = "chapter_stand_id")
     private Integer chapterStandId;
@@ -38,19 +40,19 @@ public class Chapter {
     public Chapter() {
     }
 
-    public Integer getChapterId() {
+    public Long getChapterId() {
         return chapterId;
     }
 
-    public void setChapterId(Integer chapterId) {
+    public void setChapterId(Long chapterId) {
         this.chapterId = chapterId;
     }
 
-    public Integer getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 

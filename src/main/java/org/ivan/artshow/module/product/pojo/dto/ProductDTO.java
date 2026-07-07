@@ -9,7 +9,7 @@ package org.ivan.artshow.module.product.pojo.dto;
  * @since 1.0.0
  */
 public record ProductDTO(
-        Integer id,
+        Long id,
         Integer sellerId,
         String name,
         Double price,
@@ -18,7 +18,7 @@ public record ProductDTO(
         String description,
         Boolean isCertified
 ) {
-    public Integer getId() { return id; }
+    public Long getId() { return id; }
     public Integer getSellerId() { return sellerId; }
     public String getName() { return name; }
     public Double getPrice() { return price; }

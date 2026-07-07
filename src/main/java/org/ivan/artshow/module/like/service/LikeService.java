@@ -39,7 +39,7 @@ public class LikeService implements ILikeService {
         if (like == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer LikeID = like.getId();
+        Long LikeID = like.getId();
         if (LikeID == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -49,7 +49,7 @@ public class LikeService implements ILikeService {
     }
 
     @Override
-    public void deleteLike(Integer id) {
+    public void deleteLike(Long id) {
         if (id == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -57,7 +57,7 @@ public class LikeService implements ILikeService {
     }
 
     @Override
-    public Like queryLike(Integer id) {
+    public Like queryLike(Long id) {
         if (id == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

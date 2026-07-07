@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public interface ChapterRepository extends JpaRepository<Chapter,Integer> {
+public interface ChapterRepository extends JpaRepository<Chapter,Long> {
 }

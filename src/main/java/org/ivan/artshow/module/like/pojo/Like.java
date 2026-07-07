@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.like.pojo;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
@@ -16,12 +17,13 @@ import java.util.Date;
 @Table(name = "post_like")
 public class Like {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @GeneratedValue(generator = "snowflake")
     @Column(name = "like_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "post_id")
-    private Integer postId;
+    private Long postId;
 
     @Column(name = "user_id")
     private Integer userId;
@@ -32,19 +34,19 @@ public class Like {
     public Like() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getPostId() {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(Integer postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 

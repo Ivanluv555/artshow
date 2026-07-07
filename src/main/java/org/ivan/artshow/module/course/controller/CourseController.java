@@ -41,7 +41,7 @@ public class CourseController {
      * @param courseId 课程ID
      */
     @DeleteMapping
-    public void deleteCourse(@RequestParam Integer courseId){
+    public void deleteCourse(@RequestParam Long courseId){
         courseService.deleteCourse(courseId);
     }
 
@@ -62,7 +62,7 @@ public class CourseController {
      * @return 课程对象
      */
     @GetMapping
-    public Result<Course> queryCourse(@RequestParam Integer courseId) {
+    public Result<Course> queryCourse(@RequestParam Long courseId) {
         Course ncourse = courseService.queryCourse(courseId);
         return Result.success(ncourse);
     }
@@ -73,7 +73,7 @@ public class CourseController {
      * @return 课程列表
      */
     @PostMapping("/batch")
-    public Result<List<Course>> queryAllCourse(@RequestBody List<Integer> courseIdList){
+    public Result<List<Course>> queryAllCourse(@RequestBody List<Long> courseIdList){
         List<Course> list = courseService.queryAllCourses(courseIdList);
         return Result.success(list);
     }

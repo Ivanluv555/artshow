@@ -34,7 +34,7 @@ public class ChapterService implements IChapterService {
     }
 
     @Override
-    public void deleteChapter(Integer chapterId) {
+    public void deleteChapter(Long chapterId) {
         if (chapterId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -46,7 +46,7 @@ public class ChapterService implements IChapterService {
         if (Chapter == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer chapterId = Chapter.getChapterId();
+        Long chapterId = Chapter.getChapterId();
         if (chapterId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -56,7 +56,7 @@ public class ChapterService implements IChapterService {
     }
 
     @Override
-    public Chapter queryChapter(Integer chapterId) {
+    public Chapter queryChapter(Long chapterId) {
         if (chapterId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

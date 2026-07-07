@@ -9,14 +9,14 @@ package org.ivan.artshow.module.user.pojo.dto;
  * @since 1.0.0
  */
 public record UserDTO(
-        Integer userId,
+        Long userId,
         String userName,
         String password,
         String nickName,
         String userAvatar,
         String userBio
 ) {
-    public Integer getUserId() { return userId; }
+    public Long getUserId() { return userId; }
     public String getUserName() { return userName; }
     public String getPassword() { return password; }
     public String getNickName() { return nickName; }

@@ -24,7 +24,7 @@ public interface ICourseService {
      * 删除课程
      * @param courseId 课程ID
      */
-    void deleteCourse(Integer courseId);
+    void deleteCourse(Long courseId);
 
     /**
      * 更新课程信息
@@ -38,14 +38,14 @@ public interface ICourseService {
      * @param courseId 课程ID
      * @return 课程对象
      */
-    Course queryCourse(Integer courseId);
+    Course queryCourse(Long courseId);
 
     /**
      * 批量查询课程
      * @param courseIdList 课程ID列表
      * @return 课程列表
      */
-    List<Course> queryAllCourses(List<Integer> courseIdList);
+    List<Course> queryAllCourses(List<Long> courseIdList);
 
     /**
      * 查询所有课程

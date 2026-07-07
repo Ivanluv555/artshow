@@ -32,7 +32,7 @@ public class InstructorController {
     }
 
     @DeleteMapping
-    public Result<Instructor> deleteInstructor(@RequestParam Integer instructorId) {
+    public Result<Instructor> deleteInstructor(@RequestParam Long instructorId) {
         instructorService.deleteInstructor(instructorId);
         return Result.success(null);
     }
@@ -44,7 +44,7 @@ public class InstructorController {
     }
 
     @GetMapping
-    public Result<Instructor> queryInstructor(@RequestParam Integer instructorId) {
+    public Result<Instructor> queryInstructor(@RequestParam Long instructorId) {
         return Result.success(instructorService.queryInstructor(instructorId));
     }
 

@@ -38,13 +38,13 @@ public class ProductController {
     }
 
     @DeleteMapping
-    public Result<Product> deleteOneProduct(@RequestParam Integer productId) {
+    public Result<Product> deleteOneProduct(@RequestParam Long productId) {
         productService.deleteOneProduct(productId);
         return Result.success(null);
     }
 
     @DeleteMapping("/dbatch")
-    public Result<Product> deleteProducts(@RequestBody Iterable<Integer> productId) {
+    public Result<Product> deleteProducts(@RequestBody Iterable<Long> productId) {
         productService.deleteProducts(productId);
         return Result.success(null);
     }
@@ -56,7 +56,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public Result<Product> queryOneProduct(@RequestParam Integer productId) {
+    public Result<Product> queryOneProduct(@RequestParam Long productId) {
         Product nProduct = productService.queryOneProduct(productId);
         return Result.success(nProduct);
     }

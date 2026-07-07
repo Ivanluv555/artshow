@@ -9,12 +9,12 @@ package org.ivan.artshow.module.badge.pojo.dto;
  * @since 1.0.0
  */
 public record BadgeDTO(
-        Integer badgeId,
+        Long badgeId,
         String badgeName,
         String badgeDescription,
         String badgeImage
 ) {
-    public Integer getBadgeId() { return badgeId; }
+    public Long getBadgeId() { return badgeId; }
     public String getBadgeName() { return badgeName; }
     public String getBadgeDescription() { return badgeDescription; }
     public String getBadgeImage() { return badgeImage; }

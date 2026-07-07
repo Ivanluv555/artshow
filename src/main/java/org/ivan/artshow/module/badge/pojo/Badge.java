@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.badge.pojo;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
@@ -16,9 +17,10 @@ import java.util.Date;
 @Table(name = "badge")
 public class Badge {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @GeneratedValue(generator = "snowflake")
     @Column(name = "badge_id")
-    private Integer badgeId;
+    private Long badgeId;
 
     @Column(name = "name")
     private String name;
@@ -35,11 +37,11 @@ public class Badge {
     public Badge() {
     }
 
-    public Integer getBadgeId() {
+    public Long getBadgeId() {
         return badgeId;
     }
 
-    public void setBadgeId(Integer badgeId) {
+    public void setBadgeId(Long badgeId) {
         this.badgeId = badgeId;
     }
 

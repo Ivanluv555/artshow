@@ -9,13 +9,13 @@ package org.ivan.artshow.module.instructor.pojo.dto;
  * @since 1.0.0
  */
 public record InstructorDTO(
-        int id,
+        Long id,
         String name,
         String title,
         String avatarUrl,
         String bio
 ) {
-    public int getId() { return id; }
+    public Long getId() { return id; }
     public String getName() { return name; }
     public String getTitle() { return title; }
     public String getAvatarUrl() { return avatarUrl; }

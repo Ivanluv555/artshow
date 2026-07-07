@@ -32,7 +32,7 @@ public class OrderController {
     }
 
     @DeleteMapping
-    public void deleteOrder(@RequestParam Integer order_id) {
+    public void deleteOrder(@RequestParam Long order_id) {
         orderService.deleteOrder(order_id);
     }
 
@@ -43,7 +43,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public Result<Order> queryOrder(@RequestParam Integer orderId) {
+    public Result<Order> queryOrder(@RequestParam Long orderId) {
         Order norder = orderService.queryOrder(orderId);
         return Result.success(norder);
     }
@@ -89,7 +89,7 @@ public class OrderController {
      * PUT /order/{orderId}/cancel
      */
     @PutMapping("/{orderId}/cancel")
-    public Result<Void> cancelOrder(@PathVariable Integer orderId) {
+    public Result<Void> cancelOrder(@PathVariable Long orderId) {
         orderService.cancelOrder(orderId);
         return Result.success(null);
     }
@@ -99,7 +99,7 @@ public class OrderController {
      * PUT /order/{orderId}/pay
      */
     @PutMapping("/{orderId}/pay")
-    public Result<Void> payOrder(@PathVariable Integer orderId) {
+    public Result<Void> payOrder(@PathVariable Long orderId) {
         orderService.payOrder(orderId);
         return Result.success(null);
     }
@@ -109,7 +109,7 @@ public class OrderController {
      * PUT /order/{orderId}/ship
      */
     @PutMapping("/{orderId}/ship")
-    public Result<Void> shipOrder(@PathVariable Integer orderId) {
+    public Result<Void> shipOrder(@PathVariable Long orderId) {
         orderService.shipOrder(orderId);
         return Result.success(null);
     }
@@ -119,7 +119,7 @@ public class OrderController {
      * PUT /order/{orderId}/complete
      */
     @PutMapping("/{orderId}/complete")
-    public Result<Void> completeOrder(@PathVariable Integer orderId) {
+    public Result<Void> completeOrder(@PathVariable Long orderId) {
         orderService.completeOrder(orderId);
         return Result.success(null);
     }
@@ -128,22 +128,22 @@ public class OrderController {
      * 创建订单请求对象
      */
     public static class CreateOrderRequest {
-        private List<Integer> cartItemIds;
-        private Integer addressId;
+        private List<Long> cartItemIds;
+        private Long addressId;
 
-        public List<Integer> getCartItemIds() {
+        public List<Long> getCartItemIds() {
             return cartItemIds;
         }
 
-        public void setCartItemIds(List<Integer> cartItemIds) {
+        public void setCartItemIds(List<Long> cartItemIds) {
             this.cartItemIds = cartItemIds;
         }
 
-        public Integer getAddressId() {
+        public Long getAddressId() {
             return addressId;
         }
 
-        public void setAddressId(Integer addressId) {
+        public void setAddressId(Long addressId) {
             this.addressId = addressId;
         }
     }

@@ -17,12 +17,12 @@ public interface IProductService {
     Product addOneProduct(ProductDTO product);
     void addProducts(Iterable<Product> productList);
 
-    void deleteOneProduct(Integer productId);
-    void deleteProducts(Iterable<Integer> productIdList);
+    void deleteOneProduct(Long productId);
+    void deleteProducts(Iterable<Long> productIdList);
 
     Product updateOneProduct(ProductDTO product);
 
-    Product queryOneProduct(Integer productId);
+    Product queryOneProduct(Long productId);
 
     List<Product> findAllProducts();
 
@@ -32,7 +32,7 @@ public interface IProductService {
      * @param quantity 需要的数量
      * @return true表示库存充足
      */
-    boolean checkStock(Integer productId, Integer quantity);
+    boolean checkStock(Long productId, Integer quantity);
 
     /**
      * 扣减商品库存（原子操作）
@@ -40,12 +40,12 @@ public interface IProductService {
      * @param quantity 扣减数量
      * @return true表示扣减成功，false表示库存不足
      */
-    boolean deductStock(Integer productId, Integer quantity);
+    boolean deductStock(Long productId, Integer quantity);
 
     /**
      * 恢复商品库存（取消订单时使用）
      * @param productId 商品ID
      * @param quantity 恢复数量
      */
-    void restoreStock(Integer productId, Integer quantity);
+    void restoreStock(Long productId, Integer quantity);
 }

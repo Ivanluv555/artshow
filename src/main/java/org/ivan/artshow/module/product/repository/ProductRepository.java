@@ -15,7 +15,7 @@ import org.springframework.data.repository.query.Param;
  * @since 1.0.0
  */
 
-public interface ProductRepository extends JpaRepository<Product,Integer> {
+public interface ProductRepository extends JpaRepository<Product,Long> {
     /**
      * 扣减商品库存（原子操作，防止超卖）
      * @param productId 商品ID
@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
      */
     @Modifying
     @Query("UPDATE Product p SET p.stock = p.stock - :quantity WHERE p.id = :productId AND p.stock >= :quantity")
-    int deductStock(@Param("productId") Integer productId, @Param("quantity") Integer quantity);
+    int deductStock(@Param("productId") Long productId, @Param("quantity") Integer quantity);
 
     /**
      * 恢复商品库存（取消订单时使用）
@@ -34,5 +34,5 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
      */
     @Modifying
     @Query("UPDATE Product p SET p.stock = p.stock + :quantity WHERE p.id = :productId")
-    int restoreStock(@Param("productId") Integer productId, @Param("quantity") Integer quantity);
+    int restoreStock(@Param("productId") Long productId, @Param("quantity") Integer quantity);
 }

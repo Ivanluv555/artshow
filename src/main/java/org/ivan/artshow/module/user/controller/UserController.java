@@ -68,7 +68,7 @@ public class UserController {
     @DeleteMapping
     @Operation(summary = "Delete User", description = "Delete user by user ID")
     @SecurityRequirement(name = "BearerAuth")
-    public void deleteUser(@RequestParam @Parameter(description = "User ID", required = true) Integer userId) {
+    public void deleteUser(@RequestParam @Parameter(description = "User ID", required = true) Long userId) {
         userService.deleteUser(userId);
     }
 
@@ -95,7 +95,7 @@ public class UserController {
     @GetMapping
     @Operation(summary = "Query User", description = "Query user details by user ID")
     @SecurityRequirement(name = "BearerAuth")
-    public Result<User> queryUser(@RequestParam @Parameter(description = "User ID", required = true) Integer userId) {
+    public Result<User> queryUser(@RequestParam @Parameter(description = "User ID", required = true) Long userId) {
         User nuser = userService.queryUser(userId);
         return Result.success(nuser);
     }
@@ -109,7 +109,7 @@ public class UserController {
     @PostMapping("/batch")
     @Operation(summary = "Batch Query Users", description = "Batch query user information by user ID list")
     @SecurityRequirement(name = "BearerAuth")
-    public Result<List<User>> queryAllUser(@RequestBody List<Integer> userIds) {
+    public Result<List<User>> queryAllUser(@RequestBody List<Long> userIds) {
         List<User> nLUser = userService.queryAllUser(userIds);
         return Result.success(nLUser);
     }

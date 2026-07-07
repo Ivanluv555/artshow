@@ -37,7 +37,7 @@ public class PostService implements IPostService{
     }
 
     @Override
-    public void deletePost(Integer PostId){
+    public void deletePost(Long PostId){
         if (PostId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -49,7 +49,7 @@ public class PostService implements IPostService{
         if (Post == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer postId = Post.getPostId();
+        Long postId = Post.getPostId();
         if (postId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -59,7 +59,7 @@ public class PostService implements IPostService{
     }
 
     @Override
-    public Post queryPost(Integer postId){
+    public Post queryPost(Long postId){
         if (postId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

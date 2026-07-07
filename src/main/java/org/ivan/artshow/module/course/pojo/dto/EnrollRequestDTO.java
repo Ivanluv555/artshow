@@ -9,7 +9,7 @@ package org.ivan.artshow.module.course.pojo.dto;
  * @since 1.0.0
  */
 public record EnrollRequestDTO(
-        Integer courseId
+        Long courseId
 ) {
-    public Integer getCourseId() { return courseId; }
+    public Long getCourseId() { return courseId; }
 }

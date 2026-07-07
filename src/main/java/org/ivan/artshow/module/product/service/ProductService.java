@@ -39,7 +39,7 @@ public class ProductService implements IProductService {
         if (product == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer productId = product.getId();
+        Long productId = product.getId();
         if (productId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -49,7 +49,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product queryOneProduct(Integer productId) {
+    public Product queryOneProduct(Long productId) {
         if (productId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -57,7 +57,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void deleteOneProduct(Integer productId) {
+    public void deleteOneProduct(Long productId) {
         if (productId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -65,7 +65,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void deleteProducts(Iterable<Integer> productIdList) {
+    public void deleteProducts(Iterable<Long> productIdList) {
         if (productIdList == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -86,7 +86,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public boolean checkStock(Integer productId, Integer quantity) {
+    public boolean checkStock(Long productId, Integer quantity) {
         if (productId == null || quantity == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -100,7 +100,7 @@ public class ProductService implements IProductService {
 
     @Override
     @Transactional
-    public boolean deductStock(Integer productId, Integer quantity) {
+    public boolean deductStock(Long productId, Integer quantity) {
         if (productId == null || quantity == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -113,7 +113,7 @@ public class ProductService implements IProductService {
 
     @Override
     @Transactional
-    public void restoreStock(Integer productId, Integer quantity) {
+    public void restoreStock(Long productId, Integer quantity) {
         if (productId == null || quantity == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

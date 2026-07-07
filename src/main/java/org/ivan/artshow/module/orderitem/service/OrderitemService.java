@@ -35,7 +35,7 @@ public class OrderitemService implements IOrderitemService {
     }
 
     @Override
-    public void deleteOrderItem(Integer OrderItemId){
+    public void deleteOrderItem(Long OrderItemId){
         if (OrderItemId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -47,7 +47,7 @@ public class OrderitemService implements IOrderitemService {
         if (OrderItem == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer OrderItemId = OrderItem.getOrderItemId();
+        Long OrderItemId = OrderItem.getOrderItemId();
         if (OrderItemId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -56,7 +56,7 @@ public class OrderitemService implements IOrderitemService {
         return orderItemRepository.save(norderItem);
     }
     @Override
-    public Orderitem queryOrderItem(Integer orderItemId) {
+    public Orderitem queryOrderItem(Long orderItemId) {
         if (orderItemId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

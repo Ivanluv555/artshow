@@ -17,8 +17,8 @@ import java.util.List;
  */
 public interface IBadgeService {
     public Badge addBadge(BadgeDTO badge);
-    public void deleteBadge(Integer badgeId);
+    public void deleteBadge(Long badgeId);
     public Badge updateBadge(BadgeDTO badge);
-    public Badge queryBadge(Integer badgeId);
+    public Badge queryBadge(Long badgeId);
     List<Badge> findAllBadges();
 }

@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.order.pojo;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * OrderShippingAddress - 实体类
@@ -14,12 +15,13 @@ import jakarta.persistence.*;
 @Table(name = "order_shipping_address")
 public class OrderShippingAddress {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @GeneratedValue(generator = "snowflake")
     @Column(name = "shipping_address_id")
-    private Integer shippingAddressId;
+    private Long shippingAddressId;
 
     @Column(name = "order_id")
-    private Integer orderId;
+    private Long orderId;
 
     @Column(name = "recipient_name")
     private String recipientName;
@@ -36,19 +38,19 @@ public class OrderShippingAddress {
     public OrderShippingAddress() {
     }
 
-    public Integer getShippingAddressId() {
+    public Long getShippingAddressId() {
         return shippingAddressId;
     }
 
-    public void setShippingAddressId(Integer shippingAddressId) {
+    public void setShippingAddressId(Long shippingAddressId) {
         this.shippingAddressId = shippingAddressId;
     }
 
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 

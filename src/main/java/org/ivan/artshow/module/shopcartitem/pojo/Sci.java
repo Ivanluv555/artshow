@@ -16,15 +16,16 @@ import java.util.Date;
 @Table(name = "shopping_cart_item")
 public class Sci {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "snowflake")
+    @org.hibernate.annotations.GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
     @Column(name = "cart_item_id")
-    private Integer cartItemId;
+    private Long cartItemId;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "product_id")
-    private Integer productId;
+    private Long productId;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -35,27 +36,27 @@ public class Sci {
     public Sci() {
     }
 
-    public Integer getCartItemId() {
+    public Long getCartItemId() {
         return cartItemId;
     }
 
-    public void setCartItemId(Integer cartItemId) {
+    public void setCartItemId(Long cartItemId) {
         this.cartItemId = cartItemId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

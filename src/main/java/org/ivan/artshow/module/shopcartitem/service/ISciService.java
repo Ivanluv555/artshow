@@ -18,10 +18,10 @@ import java.util.List;
  */
 public interface ISciService {
     public Sci addSci(SciDTO sci);
-    public void deleteSci(Integer cartItemId);
+    public void deleteSci(Long cartItemId);
     public Sci updateSci(SciDTO Sci);
-    public Sci querySci(Integer cartItemId);
-    public List<Sci> queryAllSciBatch(List<Integer> userIdList);
+    public Sci querySci(Long cartItemId);
+    public List<Sci> queryAllSciBatch(List<Long> userIdList);
 
     /**
      * 查询当前用户的购物车

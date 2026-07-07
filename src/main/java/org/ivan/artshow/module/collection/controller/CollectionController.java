@@ -35,7 +35,7 @@ public class CollectionController {
     }
 
     @DeleteMapping
-    public void deleteCollection(@RequestParam Integer collectionId){
+    public void deleteCollection(@RequestParam Long collectionId){
         collectionService.deleteCollection(collectionId);
     }
 
@@ -46,7 +46,7 @@ public class CollectionController {
     }
 
     @GetMapping
-    public Result<Collection> queryCollection(@RequestParam Integer collectionId){
+    public Result<Collection> queryCollection(@RequestParam Long collectionId){
         Collection ncollection = collectionService.queryCollection(collectionId);
         return Result.success(ncollection);
     }
@@ -54,7 +54,7 @@ public class CollectionController {
     // 2. BATCH QUERY -> POST /collection/batch
     // FIX: Added "/batch" to distinguish this from the addCollection method
     @PostMapping("/batch")
-    public Result<List<Collection>> queryAllCollectionBatch(@RequestBody List<Integer> collectionId){
+    public Result<List<Collection>> queryAllCollectionBatch(@RequestBody List<Long> collectionId){
         List<Collection> list = collectionService.queryAllCollectionBatch(collectionId);
         return Result.success(list);
     }

@@ -9,7 +9,7 @@ package org.ivan.artshow.module.artsubcategory.pojo.dto;
  * @since 1.0.0
  */
 public record ArtsubcategoryDTO(
-        Integer subCateId,
+        Long subCateId,
         Integer categoryId,
         String name,
         String coverImageUrl,
@@ -18,7 +18,7 @@ public record ArtsubcategoryDTO(
         String features,
         String culturalMeaning
 ) {
-    public Integer getSubCateId() { return subCateId; }
+    public Long getSubCateId() { return subCateId; }
     public Integer getCategoryId() { return categoryId; }
     public String getName() { return name; }
     public String getCoverImageUrl() { return coverImageUrl; }

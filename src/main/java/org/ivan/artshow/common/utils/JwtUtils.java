@@ -58,7 +58,7 @@ public class JwtUtils {
      * @param userId 用户ID
      * @return JWT令牌字符串
      */
-    public static String createToken(Integer userId) {
+    public static String createToken(Long userId) {
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
                 .setIssuedAt(new Date())
@@ -74,14 +74,14 @@ public class JwtUtils {
      * @return 用户ID
      * @throws BizException 当令牌无效、过期或解析失败时抛出未登录异常
      */
-    public static Integer parseToken(String token) {
+    public static Long parseToken(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(getKey())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-            return Integer.parseInt(claims.getSubject());
+            return Long.parseLong(claims.getSubject());
         } catch (Exception e) {
             throw new BizException(ResultCodes.NOTLOGIN);
         }

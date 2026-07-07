@@ -20,14 +20,14 @@ package org.ivan.artshow.common.auth;
  * @since 1.0.0
  */
 public class UserContext {
-    private static final ThreadLocal<Integer> userHolder = new ThreadLocal<>();
+    private static final ThreadLocal<Long> userHolder = new ThreadLocal<>();
 
     /**
      * 设置当前请求的用户ID
      *
      * @param userId 用户ID
      */
-    public static void setUserId(Integer userId) {
+    public static void setUserId(Long userId) {
         userHolder.set(userId);
     }
 
@@ -36,7 +36,7 @@ public class UserContext {
      *
      * @return 用户ID，如果未设置则返回null
      */
-    public static Integer getUserId() {
+    public static Long getUserId() {
         return userHolder.get();
     }
 

@@ -11,20 +11,20 @@ import java.util.Date;
  * @since 1.0.0
  */
 public record OrderDTO(
-        Integer orderId,
+        Long orderId,
         String orderNumber,
-        Integer userId,
+        Long userId,
         Double totalPrice,
         String status,
         Date createdAt,
         // 新增：前端下单必须传这个地址ID
-        Integer addressId
+        Long addressId
 ) {
-    public Integer getOrderId() { return orderId; }
+    public Long getOrderId() { return orderId; }
     public String getOrderNumber() { return orderNumber; }
-    public Integer getUserId() { return userId; }
+    public Long getUserId() { return userId; }
     public Double getTotalPrice() { return totalPrice; }
     public String getStatus() { return status; }
     public Date getCreatedAt() { return createdAt; }
-    public Integer getAddressId() { return addressId; }
+    public Long getAddressId() { return addressId; }
 }

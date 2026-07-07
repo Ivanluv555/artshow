@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.artsubcategory.pojo;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
@@ -16,9 +17,10 @@ import java.util.Date;
 @Table(name = "art_subcategory")
 public class Artsubcategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @GeneratedValue(generator = "snowflake")
     @Column(name = "subcategory_id")
-    private Integer subCateId;
+    private Long subCateId;
 
     @Column(name = "category_id")
     private Integer categoryId;
@@ -47,11 +49,11 @@ public class Artsubcategory {
     public Artsubcategory() {
     }
 
-    public Integer getSubCateId() {
+    public Long getSubCateId() {
         return subCateId;
     }
 
-    public void setSubCateId(Integer subCateId) {
+    public void setSubCateId(Long subCateId) {
         this.subCateId = subCateId;
     }
 

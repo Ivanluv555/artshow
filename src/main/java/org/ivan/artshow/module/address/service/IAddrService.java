@@ -22,7 +22,7 @@ public interface IAddrService {
      * 删除用户地址（权限校验：只能删除自己的地址）
      * @param addressId 地址ID
      */
-    void deleteUserAddress(Integer addressId);
+    void deleteUserAddress(Long addressId);
 
     /**
      * 更新用户地址（权限校验：只能修改自己的地址）
@@ -36,5 +36,5 @@ public interface IAddrService {
      * @param addressId 地址ID
      * @return 地址对象
      */
-    Address queryUserAddress(Integer addressId);
+    Address queryUserAddress(Long addressId);
 }

@@ -52,7 +52,7 @@ public class CourseEnrollmentController {
     // 4. 检查是否已购买课程
     // GET /course/enroll/check-purchased/{courseId}
     @GetMapping("/check-purchased/{courseId}")
-    public Result<Boolean> checkPurchased(@PathVariable Integer courseId) {
+    public Result<Boolean> checkPurchased(@PathVariable Long courseId) {
         boolean hasPurchased = enrollmentService.hasPurchasedCourse(courseId);
         return Result.success(hasPurchased);
     }

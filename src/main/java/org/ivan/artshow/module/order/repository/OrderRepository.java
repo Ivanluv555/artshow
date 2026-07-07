@@ -13,6 +13,6 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public interface OrderRepository extends JpaRepository<Order,Integer> {
-    List<Order> findByUserId(Integer userId);
+public interface OrderRepository extends JpaRepository<Order,Long> {
+    List<Order> findByUserId(Long userId);
 }

@@ -13,10 +13,10 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public interface UserCourseEnrollmentRepository extends JpaRepository<UserCourseEnrollment, Integer> {
+public interface UserCourseEnrollmentRepository extends JpaRepository<UserCourseEnrollment, Long> {
     // 核心方法：检查用户有没有买过这门课
-    UserCourseEnrollment findByUserIdAndCourseId(Integer userId, Integer courseId);
+    UserCourseEnrollment findByUserIdAndCourseId(Long userId, Long courseId);
 
     // 查询我的所有课程
-    List<UserCourseEnrollment> findAllByUserId(Integer userId);
+    List<UserCourseEnrollment> findAllByUserId(Long userId);
 }

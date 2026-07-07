@@ -16,7 +16,7 @@ import java.util.List;
 public interface IArtcategoryService {
     public Artcategory addCate(ArtcategoryDTO artcategory);
     public Artcategory updateCate(ArtcategoryDTO artcategory);
-    public void deleteCate(Integer cateId);
-    public Artcategory queryCate(Integer cateId);
+    public void deleteCate(Long cateId);
+    public Artcategory queryCate(Long cateId);
     List<Artcategory> findAllCategories();
 }

@@ -38,7 +38,7 @@ public class InstructorService implements IInstructorService {
         if (instructor == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer instructorId = instructor.getId();
+        Long instructorId = instructor.getId();
         if (instructorId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -48,7 +48,7 @@ public class InstructorService implements IInstructorService {
     }
 
     @Override
-    public void deleteInstructor(Integer instructorId) {
+    public void deleteInstructor(Long instructorId) {
         if (instructorId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -56,7 +56,7 @@ public class InstructorService implements IInstructorService {
     }
 
     @Override
-    public Instructor queryInstructor(Integer instructorId) {
+    public Instructor queryInstructor(Long instructorId) {
         if (instructorId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

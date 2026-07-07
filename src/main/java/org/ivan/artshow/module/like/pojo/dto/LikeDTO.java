@@ -11,12 +11,12 @@ import java.util.Date;
  * @since 1.0.0
  */
 public record LikeDTO(
-        int id,
+        Long id,
         int postId,
         int userId,
         Date createdAt
 ) {
-    public int getId() { return id; }
+    public Long getId() { return id; }
     public int getPostId() { return postId; }
     public int getUserId() { return userId; }
     public Date getCreatedAt() { return createdAt; }

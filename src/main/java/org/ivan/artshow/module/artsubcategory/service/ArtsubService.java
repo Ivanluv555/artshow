@@ -41,7 +41,7 @@ public class ArtsubService implements IArtsubService {
         if (artsub == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer artsubId = artsub.getSubCateId();
+        Long artsubId = artsub.getSubCateId();
         if (artsubId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -51,7 +51,7 @@ public class ArtsubService implements IArtsubService {
     }
 
     @Override
-    public void deleteArtSub(Integer artsubId) {
+    public void deleteArtSub(Long artsubId) {
         if (artsubId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -59,7 +59,7 @@ public class ArtsubService implements IArtsubService {
     }
 
     @Override
-    public Artsubcategory queryArtSub(Integer artsubId) {
+    public Artsubcategory queryArtSub(Long artsubId) {
         if (artsubId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

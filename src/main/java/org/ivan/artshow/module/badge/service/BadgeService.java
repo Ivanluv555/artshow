@@ -37,7 +37,7 @@ public class BadgeService implements IBadgeService{
     }
 
     @Override
-    public void deleteBadge(Integer badgeId){
+    public void deleteBadge(Long badgeId){
         if (badgeId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -49,7 +49,7 @@ public class BadgeService implements IBadgeService{
         if (Badge == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer BadgeId = Badge.getBadgeId();
+        Long BadgeId = Badge.getBadgeId();
         if (BadgeId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -58,7 +58,7 @@ public class BadgeService implements IBadgeService{
         return badgeRepository.save(nbadge);
     }
     @Override
-    public Badge queryBadge(Integer badgeId) {
+    public Badge queryBadge(Long badgeId) {
         if (badgeId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

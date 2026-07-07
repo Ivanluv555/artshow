@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.orderitem.pojo;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Orderitem - 实体类
@@ -15,22 +16,23 @@ import jakarta.persistence.*;
 @Table(name = "order_item")
 public class Orderitem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @GeneratedValue(generator = "snowflake")
     @Column(name = "order_item_id")
-    private Integer orderItemId;
+    private Long orderItemId;
 
     @Column(name = "order_id", insertable = false, updatable = false)
-    private Integer orderId;
+    private Long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private org.ivan.artshow.module.order.pojo.Order order;
 
     @Column(name="product_id")
-    private Integer productId;
+    private Long productId;
 
     @Column(name="course_id")
-    private Integer courseId;
+    private Long courseId;
 
     @Column(name="quantity")
     private Integer quantity;
@@ -47,19 +49,19 @@ public class Orderitem {
     public Orderitem() {
     }
 
-    public Integer getOrderItemId() {
+    public Long getOrderItemId() {
         return orderItemId;
     }
 
-    public void setOrderItemId(Integer orderItemId) {
+    public void setOrderItemId(Long orderItemId) {
         this.orderItemId = orderItemId;
     }
 
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -71,19 +73,19 @@ public class Orderitem {
         this.order = order;
     }
 
-    public Integer getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
-    public Integer getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 

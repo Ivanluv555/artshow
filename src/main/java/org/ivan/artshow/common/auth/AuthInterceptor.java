@@ -85,7 +85,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // 4. Validate and parse token
         try {
-            Integer userId = JwtUtils.parseToken(token);
+            Long userId = JwtUtils.parseToken(token);
             log.debug("Token validated successfully, user ID: {}", userId);
 
             // 5. Store in context

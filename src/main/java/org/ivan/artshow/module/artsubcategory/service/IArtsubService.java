@@ -18,7 +18,7 @@ import java.util.List;
 public interface IArtsubService {
     public Artsubcategory addArtSub(ArtsubcategoryDTO artSubCategory);
     public Artsubcategory updateArtSub(ArtsubcategoryDTO artSubCategory);
-    public void deleteArtSub(Integer id);
-    public Artsubcategory queryArtSub(Integer id);
+    public void deleteArtSub(Long id);
+    public Artsubcategory queryArtSub(Long id);
     List<Artsubcategory> findAllSubCategories();
 }

@@ -30,13 +30,13 @@ public class LikeController {
     }
 
     @DeleteMapping
-    public Result<Like> deleteLike(@RequestParam Integer likeId) {
+    public Result<Like> deleteLike(@RequestParam Long likeId) {
         likeService.deleteLike(likeId);
         return Result.success(null);
     }
 
     @GetMapping
-    public Result<Like> getLike(@RequestParam Integer likeId) {
+    public Result<Like> getLike(@RequestParam Long likeId) {
         Like nlike = likeService.queryLike(likeId);
         return Result.success(nlike);
     }

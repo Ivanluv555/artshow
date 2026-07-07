@@ -18,7 +18,7 @@ import java.util.List;
 public interface IInstructorService {
     public Instructor addInstructor(InstructorDTO instructor);
     public Instructor updateInstructor(InstructorDTO instructor);
-    public void deleteInstructor(Integer UserId);
-    public Instructor queryInstructor(Integer UserId);
+    public void deleteInstructor(Long UserId);
+    public Instructor queryInstructor(Long UserId);
     List<Instructor> findAllInstructors();
 }

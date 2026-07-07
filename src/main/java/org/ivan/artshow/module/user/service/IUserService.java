@@ -33,7 +33,7 @@ public interface IUserService {
      *
      * @param UserId 用户ID
      */
-    void deleteUser(Integer UserId);
+    void deleteUser(Long UserId);
 
     /**
      * 更新用户信息
@@ -49,7 +49,7 @@ public interface IUserService {
      * @param userId 用户ID
      * @return 用户对象
      */
-    User queryUser(Integer userId);
+    User queryUser(Long userId);
 
     /**
      * 查询所有用户
@@ -64,7 +64,7 @@ public interface IUserService {
      * @param userIdList 用户ID列表
      * @return 用户列表
      */
-    List<User> queryAllUser(List<Integer> userIdList);
+    List<User> queryAllUser(List<Long> userIdList);
 
     /**
      * 用户登录

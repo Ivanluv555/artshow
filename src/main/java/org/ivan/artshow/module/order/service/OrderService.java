@@ -69,7 +69,7 @@ public class OrderService implements IOrderService {
         if (orderDTO == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
 
         Order nOrder = new Order();
         BeanUtils.copyProperties(orderDTO, nOrder);
@@ -99,11 +99,11 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void deleteOrder(Integer orderId) {
+    public void deleteOrder(Long orderId) {
         if (orderId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
 
@@ -124,7 +124,7 @@ public class OrderService implements IOrderService {
         }
         // 订单通常不允许用户直接Update，通常是修改状态（取消/支付）
         // 这里仅做示例修复
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         Order order = orderRepository.findById(orderDTO.getOrderId())
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
 
@@ -137,11 +137,11 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order queryOrder(Integer orderId) {
+    public Order queryOrder(Long orderId) {
         if (orderId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
 
@@ -155,7 +155,7 @@ public class OrderService implements IOrderService {
     // 🔒 新增：查我的订单（实现之前的讨论）
     @Override
     public List<Order> findMyOrders() {
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         return orderRepository.findByUserId(currentUserId);
     }
 
@@ -165,7 +165,9 @@ public class OrderService implements IOrderService {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         // 管理员接口，暂时保持原样
-        return orderRepository.findAllById(userIdlist);
+        // Convert List<Integer> to List<Long>
+        List<Long> longList = userIdlist.stream().map(Integer::longValue).toList();
+        return orderRepository.findAllById(longList);
     }
 
     @Override
@@ -186,7 +188,7 @@ public class OrderService implements IOrderService {
      */
     @Override
     @Transactional
-    public Order createOrderFromCart(List<Integer> cartItemIds, Integer addressId) {
+    public Order createOrderFromCart(List<Long> cartItemIds, Long addressId) {
         if (cartItemIds == null || cartItemIds.isEmpty()) {
             throw new BizException(ResultCodes.INVALID_PARAM, "购物车为空");
         }
@@ -194,7 +196,7 @@ public class OrderService implements IOrderService {
             throw new BizException(ResultCodes.INVALID_PARAM, "请选择收货地址");
         }
 
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
 
         // 1. 获取购物车项
         List<Sci> cartItems = sciRepository.findByCartItemIdIn(cartItemIds);
@@ -315,10 +317,10 @@ public class OrderService implements IOrderService {
             throw new BizException(ResultCodes.NULLPOINT);
         }
 
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
 
         // 1. 检查课程是否存在
-        Course course = courseRepository.findById(courseId)
+        Course course = courseRepository.findById(courseId.longValue())
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "课程不存在"));
 
         // 2. 验证课程类型不为空
@@ -337,7 +339,7 @@ public class OrderService implements IOrderService {
         }
 
         // 5. 检查是否已购买
-        boolean hasPurchased = orderitemRepository.existsPaidCourseByUserIdAndCourseId(currentUserId, courseId);
+        boolean hasPurchased = orderitemRepository.existsPaidCourseByUserIdAndCourseId(currentUserId, courseId.longValue());
         if (hasPurchased) {
             throw new BizException(ResultCodes.INVALID_PARAM, "您已经购买过该课程");
         }
@@ -357,7 +359,7 @@ public class OrderService implements IOrderService {
         // 6. 创建订单项（课程订单）
         Orderitem orderItem = new Orderitem();
         orderItem.setOrderId(order.getOrderId());
-        orderItem.setCourseId(courseId); // 设置课程ID
+        orderItem.setCourseId(courseId.longValue()); // 设置课程ID
         orderItem.setProductId(null); // 课程订单不关联商品
         orderItem.setQuantity(1); // 课程数量固定为1
         orderItem.setPriceAtPurchase(course.getPrice()); // 价格快照
@@ -374,12 +376,12 @@ public class OrderService implements IOrderService {
      */
     @Override
     @Transactional
-    public void cancelOrder(Integer orderId) {
+    public void cancelOrder(Long orderId) {
         if (orderId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
 
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "订单不存在"));
 
@@ -414,12 +416,12 @@ public class OrderService implements IOrderService {
      */
     @Override
     @Transactional
-    public void payOrder(Integer orderId) {
+    public void payOrder(Long orderId) {
         if (orderId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
 
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "订单不存在"));
 
@@ -442,7 +444,7 @@ public class OrderService implements IOrderService {
      */
     @Override
     @Transactional
-    public void shipOrder(Integer orderId) {
+    public void shipOrder(Long orderId) {
         if (orderId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -464,12 +466,12 @@ public class OrderService implements IOrderService {
      */
     @Override
     @Transactional
-    public void completeOrder(Integer orderId) {
+    public void completeOrder(Long orderId) {
         if (orderId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
 
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "订单不存在"));
 

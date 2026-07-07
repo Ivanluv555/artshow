@@ -2,9 +2,7 @@ package org.ivan.artshow.module.orderitem.service;
 
 import org.ivan.artshow.module.orderitem.pojo.Orderitem;
 import org.ivan.artshow.module.orderitem.pojo.dto.OrderitemDTO;
-import org.springframework.stereotype.Service;
 
-@Service
 /**
  * IOrderitemService - 业务服务接口
  *
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 public interface IOrderitemService {
     public Orderitem addOrderItem(OrderitemDTO orderItem);
-    public void deleteOrderItem(Integer orderItemId);
+    public void deleteOrderItem(Long orderItemId);
     public Orderitem updateOrderItem(OrderitemDTO OrderItem);
-    public Orderitem queryOrderItem(Integer orderItemId);
+    public Orderitem queryOrderItem(Long orderItemId);
 }

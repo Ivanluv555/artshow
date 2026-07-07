@@ -50,8 +50,8 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
         if (enrollDTO == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer userId = UserContext.getUserId();
-        Integer courseId = enrollDTO.getCourseId();
+        Long userId = UserContext.getUserId();
+        Long courseId = enrollDTO.getCourseId();
         if (courseId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -101,9 +101,9 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
         if (completeDTO == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer userId = UserContext.getUserId();
-        Integer courseId = completeDTO.getCourseId();
-        Integer chapterId = completeDTO.getChapterId();
+        Long userId = UserContext.getUserId();
+        Long courseId = completeDTO.getCourseId();
+        Long chapterId = completeDTO.getChapterId();
         if (courseId == null || chapterId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -129,16 +129,16 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
 
     @Override
     public List<UserCourseEnrollment> queryMyCourses() {
-        Integer userId = UserContext.getUserId();
+        Long userId = UserContext.getUserId();
         return enrollmentRepository.findAllByUserId(userId);
     }
 
     @Override
-    public boolean hasPurchasedCourse(Integer courseId) {
+    public boolean hasPurchasedCourse(Long courseId) {
         if (courseId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer userId = UserContext.getUserId();
+        Long userId = UserContext.getUserId();
         return orderitemRepository.existsPaidCourseByUserIdAndCourseId(userId, courseId);
     }
 }

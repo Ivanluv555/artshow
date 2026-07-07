@@ -36,7 +36,7 @@ public class CommentService implements ICommentService
     }
 
     @Override
-    public void deleteComment(Integer comment_id){
+    public void deleteComment(Long comment_id){
         if (comment_id == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -44,7 +44,7 @@ public class CommentService implements ICommentService
     }
 
     @Override
-    public Comment queryComment(Integer comment_id){
+    public Comment queryComment(Long comment_id){
         if (comment_id == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -56,7 +56,7 @@ public class CommentService implements ICommentService
         if (Comment == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer commentId = Comment.getCommentId();
+        Long commentId = Comment.getCommentId();
         if (commentId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

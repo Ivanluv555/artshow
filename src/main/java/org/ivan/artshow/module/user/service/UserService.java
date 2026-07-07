@@ -38,11 +38,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
         if (userId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         if (!currentUserId.equals(userId)) {
             throw new BizException(ResultCodes.UNAUTH);
         }
@@ -54,7 +54,7 @@ public class UserService implements IUserService {
         if (userDTO == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         User nUser = userRepository.findById(currentUserId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
         if (userDTO.getNickName() != null) nUser.setNickName(userDTO.getNickName());
@@ -64,7 +64,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User queryUser(Integer userId) {
+    public User queryUser(Long userId) {
         if (userId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -78,7 +78,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> queryAllUser(List<Integer> userIdList) {
+    public List<User> queryAllUser(List<Long> userIdList) {
         if (userIdList == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

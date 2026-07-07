@@ -32,13 +32,13 @@ public class ArtsubController {
     }
 
     @DeleteMapping
-    public Result<Artsubcategory> delArtSub(@RequestParam Integer artsubId) {
+    public Result<Artsubcategory> delArtSub(@RequestParam Long artsubId) {
         artSubService.deleteArtSub(artsubId);
         return Result.success(null);
     }
 
     @GetMapping
-    public Result<Artsubcategory> queryArtSub(@RequestParam Integer id) {
+    public Result<Artsubcategory> queryArtSub(@RequestParam Long id) {
         return Result.success(artSubService.queryArtSub(id));
     }
 

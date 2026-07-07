@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public interface ArtcategoryRepository extends JpaRepository<Artcategory, Integer> {
+public interface ArtcategoryRepository extends JpaRepository<Artcategory, Long> {
 }

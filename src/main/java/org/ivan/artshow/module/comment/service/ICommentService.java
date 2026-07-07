@@ -14,6 +14,6 @@ import org.ivan.artshow.module.comment.pojo.dto.CommentDTO;
 public interface ICommentService {
     public Comment addComment(CommentDTO comment);
     public Comment updateComment(CommentDTO Comment);
-    public void deleteComment(Integer commentId);
-    public Comment queryComment(Integer commentId);
+    public void deleteComment(Long commentId);
+    public Comment queryComment(Long commentId);
 }

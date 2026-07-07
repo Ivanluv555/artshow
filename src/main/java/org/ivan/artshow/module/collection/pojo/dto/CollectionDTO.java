@@ -11,13 +11,13 @@ import java.util.Date;
  * @since 1.0.0
  */
 public record CollectionDTO(
-        Integer collectionId,
-        Integer postId,
+        Long collectionId,
+        Long postId,
         Integer userId,
         Date createAt
 ) {
-    public Integer getCollectionId() { return collectionId; }
-    public Integer getPostId() { return postId; }
+    public Long getCollectionId() { return collectionId; }
+    public Long getPostId() { return postId; }
     public Integer getUserId() { return userId; }
     public Date getCreateAt() { return createAt; }
 }

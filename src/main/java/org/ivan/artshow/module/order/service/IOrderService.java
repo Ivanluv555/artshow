@@ -15,9 +15,9 @@ import java.util.List;
  */
 public interface IOrderService {
     public Order addOrder(OrderDTO order);
-    public void deleteOrder(Integer orderId);
+    public void deleteOrder(Long orderId);
     public Order updateOrder(OrderDTO Order);
-    public Order queryOrder(Integer orderId);
+    public Order queryOrder(Long orderId);
     public List<Order> queryAllOrderBatch(List<Integer> userIdlist);
     List<Order> findAllOrders();
     List<Order> findMyOrders();
@@ -28,7 +28,7 @@ public interface IOrderService {
      * @param addressId 收货地址ID
      * @return 创建的订单
      */
-    Order createOrderFromCart(List<Integer> cartItemIds, Integer addressId);
+    Order createOrderFromCart(List<Long> cartItemIds, Long addressId);
 
     /**
      * 直接购买课程（创建课程订单）
@@ -41,23 +41,23 @@ public interface IOrderService {
      * 取消订单（恢复库存）
      * @param orderId 订单ID
      */
-    void cancelOrder(Integer orderId);
+    void cancelOrder(Long orderId);
 
     /**
      * 支付订单
      * @param orderId 订单ID
      */
-    void payOrder(Integer orderId);
+    void payOrder(Long orderId);
 
     /**
      * 发货
      * @param orderId 订单ID
      */
-    void shipOrder(Integer orderId);
+    void shipOrder(Long orderId);
 
     /**
      * 完成订单
      * @param orderId 订单ID
      */
-    void completeOrder(Integer orderId);
+    void completeOrder(Long orderId);
 }

@@ -39,7 +39,7 @@ public class AddrController {
      * @param addressId 地址ID
      */
     @DeleteMapping
-    public void deleteUserAddress(@RequestParam Integer addressId) {
+    public void deleteUserAddress(@RequestParam Long addressId) {
         addrService.deleteUserAddress(addressId);
     }
 
@@ -60,7 +60,7 @@ public class AddrController {
      * @return 地址对象
      */
     @GetMapping
-    public Result<Address> queryUserAddress(@RequestParam Integer addressId) {
+    public Result<Address> queryUserAddress(@RequestParam Long addressId) {
         Address naddress = addrService.queryUserAddress(addressId);
         return Result.success(naddress);
     }

@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.course.pojo;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 import java.util.Date;
 
 /**
@@ -15,15 +16,16 @@ import java.util.Date;
 @Table(name = "user_course_enrollment")
 public class UserCourseEnrollment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @GeneratedValue(generator = "snowflake")
     @Column(name = "enrollment_id")
-    private Integer enrollmentId;
+    private Long enrollmentId;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "course_id")
-    private Integer courseId;
+    private Long courseId;
 
     @Column(name = "certificate_awarded")
     private Boolean certificateAwarded;
@@ -37,27 +39,27 @@ public class UserCourseEnrollment {
     public UserCourseEnrollment() {
     }
 
-    public Integer getEnrollmentId() {
+    public Long getEnrollmentId() {
         return enrollmentId;
     }
 
-    public void setEnrollmentId(Integer enrollmentId) {
+    public void setEnrollmentId(Long enrollmentId) {
         this.enrollmentId = enrollmentId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 

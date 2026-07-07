@@ -11,13 +11,13 @@ import java.util.Date;
  * @since 1.0.0
  */
 public record CommentDTO(
-        Integer commentId,
+        Long commentId,
         Integer postId,
         Integer userId,
         String content,
         Date createdAt
 ) {
-    public Integer getCommentId() { return commentId; }
+    public Long getCommentId() { return commentId; }
     public Integer getPostId() { return postId; }
     public Integer getUserId() { return userId; }
     public String getContent() { return content; }

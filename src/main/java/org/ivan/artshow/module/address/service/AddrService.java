@@ -29,7 +29,7 @@ public class AddrService implements IAddrService {
         if (addressDTO == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
+        Long currentUserId = UserContext.getUserId();
         Address nAddress = new Address();
         BeanUtils.copyProperties(addressDTO, nAddress);
         nAddress.setUserId(currentUserId);
@@ -37,8 +37,8 @@ public class AddrService implements IAddrService {
     }
 
     @Override
-    public void deleteUserAddress(Integer addressId) {
-        Integer currentUserId = UserContext.getUserId();
+    public void deleteUserAddress(Long addressId) {
+        Long currentUserId = UserContext.getUserId();
         if (addressId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -55,8 +55,8 @@ public class AddrService implements IAddrService {
         if (addressDTO == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer currentUserId = UserContext.getUserId();
-        Integer addressId = addressDTO.getAddressId();
+        Long currentUserId = UserContext.getUserId();
+        Long addressId = addressDTO.getAddressId();
         if (addressId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -71,8 +71,8 @@ public class AddrService implements IAddrService {
     }
 
     @Override
-    public Address queryUserAddress(Integer addressId) {
-        Integer currentUserId = UserContext.getUserId();
+    public Address queryUserAddress(Long addressId) {
+        Long currentUserId = UserContext.getUserId();
         if (addressId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

@@ -36,7 +36,7 @@ public class CourseService implements ICourseService{
     }
 
     @Override
-    public void deleteCourse(Integer courseId) {
+    public void deleteCourse(Long courseId) {
         if (courseId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -48,7 +48,7 @@ public class CourseService implements ICourseService{
         if (Course == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer courseId = Course.getCourseId();
+        Long courseId = Course.getCourseId();
         if (courseId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -58,7 +58,7 @@ public class CourseService implements ICourseService{
     }
 
     @Override
-    public Course queryCourse(Integer courseId) {
+    public Course queryCourse(Long courseId) {
         if (courseId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -66,7 +66,7 @@ public class CourseService implements ICourseService{
     }
 
     @Override
-    public List<Course> queryAllCourses(List<Integer> courseIdList) {
+    public List<Course> queryAllCourses(List<Long> courseIdList) {
         if (courseIdList == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

@@ -37,7 +37,7 @@ public class CollectionService implements ICollectionService{
     }
 
     @Override
-    public void deleteCollection(Integer collectionId) {
+    public void deleteCollection(Long collectionId) {
         if (collectionId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -49,7 +49,7 @@ public class CollectionService implements ICollectionService{
         if (Collection == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer collectionId = Collection.getCollectionId();
+        Long collectionId = Collection.getCollectionId();
         if (collectionId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -59,7 +59,7 @@ public class CollectionService implements ICollectionService{
     }
 
     @Override
-    public Collection queryCollection(Integer collectionId) {
+    public Collection queryCollection(Long collectionId) {
         if (collectionId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -67,7 +67,7 @@ public class CollectionService implements ICollectionService{
     }
 
     @Override
-    public List<Collection> queryAllCollectionBatch(List<Integer> collectionId){
+    public List<Collection> queryAllCollectionBatch(List<Long> collectionId){
         if (collectionId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

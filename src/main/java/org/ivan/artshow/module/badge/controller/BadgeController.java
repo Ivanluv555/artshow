@@ -30,7 +30,7 @@ public class BadgeController {
     }
 
     @DeleteMapping
-    public void deleteBadge(@RequestParam Integer badgeId) { badgeService.deleteBadge(badgeId);}
+    public void deleteBadge(@RequestParam Long badgeId) { badgeService.deleteBadge(badgeId);}
 
     @PutMapping
     public Result<Badge> updateBadge(@RequestBody @Validated BadgeDTO badge) {
@@ -39,7 +39,7 @@ public class BadgeController {
     }
 
     @GetMapping
-    public Result<Badge> queryBadge(@RequestParam Integer badgeId) {
+    public Result<Badge> queryBadge(@RequestParam Long badgeId) {
         Badge nbadge = badgeService.queryBadge(badgeId);
         return Result.success(nbadge);}
 }

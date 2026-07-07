@@ -11,7 +11,7 @@ import java.util.Date;
  * @since 1.0.0
  */
 public record PostDTO(
-        Integer postId,
+        Long postId,
         Integer userId,
         Integer subcategoryId,
         String title,
@@ -19,7 +19,7 @@ public record PostDTO(
         String imageUrl,
         Date createdAt
 ) {
-    public Integer getPostId() { return postId; }
+    public Long getPostId() { return postId; }
     public Integer getUserId() { return userId; }
     public Integer getSubcategoryId() { return subcategoryId; }
     public String getTitle() { return title; }

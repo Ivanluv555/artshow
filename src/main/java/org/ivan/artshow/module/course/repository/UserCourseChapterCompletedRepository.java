@@ -13,10 +13,10 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public interface UserCourseChapterCompletedRepository extends JpaRepository<UserCourseChapterCompleted, Integer> {
+public interface UserCourseChapterCompletedRepository extends JpaRepository<UserCourseChapterCompleted, Long> {
     // 检查某次报名记录下，某章是否已完成（防止重复打卡）
-    boolean existsByEnrollmentIdAndChapterId(Integer enrollmentId, Integer chapterId);
+    boolean existsByEnrollmentIdAndChapterId(Long enrollmentId, Long chapterId);
 
     // 查询某次报名的所有完成记录（用于计算进度）
-    List<UserCourseChapterCompleted> findAllByEnrollmentId(Integer enrollmentId);
+    List<UserCourseChapterCompleted> findAllByEnrollmentId(Long enrollmentId);
 }

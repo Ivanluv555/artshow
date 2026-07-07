@@ -41,7 +41,7 @@ public class ArtcategoryService implements IArtcategoryService {
         if (artcategory == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Integer artcateId = artcategory.getCategoryId();
+        Long artcateId = artcategory.getCategoryId();
         if (artcateId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -51,7 +51,7 @@ public class ArtcategoryService implements IArtcategoryService {
     }
 
     @Override
-    public void deleteCate(Integer cateId) {
+    public void deleteCate(Long cateId) {
         if (cateId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -59,7 +59,7 @@ public class ArtcategoryService implements IArtcategoryService {
     }
 
     @Override
-    public Artcategory queryCate(Integer cateId) {
+    public Artcategory queryCate(Long cateId) {
         if (cateId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

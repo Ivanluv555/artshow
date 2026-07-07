@@ -39,13 +39,13 @@ public class ArtcategoryController {
     }
 
     @DeleteMapping
-    public Result<Artcategory> deleteCate(@RequestParam Integer id) {
+    public Result<Artcategory> deleteCate(@RequestParam Long id) {
         artCateService.deleteCate(id);
         return Result.success(null);
     }
 
     @GetMapping
-    public Result<Artcategory> getCate(@RequestParam Integer cateId) {
+    public Result<Artcategory> getCate(@RequestParam Long cateId) {
         Artcategory nartCategory = artCateService.queryCate(cateId);
         return Result.success(nartCategory);
     }

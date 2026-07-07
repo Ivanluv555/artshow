@@ -13,18 +13,18 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public interface SciRepository extends JpaRepository<Sci, Integer> {
+public interface SciRepository extends JpaRepository<Sci, Long> {
     /**
      * 查询用户的购物车
      * @param userId 用户ID
      * @return 购物车项列表
      */
-    List<Sci> findByUserId(Integer userId);
+    List<Sci> findByUserId(Long userId);
 
     /**
      * 批量查询购物车项（用于结算）
      * @param cartItemIds 购物车项ID列表
      * @return 购物车项列表
      */
-    List<Sci> findByCartItemIdIn(List<Integer> cartItemIds);
+    List<Sci> findByCartItemIdIn(List<Long> cartItemIds);
 }

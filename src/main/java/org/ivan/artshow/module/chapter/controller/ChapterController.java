@@ -30,7 +30,7 @@ public class ChapterController {
     }
 
     @DeleteMapping
-    public void deleteChapter(@RequestParam Integer chapterId){ chapterService.deleteChapter(chapterId);}
+    public void deleteChapter(@RequestParam Long chapterId){ chapterService.deleteChapter(chapterId);}
 
 
     @PutMapping
@@ -40,7 +40,7 @@ public class ChapterController {
     }
 
     @GetMapping
-    public Result<Chapter> queryChapter(@RequestParam  Integer chapterId){
+    public Result<Chapter> queryChapter(@RequestParam  Long chapterId){
         Chapter nchapter = chapterService.queryChapter(chapterId);
         return Result.success(nchapter);
     }

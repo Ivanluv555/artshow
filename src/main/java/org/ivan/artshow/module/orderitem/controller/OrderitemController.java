@@ -30,7 +30,7 @@ public class OrderitemController {
     }
 
     @DeleteMapping
-    public void deleteOrderItem(@RequestParam Integer orderItemId) {
+    public void deleteOrderItem(@RequestParam Long orderItemId) {
         orderItemService.deleteOrderItem(orderItemId);
     }
 
@@ -41,7 +41,7 @@ public class OrderitemController {
     }
 
     @GetMapping
-    public Result<Orderitem> queryOrderItem(@RequestParam Integer orderItemId) {
+    public Result<Orderitem> queryOrderItem(@RequestParam Long orderItemId) {
          Orderitem norderitem = orderItemService.queryOrderItem(orderItemId);
         return Result.success(norderitem);
     }

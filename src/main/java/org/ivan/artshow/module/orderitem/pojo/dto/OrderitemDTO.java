@@ -9,16 +9,16 @@ package org.ivan.artshow.module.orderitem.pojo.dto;
  * @since 1.0.0
  */
 public record OrderitemDTO(
-        Integer orderItemId,
-        Integer orderId,
+        Long orderItemId,
+        Long orderId,
         Integer productId,
         Integer quantity,
         Double priceAtPurchase,
         String productNameSnapshot,
         String productImageSnapshot
 ) {
-    public Integer getOrderItemId() { return orderItemId; }
-    public Integer getOrderId() { return orderId; }
+    public Long getOrderItemId() { return orderItemId; }
+    public Long getOrderId() { return orderId; }
     public Integer getProductId() { return productId; }
     public Integer getQuantity() { return quantity; }
     public Double getPriceAtPurchase() { return priceAtPurchase; }

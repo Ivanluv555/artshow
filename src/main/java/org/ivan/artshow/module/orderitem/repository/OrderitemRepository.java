@@ -15,13 +15,13 @@ import java.util.List;
  * @author Ivan Horn
  * @since 1.0.0
  */
-public interface OrderitemRepository extends JpaRepository<Orderitem, Integer> {
+public interface OrderitemRepository extends JpaRepository<Orderitem, Long> {
     /**
      * 查询订单的所有订单项
      * @param orderId 订单ID
      * @return 订单项列表
      */
-    List<Orderitem> findByOrderId(Integer orderId);
+    List<Orderitem> findByOrderId(Long orderId);
 
     /**
      * 检查用户是否已购买某个课程（订单已支付）
@@ -34,8 +34,8 @@ public interface OrderitemRepository extends JpaRepository<Orderitem, Integer> {
            "WHERE o.userId = :userId " +
            "AND oi.courseId = :courseId " +
            "AND o.status IN ('paid', 'shipped', 'completed')")
-    boolean existsPaidCourseByUserIdAndCourseId(@Param("userId") Integer userId,
-                                                 @Param("courseId") Integer courseId);
+    boolean existsPaidCourseByUserIdAndCourseId(@Param("userId") Long userId,
+                                                 @Param("courseId") Long courseId);
 
     /**
      * 查询用户购买的所有课程订单项（已支付）
@@ -47,5 +47,5 @@ public interface OrderitemRepository extends JpaRepository<Orderitem, Integer> {
            "WHERE o.userId = :userId " +
            "AND oi.courseId IS NOT NULL " +
            "AND o.status IN ('paid', 'shipped', 'completed')")
-    List<Orderitem> findPaidCoursesByUserId(@Param("userId") Integer userId);
+    List<Orderitem> findPaidCoursesByUserId(@Param("userId") Long userId);
 }

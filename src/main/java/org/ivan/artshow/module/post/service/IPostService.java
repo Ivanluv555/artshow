@@ -16,8 +16,8 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface IPostService {
-    public Post queryPost(Integer postId);
-    public void deletePost(Integer postId);
+    public Post queryPost(Long postId);
+    public void deletePost(Long postId);
     public Post updatePost(PostDTO post);
     public Post addPost(PostDTO post);
     List<Post> findAllPosts();

@@ -33,7 +33,7 @@ public class PostController {
     }
 
     @DeleteMapping
-    public void deletePost(@RequestParam Integer postId){
+    public void deletePost(@RequestParam Long postId){
         postService.deletePost(postId);
     }
 
@@ -44,7 +44,7 @@ public class PostController {
     }
 
     @GetMapping
-    public Result<Post> queryPost(@RequestParam Integer postId){
+    public Result<Post> queryPost(@RequestParam Long postId){
         Post npost = postService.queryPost(postId);
         return Result.success(npost);
     }

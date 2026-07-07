@@ -30,5 +30,5 @@ public interface ICourseEnrollmentService {
      * @param courseId 课程ID
      * @return true表示已购买
      */
-    boolean hasPurchasedCourse(Integer courseId);
+    boolean hasPurchasedCourse(Long courseId);
 }
