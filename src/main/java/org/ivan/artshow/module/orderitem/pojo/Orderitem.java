@@ -19,8 +19,12 @@ public class Orderitem {
     @Column(name = "order_item_id")
     private Integer orderItemId;
 
-    @Column(name = "order_id")
+    @Column(name = "order_id", insertable = false, updatable = false)
     private Integer orderId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private org.ivan.artshow.module.order.pojo.Order order;
 
     @Column(name="product_id")
     private Integer productId;
@@ -57,6 +61,14 @@ public class Orderitem {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public org.ivan.artshow.module.order.pojo.Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(org.ivan.artshow.module.order.pojo.Order order) {
+        this.order = order;
     }
 
     public Integer getProductId() {

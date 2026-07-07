@@ -214,8 +214,18 @@ public class OrderService implements IOrderService {
         double totalPrice = 0.0;
 
         for (Sci cartItem : cartItems) {
+            // 验证购物车项数量
+            if (cartItem.getQuantity() == null || cartItem.getQuantity() <= 0) {
+                throw new BizException(ResultCodes.INVALID_PARAM, "购物车项数量无效");
+            }
+
             Product product = productRepository.findById(cartItem.getProductId())
                     .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在: " + cartItem.getProductId()));
+
+            // 验证商品价格
+            if (product.getPrice() == null) {
+                throw new BizException(ResultCodes.INVALID_PARAM, "商品 [" + product.getName() + "] 价格未设置");
+            }
 
             // 检查库存
             if (product.getStock() == null || product.getStock() < cartItem.getQuantity()) {
@@ -311,21 +321,31 @@ public class OrderService implements IOrderService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "课程不存在"));
 
-        // 2. 检查是否为付费课程
+        // 2. 验证课程类型不为空
+        if (course.getType() == null) {
+            throw new BizException(ResultCodes.INVALID_PARAM, "课程类型未设置");
+        }
+
+        // 3. 检查是否为付费课程
         if (!"paid".equalsIgnoreCase(course.getType())) {
             throw new BizException(ResultCodes.INVALID_PARAM, "该课程为免费课程，无需购买");
         }
 
-        // 3. 检查是否已购买
+        // 4. 验证课程价格不为空
+        if (course.getPrice() == null) {
+            throw new BizException(ResultCodes.INVALID_PARAM, "付费课程价格未设置");
+        }
+
+        // 5. 检查是否已购买
         boolean hasPurchased = orderitemRepository.existsPaidCourseByUserIdAndCourseId(currentUserId, courseId);
         if (hasPurchased) {
             throw new BizException(ResultCodes.INVALID_PARAM, "您已经购买过该课程");
         }
 
-        // 4. 生成订单号
+        // 6. 生成订单号
         String orderNumber = generateOrderNumber();
 
-        // 5. 创建订单主表
+        // 7. 创建订单主表
         Order order = new Order();
         order.setOrderNumber(orderNumber);
         order.setUserId(currentUserId);

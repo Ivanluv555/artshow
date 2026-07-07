@@ -30,7 +30,7 @@ public interface OrderitemRepository extends JpaRepository<Orderitem, Integer> {
      * @return 是否已购买
      */
     @Query("SELECT COUNT(oi) > 0 FROM Orderitem oi " +
-           "JOIN Order o ON oi.orderId = o.orderId " +
+           "JOIN oi.order o " +
            "WHERE o.userId = :userId " +
            "AND oi.courseId = :courseId " +
            "AND o.status IN ('paid', 'shipped', 'completed')")
@@ -43,7 +43,7 @@ public interface OrderitemRepository extends JpaRepository<Orderitem, Integer> {
      * @return 课程订单项列表
      */
     @Query("SELECT oi FROM Orderitem oi " +
-           "JOIN Order o ON oi.orderId = o.orderId " +
+           "JOIN oi.order o " +
            "WHERE o.userId = :userId " +
            "AND oi.courseId IS NOT NULL " +
            "AND o.status IN ('paid', 'shipped', 'completed')")

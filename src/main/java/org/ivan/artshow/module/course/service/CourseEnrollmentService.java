@@ -66,7 +66,12 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
             throw new BizException(ResultCodes.INVALID_PARAM, "您已经报名过该课程");
         }
 
-        // 3. 检查课程类型（核心逻辑）
+        // 3. 验证课程类型不为空
+        if (course.getType() == null) {
+            throw new BizException(ResultCodes.INVALID_PARAM, "课程类型未设置");
+        }
+
+        // 4. 检查课程类型（核心逻辑）
         if ("paid".equalsIgnoreCase(course.getType())) {
             // 付费课程：检查用户是否已购买
             boolean hasPurchased = orderitemRepository.existsPaidCourseByUserIdAndCourseId(userId, courseId);
@@ -74,10 +79,13 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
                 throw new BizException(ResultCodes.INVALID_PARAM,
                     "该课程为付费课程，请先购买后再报名");
             }
+        } else if (!"free".equalsIgnoreCase(course.getType())) {
+            // 既不是paid也不是free，数据异常
+            throw new BizException(ResultCodes.INVALID_PARAM, "课程类型无效");
         }
         // 免费课程：直接允许报名
 
-        // 4. 创建报名记录
+        // 5. 创建报名记录
         UserCourseEnrollment enrollment = new UserCourseEnrollment();
         enrollment.setUserId(userId);
         enrollment.setCourseId(courseId);
