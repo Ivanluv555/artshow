@@ -1,5 +1,6 @@
 package org.ivan.artshow.module.order.pojo.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ public record OrderDTO(
         Long orderId,
         String orderNumber,
         Long userId,
-        Double totalPrice,
+        BigDecimal totalPrice,
         String status,
         Date createdAt,
         // 新增：前端下单必须传这个地址ID
@@ -23,7 +24,7 @@ public record OrderDTO(
     public Long getOrderId() { return orderId; }
     public String getOrderNumber() { return orderNumber; }
     public Long getUserId() { return userId; }
-    public Double getTotalPrice() { return totalPrice; }
+    public BigDecimal getTotalPrice() { return totalPrice; }
     public String getStatus() { return status; }
     public Date getCreatedAt() { return createdAt; }
     public Long getAddressId() { return addressId; }

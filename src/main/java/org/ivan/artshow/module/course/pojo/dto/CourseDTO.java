@@ -1,5 +1,7 @@
 package org.ivan.artshow.module.course.pojo.dto;
 
+import java.math.BigDecimal;
+
 /**
  * CourseDTO - 数据传输对象
  *
@@ -13,7 +15,7 @@ public record CourseDTO(
         Integer instructorId,
         String title,
         String coverImageUrl,
-        Double price,
+        BigDecimal price,
         String type,
         Integer studentCount,
         String description
@@ -22,7 +24,7 @@ public record CourseDTO(
     public Integer getInstructorId() { return instructorId; }
     public String getTitle() { return title; }
     public String getCoverImageUrl() { return coverImageUrl; }
-    public Double getPrice() { return price; }
+    public BigDecimal getPrice() { return price; }
     public String getType() { return type; }
     public Integer getStudentCount() { return studentCount; }
     public String getDescription() { return description; }

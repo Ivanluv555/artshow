@@ -22,6 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -213,7 +214,7 @@ public class OrderService implements IOrderService {
 
         // 2. 获取商品信息并检查库存
         List<Product> products = new ArrayList<>();
-        double totalPrice = 0.0;
+        BigDecimal totalPrice = BigDecimal.ZERO;
 
         for (Sci cartItem : cartItems) {
             // 验证购物车项数量
@@ -236,7 +237,7 @@ public class OrderService implements IOrderService {
             }
 
             products.add(product);
-            totalPrice += product.getPrice() * cartItem.getQuantity();
+            totalPrice = totalPrice.add(product.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())));
         }
 
         // 3. 验证地址属于当前用户

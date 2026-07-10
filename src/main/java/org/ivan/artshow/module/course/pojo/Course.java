@@ -3,6 +3,7 @@ package org.ivan.artshow.module.course.pojo;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -32,7 +33,7 @@ public class Course {
     private String coverImageUrl;
 
     @Column(name = "price")
-    private Double price;
+    private BigDecimal price;
 
     @Column(name = "type")
     private String type;
@@ -84,11 +85,11 @@ public class Course {
         this.coverImageUrl = coverImageUrl;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

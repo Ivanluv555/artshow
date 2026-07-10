@@ -3,6 +3,8 @@ package org.ivan.artshow.module.orderitem.pojo;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigDecimal;
+
 /**
  * Orderitem - 实体类
  *
@@ -38,7 +40,7 @@ public class Orderitem {
     private Integer quantity;
 
     @Column(name="price_at_purchase")
-    private Double priceAtPurchase;
+    private BigDecimal priceAtPurchase;
 
     @Column(name="product_name_snapshot")
     private String productNameSnapshot;
@@ -97,11 +99,11 @@ public class Orderitem {
         this.quantity = quantity;
     }
 
-    public Double getPriceAtPurchase() {
+    public BigDecimal getPriceAtPurchase() {
         return priceAtPurchase;
     }
 
-    public void setPriceAtPurchase(Double priceAtPurchase) {
+    public void setPriceAtPurchase(BigDecimal priceAtPurchase) {
         this.priceAtPurchase = priceAtPurchase;
     }
 

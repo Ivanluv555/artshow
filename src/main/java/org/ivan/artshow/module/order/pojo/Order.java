@@ -3,6 +3,7 @@ package org.ivan.artshow.module.order.pojo;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -29,7 +30,7 @@ public class Order {
     private Long userId;
 
     @Column(name="total_price")
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     @Column(name="status")
     private String status;
@@ -64,11 +65,11 @@ public class Order {
         this.userId = userId;
     }
 
-    public Double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 

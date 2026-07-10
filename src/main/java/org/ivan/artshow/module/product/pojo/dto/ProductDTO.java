@@ -1,5 +1,7 @@
 package org.ivan.artshow.module.product.pojo.dto;
 
+import java.math.BigDecimal;
+
 /**
  * ProductDTO - 数据传输对象
  *
@@ -12,7 +14,7 @@ public record ProductDTO(
         Long id,
         Integer sellerId,
         String name,
-        Double price,
+        BigDecimal price,
         Integer stock,
         String imageUrl,
         String description,
@@ -21,7 +23,7 @@ public record ProductDTO(
     public Long getId() { return id; }
     public Integer getSellerId() { return sellerId; }
     public String getName() { return name; }
-    public Double getPrice() { return price; }
+    public BigDecimal getPrice() { return price; }
     public Integer getStock() { return stock; }
     public String getImageUrl() { return imageUrl; }
     public String getDescription() { return description; }
