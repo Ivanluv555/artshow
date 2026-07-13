@@ -1,5 +1,8 @@
 package org.ivan.artshow.module.course.controller;
 
+import org.ivan.artshow.common.auth.Public;
+import org.ivan.artshow.common.auth.RequireRole;
+import org.ivan.artshow.common.auth.UserRole;
 import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.course.pojo.Course;
 import org.ivan.artshow.module.course.pojo.dto.CourseDTO;
@@ -26,10 +29,11 @@ public class CourseController {
     }
 
     /**
-     * 添加课程
+     * 添加课程 - 讲师或管理员
      * @param course 课程信息DTO
      * @return 新增的课程对象
      */
+    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
     @PostMapping
     public Result<Course> addCourse(@RequestBody CourseDTO course){
         Course ncourse = courseService.addCourse(course);
@@ -37,19 +41,21 @@ public class CourseController {
     }
 
     /**
-     * 删除课程
+     * 删除课程 - 仅管理员
      * @param courseId 课程ID
      */
+    @RequireRole(UserRole.ADMIN)
     @DeleteMapping
     public void deleteCourse(@RequestParam Long courseId){
         courseService.deleteCourse(courseId);
     }
 
     /**
-     * 更新课程信息
+     * 更新课程信息 - 讲师或管理员
      * @param course 课程信息DTO
      * @return 更新后的课程对象
      */
+    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
     @PutMapping
     public Result<Course> updateCourse(@RequestBody @Validated CourseDTO course){
         Course ncourse = courseService.updateCourse(course);
@@ -57,10 +63,11 @@ public class CourseController {
     }
 
     /**
-     * 查询单个课程
+     * 查询单个课程 - 公开
      * @param courseId 课程ID
      * @return 课程对象
      */
+    @Public("课程详情")
     @GetMapping
     public Result<Course> queryCourse(@RequestParam Long courseId) {
         Course ncourse = courseService.queryCourse(courseId);
@@ -68,10 +75,11 @@ public class CourseController {
     }
 
     /**
-     * 批量查询课程
+     * 批量查询课程 - 公开
      * @param courseIdList 课程ID列表
      * @return 课程列表
      */
+    @Public("批量查询课程")
     @PostMapping("/batch")
     public Result<List<Course>> queryAllCourse(@RequestBody List<Long> courseIdList){
         List<Course> list = courseService.queryAllCourses(courseIdList);
@@ -79,9 +87,10 @@ public class CourseController {
     }
 
     /**
-     * 查询所有课程
+     * 查询所有课程 - 公开
      * @return 课程列表
      */
+    @Public("课程列表")
     @GetMapping("/list")
     public Result<List<Course>> listCourses() {
         return Result.success(courseService.findAllCourses());

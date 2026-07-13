@@ -1,4 +1,5 @@
 package org.ivan.artshow.module.artcategory.controller;
+import org.ivan.artshow.common.auth.*;
 import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.artcategory.pojo.Artcategory;
@@ -26,30 +27,40 @@ public class ArtcategoryController {
         this.artCateService = artCateService;
     }
 
+    // 添加分类 - 仅管理员
+    @RequireRole(UserRole.ADMIN)
     @PostMapping
     public Result<Artcategory> addCate(@RequestBody @Validated ArtcategoryDTO artcategory) {
         Artcategory nartcategory = artCateService.addCate(artcategory);
         return Result.success(nartcategory);
     }
 
+    // 更新分类 - 仅管理员
+    @RequireRole(UserRole.ADMIN)
     @PutMapping
     public Result<Artcategory> updateCate(@RequestBody @Validated ArtcategoryDTO artcategory) {
         Artcategory nartcategory = artCateService.updateCate(artcategory);
         return Result.success(nartcategory);
     }
 
+    // 删除分类 - 仅管理员
+    @RequireRole(UserRole.ADMIN)
     @DeleteMapping
     public Result<Artcategory> deleteCate(@RequestParam Long id) {
         artCateService.deleteCate(id);
         return Result.success(null);
     }
 
+    // 查询分类详情 - 公开
+    @Public("分类详情")
     @GetMapping
     public Result<Artcategory> getCate(@RequestParam Long cateId) {
         Artcategory nartCategory = artCateService.queryCate(cateId);
         return Result.success(nartCategory);
     }
 
+    // 查询分类列表 - 公开
+    @Public("分类列表")
     @GetMapping("/list")
     public Result<List<Artcategory>> listCategories() {
         return Result.success(artCateService.findAllCategories());

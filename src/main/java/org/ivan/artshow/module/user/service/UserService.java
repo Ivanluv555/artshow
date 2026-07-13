@@ -34,6 +34,10 @@ public class UserService implements IUserService {
         }
         User nUser = new User();
         BeanUtils.copyProperties(user, nUser);
+        // 新注册用户默认角色为USER
+        if (nUser.getRole() == null || nUser.getRole().isEmpty()) {
+            nUser.setRole("USER");
+        }
         return userRepository.save(nUser);
     }
 
@@ -97,6 +101,7 @@ public class UserService implements IUserService {
         if (!user.getPassword().equals(password)) {
             throw new BizException(ResultCodes.ERROR);
         }
-        return JwtUtils.createToken(user.getUserId());
+        // 生成包含角色的JWT token
+        return JwtUtils.createToken(user.getUserId(), user.getRole());
     }
 }

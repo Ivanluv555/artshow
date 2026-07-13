@@ -1,4 +1,4 @@
-package org.ivan.artshow.common.util;
+package org.ivan.artshow.common.utils;
 
 import org.springframework.stereotype.Component;
 

@@ -59,12 +59,28 @@ public class JwtUtils {
      * @return JWT令牌字符串
      */
     public static String createToken(Long userId) {
-        return Jwts.builder()
+        return createToken(userId, null);
+    }
+
+    /**
+     * 生成JWT令牌（包含角色）
+     *
+     * @param userId 用户ID
+     * @param role 用户角色
+     * @return JWT令牌字符串
+     */
+    public static String createToken(Long userId, String role) {
+        var builder = Jwts.builder()
                 .setSubject(String.valueOf(userId))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
-                .signWith(getKey(), SignatureAlgorithm.HS256)
-                .compact();
+                .signWith(getKey(), SignatureAlgorithm.HS256);
+
+        if (role != null && !role.isEmpty()) {
+            builder.claim("role", role);
+        }
+
+        return builder.compact();
     }
 
     /**
@@ -82,6 +98,45 @@ public class JwtUtils {
                     .parseClaimsJws(token)
                     .getBody();
             return Long.parseLong(claims.getSubject());
+        } catch (Exception e) {
+            throw new BizException(ResultCodes.NOTLOGIN);
+        }
+    }
+
+    /**
+     * 解析JWT令牌获取用户角色
+     *
+     * @param token JWT令牌字符串
+     * @return 用户角色，如果令牌中没有角色信息则返回null
+     * @throws BizException 当令牌无效、过期或解析失败时抛出未登录异常
+     */
+    public static String parseRole(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.get("role", String.class);
+        } catch (Exception e) {
+            throw new BizException(ResultCodes.NOTLOGIN);
+        }
+    }
+
+    /**
+     * 解析JWT令牌获取所有Claims
+     *
+     * @param token JWT令牌字符串
+     * @return Claims对象
+     * @throws BizException 当令牌无效、过期或解析失败时抛出未登录异常
+     */
+    public static Claims parseClaims(String token) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
         } catch (Exception e) {
             throw new BizException(ResultCodes.NOTLOGIN);
         }

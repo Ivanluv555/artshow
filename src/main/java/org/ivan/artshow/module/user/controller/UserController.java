@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.ivan.artshow.common.auth.Public;
+import org.ivan.artshow.common.auth.RequireRole;
+import org.ivan.artshow.common.auth.UserRole;
 import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.user.pojo.User;
@@ -47,26 +50,27 @@ public class UserController {
     }
 
     /**
-     * Add user
+     * Add user / Register
      *
      * @param user User DTO object
      * @return Newly created user information
      */
+    @Public("用户注册")
     @PostMapping
-    @Operation(summary = "Add User", description = "Create new user, requires admin permission")
-    @SecurityRequirement(name = "BearerAuth")
+    @Operation(summary = "Register User", description = "Create new user account (public endpoint)")
     public Result<User> addUser(@RequestBody @Validated UserDTO user) {
         User nuser = userService.addUser(user);
         return Result.success(nuser);
     }
 
     /**
-     * Delete user
+     * Delete user (Admin only)
      *
      * @param userId User ID
      */
+    @RequireRole(UserRole.ADMIN)
     @DeleteMapping
-    @Operation(summary = "Delete User", description = "Delete user by user ID")
+    @Operation(summary = "Delete User", description = "Delete user by user ID (Admin only)")
     @SecurityRequirement(name = "BearerAuth")
     public void deleteUser(@RequestParam @Parameter(description = "User ID", required = true) Long userId) {
         userService.deleteUser(userId);
@@ -120,17 +124,11 @@ public class UserController {
      * @param userDTO DTO containing username and password
      * @return JWT token
      */
+    @Public("用户登录")
     @PostMapping("/login")
     @Operation(
             summary = "User Login",
-            description = "Login with username and password, returns JWT token.\n\n" +
-                    "**Usage Steps:**\n" +
-                    "1. Call this endpoint to get token\n" +
-                    "2. Copy the returned token string\n" +
-                    "3. Click 🔓 \"Authorize\" button in the top right corner\n" +
-                    "4. Paste the token in the popup (no need to add Bearer prefix)\n" +
-                    "5. Click \"Authorize\" button to complete authorization\n" +
-                    "6. All authenticated endpoints will automatically carry the token",
+            description = "Login with username and password, returns JWT token.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -149,12 +147,13 @@ public class UserController {
     }
 
     /**
-     * Query all users
+     * Query all users (Admin only)
      *
      * @return User list
      */
+    @RequireRole(UserRole.ADMIN)
     @GetMapping("/list")
-    @Operation(summary = "Query All Users", description = "Get all users in the system")
+    @Operation(summary = "Query All Users", description = "Get all users in the system (Admin only)")
     @SecurityRequirement(name = "BearerAuth")
     public Result<List<User>> listUsers() {
         return Result.success(userService.findAllUsers());

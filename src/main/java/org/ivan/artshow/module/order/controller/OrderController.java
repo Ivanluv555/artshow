@@ -1,4 +1,5 @@
 package org.ivan.artshow.module.order.controller;
+import org.ivan.artshow.common.auth.*;
 import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.order.pojo.Order;
@@ -25,47 +26,55 @@ public class OrderController {
     public OrderController(IOrderService orderService) {
         this.orderService = orderService;
     }
+    // 添加订单 - 需要登录
     @PostMapping
     public Result<Order> addOrder(@RequestBody @Validated OrderDTO order) {
         Order norder= orderService.addOrder(order);
         return Result.success(norder);
     }
 
+    // 删除订单 - 需要登录
     @DeleteMapping
     public void deleteOrder(@RequestParam Long order_id) {
         orderService.deleteOrder(order_id);
     }
 
+    // 更新订单 - 需要登录
     @PutMapping
     public Result<Order> updateOrder(@RequestBody @Validated OrderDTO order) {
         Order norder = orderService.updateOrder(order);
         return Result.success(norder);
     }
 
+    // 查询订单 - 需要登录
     @GetMapping
     public Result<Order> queryOrder(@RequestParam Long orderId) {
         Order norder = orderService.queryOrder(orderId);
         return Result.success(norder);
     }
 
+    // 批量查询订单 - 需要登录
     @PostMapping("/batch")
     public Result<List<Order>> queryAllOrderBatch(@RequestBody List<Integer> userIdlist) {
         List<Order> list = orderService.queryAllOrderBatch(userIdlist);
         return Result.success(list);
     }
 
+    // 查询所有订单 - 仅管理员
+    @RequireRole(UserRole.ADMIN)
     @GetMapping("/list") // GET /order/list
     public Result<List<Order>> listOrders() {
         return Result.success(orderService.findAllOrders());
     }
 
+    // 查询我的订单 - 需要登录
     @GetMapping("/my")
     public Result<List<Order>> queryMyOrders() {
         return Result.success(orderService.findMyOrders());
     }
 
     /**
-     * 从购物车创建订单
+     * 从购物车创建订单 - 需要登录
      * POST /order/create-from-cart
      */
     @PostMapping("/create-from-cart")
@@ -75,7 +84,7 @@ public class OrderController {
     }
 
     /**
-     * 直接购买课程
+     * 直接购买课程 - 需要登录
      * POST /order/purchase-course/{courseId}
      */
     @PostMapping("/purchase-course/{courseId}")
@@ -85,7 +94,7 @@ public class OrderController {
     }
 
     /**
-     * 取消订单
+     * 取消订单 - 需要登录
      * PUT /order/{orderId}/cancel
      */
     @PutMapping("/{orderId}/cancel")
@@ -95,7 +104,7 @@ public class OrderController {
     }
 
     /**
-     * 支付订单
+     * 支付订单 - 需要登录
      * PUT /order/{orderId}/pay
      */
     @PutMapping("/{orderId}/pay")
@@ -105,9 +114,10 @@ public class OrderController {
     }
 
     /**
-     * 发货
+     * 发货 - 仅管理员
      * PUT /order/{orderId}/ship
      */
+    @RequireRole(UserRole.ADMIN)
     @PutMapping("/{orderId}/ship")
     public Result<Void> shipOrder(@PathVariable Long orderId) {
         orderService.shipOrder(orderId);
@@ -115,7 +125,7 @@ public class OrderController {
     }
 
     /**
-     * 完成订单
+     * 完成订单 - 需要登录
      * PUT /order/{orderId}/complete
      */
     @PutMapping("/{orderId}/complete")

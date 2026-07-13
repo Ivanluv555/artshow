@@ -1,4 +1,5 @@
 package org.ivan.artshow.module.badge.controller;
+import org.ivan.artshow.common.auth.*;
 import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.badge.pojo.Badge;
@@ -23,21 +24,28 @@ public class BadgeController {
     public BadgeController(IBadgeService badgeService) {
         this.badgeService = badgeService;
     }
+    // 添加徽章 - 仅管理员
+    @RequireRole(UserRole.ADMIN)
     @PostMapping
     public Result<Badge> addBadge(@RequestBody @Validated BadgeDTO badge) {
         Badge nbadge = badgeService.addBadge(badge);
         return Result.success(nbadge);
     }
 
+    // 删除徽章 - 仅管理员
+    @RequireRole(UserRole.ADMIN)
     @DeleteMapping
     public void deleteBadge(@RequestParam Long badgeId) { badgeService.deleteBadge(badgeId);}
 
+    // 更新徽章 - 仅管理员
+    @RequireRole(UserRole.ADMIN)
     @PutMapping
     public Result<Badge> updateBadge(@RequestBody @Validated BadgeDTO badge) {
         Badge nbadge = badgeService.updateBadge(badge);
         return Result.success(nbadge);
     }
 
+    // 查询徽章 - 需要登录
     @GetMapping
     public Result<Badge> queryBadge(@RequestParam Long badgeId) {
         Badge nbadge = badgeService.queryBadge(badgeId);

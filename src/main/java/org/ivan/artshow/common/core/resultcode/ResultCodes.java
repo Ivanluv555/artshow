@@ -28,6 +28,11 @@ public enum ResultCodes {
     NOTLOGIN(401, "Not logged in"),
 
     /**
+     * 403 - Forbidden - Insufficient permissions
+     */
+    FORBIDDEN(403, "Insufficient permissions"),
+
+    /**
      * 402 - No permission to access
      */
     UNAUTH(402, "No permission"),

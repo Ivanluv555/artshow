@@ -1,8 +1,9 @@
 -- ============================================================================
 -- 数据库完整重建脚本
 -- ============================================================================
--- 版本: 2.0.0
--- 日期: 2026-07-08
+-- 版本: 2.1.0
+-- 日期: 2026-07-13
+-- 更新内容: 添加用户角色字段以支持RBAC
 -- 警告: 此脚本会删除现有数据库，请确保已备份数据！
 -- 使用方法: mysql -u root -p < rebuild_database.sql
 -- ============================================================================
@@ -35,10 +36,12 @@ CREATE TABLE `user` (
                         `nickname` VARCHAR(100) DEFAULT NULL COMMENT '昵称',
                         `avatar_url` VARCHAR(500) DEFAULT NULL COMMENT '头像URL',
                         `bio` TEXT COMMENT '个人简介',
+                        `role` VARCHAR(20) NOT NULL DEFAULT 'USER' COMMENT '用户角色: USER-普通用户, INSTRUCTOR-讲师, ADMIN-管理员',
                         `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                         PRIMARY KEY (`user_id`),
                         UNIQUE KEY `username` (`username`),
-                        KEY `idx_username` (`username`)
+                        KEY `idx_username` (`username`),
+                        KEY `idx_role` (`role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
 
 -- 艺术品分类表
@@ -405,8 +408,9 @@ SELECT '视图创建完成' AS STATUS;
 -- ============================================================================
 SELECT
     '数据库重建完成！' AS message,
-    '版本: 2.0.0' AS version,
-    '更新日期: 2026-07-08' AS update_date,
+    '版本: 2.1.0' AS version,
+    '更新日期: 2026-07-13' AS update_date,
+    '主要更新: 添加用户角色字段(role)以支持RBAC' AS changelog,
     CONCAT('共创建 ',
            (SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'artshow' AND TABLE_TYPE = 'BASE TABLE'),
            ' 个表') AS tables_created,

@@ -50,6 +50,9 @@ public class User {
     @Column(name="bio")
     private String userBio;
 
+    @Column(name="role")
+    private String role;
+
     @Column(name="created_at")
     private Date createdAt;
 
@@ -110,5 +113,13 @@ public class User {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -1,4 +1,5 @@
 package org.ivan.artshow.module.shopcartitem.controller;
+import org.ivan.artshow.common.auth.*;
 import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.shopcartitem.pojo.Sci;
@@ -26,29 +27,34 @@ public class SciController {
     public SciController(ISciService sciService) {
         this.sciService = sciService;
     }
+    // 添加购物车项 - 需要登录
     @PostMapping
     public Result<Sci> addSci(@RequestBody @Validated SciDTO sci) {
         Sci nsci = sciService.addSci(sci);
         return Result.success(nsci);
     }
 
+    // 删除购物车项 - 需要登录
     @DeleteMapping
     public void deleteSci(@RequestParam Long cartItemId) {
         sciService.deleteSci(cartItemId);
     }
 
+    // 更新购物车项 - 需要登录
     @PutMapping
     public Result<Sci> updateSci(@RequestBody @Validated SciDTO sci) {
         Sci nsci = sciService.updateSci(sci);
         return Result.success(nsci);
     }
 
+    // 查询购物车项 - 需要登录
     @GetMapping
     public Result<Sci> querySci(@RequestParam Long cartItemId) {
         Sci nsci = sciService.querySci(cartItemId);
         return Result.success(nsci);
     }
 
+    // 批量查询购物车 - 需要登录
     @PostMapping("/batch")
     public Result<List<Sci>> queryAllSciBatch(@RequestBody List<Long> userIdList) {
         List<Sci> list = sciService.queryAllSciBatch(userIdList);
@@ -56,7 +62,7 @@ public class SciController {
     }
 
     /**
-     * 查询我的购物车
+     * 查询我的购物车 - 需要登录
      * GET /sci/my
      */
     @GetMapping("/my")
@@ -66,7 +72,7 @@ public class SciController {
     }
 
     /**
-     * 清空我的购物车
+     * 清空我的购物车 - 需要登录
      * DELETE /sci/my
      */
     @DeleteMapping("/my")
@@ -76,7 +82,7 @@ public class SciController {
     }
 
     /**
-     * 获取购物车商品种类数
+     * 获取购物车商品种类数 - 需要登录
      * GET /sci/count
      */
     @GetMapping("/count")

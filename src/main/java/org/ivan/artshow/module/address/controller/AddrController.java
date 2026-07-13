@@ -1,5 +1,6 @@
 package org.ivan.artshow.module.address.controller;
 
+import org.ivan.artshow.common.auth.*;
 import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.address.pojo.Address;
 import org.ivan.artshow.module.address.pojo.dto.AddressDTO;
@@ -24,7 +25,7 @@ public class AddrController {
     }
 
     /**
-     * 添加用户地址
+     * 添加用户地址 - 需要登录
      * @param address 地址信息DTO
      * @return 新增的地址对象
      */
@@ -35,7 +36,7 @@ public class AddrController {
     }
 
     /**
-     * 删除用户地址
+     * 删除用户地址 - 需要登录
      * @param addressId 地址ID
      */
     @DeleteMapping
@@ -44,7 +45,7 @@ public class AddrController {
     }
 
     /**
-     * 更新用户地址
+     * 更新用户地址 - 需要登录
      * @param address 地址信息DTO
      * @return 更新后的地址对象
      */
@@ -55,7 +56,7 @@ public class AddrController {
     }
 
     /**
-     * 查询用户地址
+     * 查询用户地址 - 需要登录
      * @param addressId 地址ID
      * @return 地址对象
      */

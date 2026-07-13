@@ -67,7 +67,26 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        // 2. Get Token from Authorization header
+        // 2. Check if method is marked with @Public annotation
+        if (handler instanceof org.springframework.web.method.HandlerMethod) {
+            org.springframework.web.method.HandlerMethod handlerMethod = (org.springframework.web.method.HandlerMethod) handler;
+
+            // Check method-level @Public annotation
+            Public publicAnnotation = handlerMethod.getMethodAnnotation(Public.class);
+            if (publicAnnotation != null) {
+                log.debug("Method {} is marked as @Public, skipping authentication", handlerMethod.getMethod().getName());
+                return true;
+            }
+
+            // Check class-level @Public annotation
+            publicAnnotation = handlerMethod.getBeanType().getAnnotation(Public.class);
+            if (publicAnnotation != null) {
+                log.debug("Controller {} is marked as @Public, skipping authentication", handlerMethod.getBeanType().getSimpleName());
+                return true;
+            }
+        }
+
+        // 3. Get Token from Authorization header
         String token = request.getHeader("Authorization");
 
         log.debug("Authorization header: {}", token != null ? token.substring(0, Math.min(20, token.length())) + "..." : "null");
@@ -77,23 +96,55 @@ public class AuthInterceptor implements HandlerInterceptor {
             throw new BizException(ResultCodes.NOTLOGIN);
         }
 
-        // 3. Handle "Bearer " prefix if present
+        // 4. Handle "Bearer " prefix if present
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
             log.debug("Token length after removing Bearer prefix: {}", token.length());
         }
 
-        // 4. Validate and parse token
+        // 5. Validate and parse token
         try {
-            Long userId = JwtUtils.parseToken(token);
-            log.debug("Token validated successfully, user ID: {}", userId);
+            io.jsonwebtoken.Claims claims = JwtUtils.parseClaims(token);
+            Long userId = Long.parseLong(claims.getSubject());
+            String role = claims.get("role", String.class);
 
-            // 5. Store in context
+            log.debug("Token validated successfully, user ID: {}, role: {}", userId, role);
+
+            // 6. Store in context
             UserContext.setUserId(userId);
+            if (role != null) {
+                UserContext.setRole(role);
+            }
+
+            // 7. Check role-based access control
+            if (handler instanceof org.springframework.web.method.HandlerMethod) {
+                org.springframework.web.method.HandlerMethod handlerMethod = (org.springframework.web.method.HandlerMethod) handler;
+
+                // Check method-level @RequireRole annotation
+                RequireRole requireRole = handlerMethod.getMethodAnnotation(RequireRole.class);
+                if (requireRole == null) {
+                    // Check class-level @RequireRole annotation
+                    requireRole = handlerMethod.getBeanType().getAnnotation(RequireRole.class);
+                }
+
+                // If @RequireRole is present, check if user has required role
+                if (requireRole != null) {
+                    UserRole[] requiredRoles = requireRole.value();
+                    boolean hasRequiredRole = UserContext.hasAnyRole(requiredRoles);
+
+                    if (!hasRequiredRole) {
+                        log.warn("User {} with role {} does not have required role for {}",
+                                userId, role, requestURI);
+                        throw new BizException(ResultCodes.FORBIDDEN);
+                    }
+
+                    log.debug("User has required role, access granted");
+                }
+            }
 
             return true; // Allow request
         } catch (BizException e) {
-            log.error("Token validation failed: {}", e.getMessage());
+            log.error("Token validation or permission check failed: {}", e.getMessage());
             throw e;
         }
     }
@@ -111,7 +162,7 @@ public class AuthInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        // 6. Clean up ThreadLocal to prevent memory leaks
+        // 7. Clean up ThreadLocal to prevent memory leaks
         UserContext.remove();
         log.debug("UserContext cleanup completed");
     }
