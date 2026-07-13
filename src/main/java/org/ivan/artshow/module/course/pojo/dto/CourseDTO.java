@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  */
 public record CourseDTO(
         Long courseId,
-        Integer instructorId,
+        Long instructorId,
         String title,
         String coverImageUrl,
         BigDecimal price,
@@ -21,7 +21,7 @@ public record CourseDTO(
         String description
 ) {
     public Long getCourseId() { return courseId; }
-    public Integer getInstructorId() { return instructorId; }
+    public Long getInstructorId() { return instructorId; }
     public String getTitle() { return title; }
     public String getCoverImageUrl() { return coverImageUrl; }
     public BigDecimal getPrice() { return price; }

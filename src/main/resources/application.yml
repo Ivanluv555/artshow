@@ -8,13 +8,13 @@ spring:
     show-sql: ${SHOW_SQL:false}
     properties:
       hibernate:
-        format_sql: true
+        "[format_sql]": true
 
   datasource:
-    url: ${DB_URL:jdbc:mysql://47.237.188.77:3306/wChina?serverTimezone=UTC}
+    url: ${DB_URL:jdbc:mysql://localhost:3306/artshow?serverTimezone=UTC}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:WaterChina@242526}
+    password: ${DB_PASSWORD:215108}
 
   jackson:
     mapper:

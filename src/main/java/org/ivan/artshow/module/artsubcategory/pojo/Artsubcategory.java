@@ -23,7 +23,7 @@ public class Artsubcategory {
     private Long subCateId;
 
     @Column(name = "category_id")
-    private Integer categoryId;
+    private Long categoryId;
 
     @Column(name = "name")
     private String name;
@@ -57,11 +57,11 @@ public class Artsubcategory {
         this.subCateId = subCateId;
     }
 
-    public Integer getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  */
 public record ProductDTO(
         Long id,
-        Integer sellerId,
+        Long sellerId,
         String name,
         BigDecimal price,
         Integer stock,
@@ -21,7 +21,7 @@ public record ProductDTO(
         Boolean isCertified
 ) {
     public Long getId() { return id; }
-    public Integer getSellerId() { return sellerId; }
+    public Long getSellerId() { return sellerId; }
     public String getName() { return name; }
     public BigDecimal getPrice() { return price; }
     public Integer getStock() { return stock; }

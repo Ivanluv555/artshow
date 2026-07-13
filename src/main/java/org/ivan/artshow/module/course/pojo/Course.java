@@ -24,7 +24,7 @@ public class Course {
     private Long courseId;
 
     @Column(name = "instructor_id")
-    private Integer instructorId;
+    private Long instructorId;
 
     @Column(name = "title")
     private String title;
@@ -61,11 +61,11 @@ public class Course {
         this.courseId = courseId;
     }
 
-    public Integer getInstructorId() {
+    public Long getInstructorId() {
         return instructorId;
     }
 
-    public void setInstructorId(Integer instructorId) {
+    public void setInstructorId(Long instructorId) {
         this.instructorId = instructorId;
     }
 

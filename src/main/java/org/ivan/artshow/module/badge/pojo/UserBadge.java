@@ -22,10 +22,10 @@ public class UserBadge {
     private Long userBadgeId;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "badge_id")
-    private Integer badgeId;
+    private Long badgeId;
 
     @Column(name = "earned_at")
     private Date earnedAt;
@@ -41,19 +41,19 @@ public class UserBadge {
         this.userBadgeId = userBadgeId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getBadgeId() {
+    public Long getBadgeId() {
         return badgeId;
     }
 
-    public void setBadgeId(Integer badgeId) {
+    public void setBadgeId(Long badgeId) {
         this.badgeId = badgeId;
     }
 

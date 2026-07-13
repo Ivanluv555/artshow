@@ -12,14 +12,14 @@ import java.util.Date;
  */
 public record CommentDTO(
         Long commentId,
-        Integer postId,
-        Integer userId,
+        Long postId,
+        Long userId,
         String content,
         Date createdAt
 ) {
     public Long getCommentId() { return commentId; }
-    public Integer getPostId() { return postId; }
-    public Integer getUserId() { return userId; }
+    public Long getPostId() { return postId; }
+    public Long getUserId() { return userId; }
     public String getContent() { return content; }
     public Date getCreatedAt() { return createdAt; }
 }

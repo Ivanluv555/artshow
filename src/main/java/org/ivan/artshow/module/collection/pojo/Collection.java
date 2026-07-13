@@ -26,7 +26,7 @@ public class Collection {
     private Long postId;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "create_at")
     private Date createAt;
@@ -50,11 +50,11 @@ public class Collection {
         this.postId = postId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

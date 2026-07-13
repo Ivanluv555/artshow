@@ -12,16 +12,16 @@ import java.util.Date;
  */
 public record PostDTO(
         Long postId,
-        Integer userId,
-        Integer subcategoryId,
+        Long userId,
+        Long subcategoryId,
         String title,
         String description,
         String imageUrl,
         Date createdAt
 ) {
     public Long getPostId() { return postId; }
-    public Integer getUserId() { return userId; }
-    public Integer getSubcategoryId() { return subcategoryId; }
+    public Long getUserId() { return userId; }
+    public Long getSubcategoryId() { return subcategoryId; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public String getImageUrl() { return imageUrl; }

@@ -24,7 +24,7 @@ public class Product {
     private Long id;
 
     @Column(name = "seller_id")
-    private Integer sellerId;
+    private Long sellerId;
 
     @Column(name="name")
     private String name;
@@ -61,11 +61,11 @@ public class Product {
         this.id = id;
     }
 
-    public Integer getSellerId() {
+    public Long getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(Integer sellerId) {
+    public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
     }
 
