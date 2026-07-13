@@ -46,7 +46,7 @@ public class SwaggerConfig {
     /**
      * Configure OpenAPI documentation
      *
-     * <p>Uses HTTP Bearer authentication scheme, users can input raw token in Knife4j interface.
+     * <p>Uses HTTP Bearer authentication scheme with JWT token containing user role information.
      * The system will automatically format the token as "Bearer {token}" and add it to Authorization header.</p>
      *
      * @return OpenAPI configuration object
@@ -56,21 +56,62 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Artshow Backend API Documentation")
-                        .version("1.0")
-                        .description("Art Exhibition and Course Management System - API for users, courses, orders and all modules\n\n" +
-                                "## Authentication Guide\n" +
-                                "1. Call `/user/login` endpoint to get JWT token\n" +
-                                "2. Click 🔓 button in top right corner for authorization\n" +
-                                "3. Paste the token in the input box (no need to add Bearer prefix)\n" +
-                                "4. After authorization, all API requests will automatically carry the token")
-                        .contact(new Contact().name("Ivan Horn").email("ivan@artshow.com")))
+                        .version("2.1.0")
+                        .description("Art Exhibition and Course Management System - API Documentation\n\n" +
+                                "## Authentication & Authorization\n\n" +
+                                "This API uses **JWT Bearer Token** authentication with **Role-Based Access Control (RBAC)**.\n\n" +
+                                "### User Roles\n" +
+                                "- **USER**: Regular users - Can browse, purchase, post, comment, like\n" +
+                                "- **INSTRUCTOR**: Instructors - USER permissions + Create/manage courses and products\n" +
+                                "- **ADMIN**: Administrators - Full system access including user management\n\n" +
+                                "### How to Use\n" +
+                                "1. **Register**: Call `POST /user` to create an account (default role: USER)\n" +
+                                "2. **Login**: Call `POST /user/login` to get your JWT token (contains userId and role)\n" +
+                                "3. **Authorize**: Click the 🔓 **Authorize** button in the top right corner\n" +
+                                "4. **Enter Token**: Paste your JWT token (no need to add 'Bearer' prefix)\n" +
+                                "5. **Test APIs**: All subsequent requests will automatically include your token\n\n" +
+                                "### API Access Levels\n" +
+                                "- 🌐 **Public**: No authentication required (marked with green lock)\n" +
+                                "- 🔒 **Login Required**: Any authenticated user\n" +
+                                "- 👨‍🏫 **Instructor/Admin**: INSTRUCTOR or ADMIN role required\n" +
+                                "- 🛡️ **Admin Only**: ADMIN role required\n\n" +
+                                "### Test Accounts\n" +
+                                "```sql\n" +
+                                "-- Admin account\n" +
+                                "username: admin\n" +
+                                "password: admin123\n" +
+                                "role: ADMIN\n\n" +
+                                "-- Instructor account\n" +
+                                "username: instructor\n" +
+                                "password: instructor123\n" +
+                                "role: INSTRUCTOR\n" +
+                                "```\n\n" +
+                                "### Permission Denied?\n" +
+                                "If you receive **403 Forbidden**, your role doesn't have sufficient permissions for this operation.")
+                        .contact(new Contact()
+                                .name("Ivan Horn")
+                                .email("ivan@artshow.com")))
                 // Configure global security requirement
                 .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("BearerAuth",
                                 new SecurityScheme()
                                         .name("Authorization")
-                                        .description("Please enter the JWT token returned by login endpoint (no need to add Bearer prefix)")
+                                        .description("JWT Bearer Token - Contains user ID and role information\n\n" +
+                                                "**How to get token:**\n" +
+                                                "1. Use `POST /user/login` endpoint with your credentials\n" +
+                                                "2. Copy the token from the response\n" +
+                                                "3. Paste it here (no need to add 'Bearer' prefix)\n\n" +
+                                                "**Token Structure:**\n" +
+                                                "```json\n" +
+                                                "{\n" +
+                                                "  \"sub\": \"userId\",\n" +
+                                                "  \"role\": \"USER|INSTRUCTOR|ADMIN\",\n" +
+                                                "  \"iat\": \"issued at timestamp\",\n" +
+                                                "  \"exp\": \"expiration timestamp (24 hours)\"\n" +
+                                                "}\n" +
+                                                "```\n\n" +
+                                                "**Token will be sent as:** `Authorization: Bearer {your-token}`")
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")));
