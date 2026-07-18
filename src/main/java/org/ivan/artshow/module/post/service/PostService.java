@@ -1,5 +1,6 @@
 package org.ivan.artshow.module.post.service;
 
+import org.ivan.artshow.common.auth.UserContext;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.module.post.pojo.Post;
@@ -41,6 +42,19 @@ public class PostService implements IPostService{
         if (PostId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
+
+        // 查询帖子
+        Post post = postRepository.findById(PostId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "帖子不存在"));
+
+        // 权限检查：只有帖子作者或管理员可以删除
+        Long currentUserId = UserContext.getUserId();
+        String currentUserRole = UserContext.getRole();
+
+        if (!post.getUserId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
+            throw new BizException(ResultCodes.FORBIDDEN, "无权删除此帖子");
+        }
+
         postRepository.deleteById(PostId);
     }
 
@@ -53,8 +67,25 @@ public class PostService implements IPostService{
         if (postId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Post post = postRepository.findById(postId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(Post,post);
+
+        // 查询帖子
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "帖子不存在"));
+
+        // 权限检查：只有帖子作者或管理员可以修改
+        Long currentUserId = UserContext.getUserId();
+        String currentUserRole = UserContext.getRole();
+
+        if (!post.getUserId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
+            throw new BizException(ResultCodes.FORBIDDEN, "无权修改此帖子");
+        }
+
+        // 更新帖子内容（不允许修改userId）
+        if (Post.getTitle() != null) post.setTitle(Post.getTitle());
+        if (Post.getDescription() != null) post.setDescription(Post.getDescription());
+        if (Post.getImageUrl() != null) post.setImageUrl(Post.getImageUrl());
+        if (Post.getSubcategoryId() != null) post.setSubcategoryId(Post.getSubcategoryId());
+
         return postRepository.save(post);
     }
 

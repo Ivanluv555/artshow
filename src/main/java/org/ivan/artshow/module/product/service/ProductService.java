@@ -1,5 +1,6 @@
 package org.ivan.artshow.module.product.service;
 
+import org.ivan.artshow.common.auth.UserContext;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.module.product.pojo.dto.ProductDTO;
@@ -43,8 +44,27 @@ public class ProductService implements IProductService {
         if (productId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Product nProduct = productRepository.findById(productId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(product, nProduct);
+
+        // 查询商品
+        Product nProduct = productRepository.findById(productId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在"));
+
+        // 权限检查：只有卖家本人或管理员可以修改
+        Long currentUserId = UserContext.getUserId();
+        String currentUserRole = UserContext.getRole();
+
+        if (!nProduct.getSellerId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
+            throw new BizException(ResultCodes.FORBIDDEN, "无权修改此商品");
+        }
+
+        // 更新商品信息（不允许修改sellerId）
+        if (product.getName() != null) nProduct.setName(product.getName());
+        if (product.getPrice() != null) nProduct.setPrice(product.getPrice());
+        if (product.getStock() != null) nProduct.setStock(product.getStock());
+        if (product.getImageUrl() != null) nProduct.setImageUrl(product.getImageUrl());
+        if (product.getDescription() != null) nProduct.setDescription(product.getDescription());
+        if (product.getIsCertified() != null) nProduct.setIsCertified(product.getIsCertified());
+
         return productRepository.save(nProduct);
     }
 
@@ -61,6 +81,19 @@ public class ProductService implements IProductService {
         if (productId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
+
+        // 查询商品
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在"));
+
+        // 权限检查：只有卖家本人或管理员可以删除
+        Long currentUserId = UserContext.getUserId();
+        String currentUserRole = UserContext.getRole();
+
+        if (!product.getSellerId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
+            throw new BizException(ResultCodes.FORBIDDEN, "无权删除此商品");
+        }
+
         productRepository.deleteById(productId);
     }
 

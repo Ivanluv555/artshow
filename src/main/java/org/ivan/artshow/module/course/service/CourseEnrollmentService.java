@@ -11,6 +11,7 @@ import org.ivan.artshow.module.course.pojo.dto.EnrollRequestDTO;
 import org.ivan.artshow.module.course.repository.CourseRepository;
 import org.ivan.artshow.module.course.repository.UserCourseChapterCompletedRepository;
 import org.ivan.artshow.module.course.repository.UserCourseEnrollmentRepository;
+import org.ivan.artshow.module.instructor.service.IUserInstructorRelationshipService;
 import org.ivan.artshow.module.orderitem.repository.OrderitemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,15 +34,18 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
     private final UserCourseChapterCompletedRepository completedRepository;
     private final CourseRepository courseRepository;
     private final OrderitemRepository orderitemRepository;
+    private final IUserInstructorRelationshipService relationshipService;
 
     public CourseEnrollmentService(UserCourseEnrollmentRepository enrollmentRepository,
                                    UserCourseChapterCompletedRepository completedRepository,
                                    CourseRepository courseRepository,
-                                   OrderitemRepository orderitemRepository) {
+                                   OrderitemRepository orderitemRepository,
+                                   IUserInstructorRelationshipService relationshipService) {
         this.enrollmentRepository = enrollmentRepository;
         this.completedRepository = completedRepository;
         this.courseRepository = courseRepository;
         this.orderitemRepository = orderitemRepository;
+        this.relationshipService = relationshipService;
     }
 
     @Override
@@ -92,7 +96,14 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
         enrollment.setCertificateAwarded(false); // 默认未获得证书
         enrollment.setEnrolledAt(new Date());
 
-        return enrollmentRepository.save(enrollment);
+        UserCourseEnrollment savedEnrollment = enrollmentRepository.save(enrollment);
+
+        // 6. 自动建立用户与讲师的关系
+        if (course.getInstructorId() != null) {
+            relationshipService.createRelationship(userId, course.getInstructorId());
+        }
+
+        return savedEnrollment;
     }
 
     @Override

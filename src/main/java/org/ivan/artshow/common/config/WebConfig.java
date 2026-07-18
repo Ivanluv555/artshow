@@ -44,19 +44,24 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(@NonNull InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/**") // Intercept all paths
-                .excludePathPatterns(   // Exclude paths that don't require authentication
-                        "/user/login",
-                        "/user/register",
-                        "/v3/api-docs/**",
-                        "/v3/api-docs",
-                        "/swagger-ui.html",
-                        "/swagger-ui/**",
-                        "/swagger-resources/**",
-                        "/webjars/**",
-                        "/favicon.ico",
-                        "/error"
-                );
+        final AuthInterceptor authInterceptor2 = authInterceptor;
+        if (authInterceptor2 != null) {
+            registry.addInterceptor(authInterceptor2)
+                    .addPathPatterns("/**") // Intercept all paths
+                    .excludePathPatterns(   // Exclude paths that don't require authentication
+                            "/user/login",
+                            "/user/register",
+                            "/v3/api-docs/**",
+                            "/v3/api-docs",
+                            "/swagger-ui.html",
+                            "/swagger-ui/**",
+                            "/swagger-resources/**",
+                            "/webjars/**",
+                            "/favicon.ico",
+                            "/error"
+                    );
+        } else {
+            // TODO handle null value
+        }
     }
 }
