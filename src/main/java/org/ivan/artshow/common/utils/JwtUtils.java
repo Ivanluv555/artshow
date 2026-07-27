@@ -2,14 +2,13 @@ package org.ivan.artshow.common.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 import org.ivan.artshow.common.exception.BizException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.Date;
 
 /**
@@ -48,7 +47,7 @@ public class JwtUtils {
      *
      * @return HMAC SHA256签名密钥
      */
-    private static Key getKey() {
+    private static SecretKey getKey() {
         return Keys.hmacShaKeyFor(SECRET_STRING.getBytes());
     }
 
@@ -71,10 +70,10 @@ public class JwtUtils {
      */
     public static String createToken(Long userId, String role) {
         var builder = Jwts.builder()
-                .setSubject(String.valueOf(userId))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
-                .signWith(getKey(), SignatureAlgorithm.HS256);
+                .subject(String.valueOf(userId))
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(getKey());
 
         if (role != null && !role.isEmpty()) {
             builder.claim("role", role);
@@ -92,11 +91,11 @@ public class JwtUtils {
      */
     public static Long parseToken(String token) {
         try {
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(getKey())
+            Claims claims = Jwts.parser()
+                    .verifyWith(getKey())
                     .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseSignedClaims(token)
+                    .getPayload();
             return Long.parseLong(claims.getSubject());
         } catch (Exception e) {
             throw new BizException(ResultCodes.NOTLOGIN);
@@ -112,11 +111,11 @@ public class JwtUtils {
      */
     public static String parseRole(String token) {
         try {
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(getKey())
+            Claims claims = Jwts.parser()
+                    .verifyWith(getKey())
                     .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseSignedClaims(token)
+                    .getPayload();
             return claims.get("role", String.class);
         } catch (Exception e) {
             throw new BizException(ResultCodes.NOTLOGIN);
@@ -132,11 +131,11 @@ public class JwtUtils {
      */
     public static Claims parseClaims(String token) {
         try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(getKey())
+            return Jwts.parser()
+                    .verifyWith(getKey())
                     .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseSignedClaims(token)
+                    .getPayload();
         } catch (Exception e) {
             throw new BizException(ResultCodes.NOTLOGIN);
         }
