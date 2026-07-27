@@ -1,7 +1,7 @@
 package org.ivan.artshow.module.orderitem.pojo;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.ivan.artshow.common.config.SnowflakeId;
 
 import java.math.BigDecimal;
 
@@ -18,8 +18,7 @@ import java.math.BigDecimal;
 @Table(name = "order_item")
 public class Orderitem {
     @Id
-    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
-    @GeneratedValue(generator = "snowflake")
+    @SnowflakeId
     @Column(name = "order_item_id")
     private Long orderItemId;
 

@@ -1,5 +1,5 @@
 package org.ivan.artshow.module.shopcartitem.controller;
-import org.ivan.artshow.common.auth.*;
+
 import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.shopcartitem.pojo.Sci;
@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 /**
  * SciController - 控制器
  *
- * <p>SciController负责处理HTTP请求，提供RESTful API接口。</p>
+ * <p>
+ * SciController负责处理HTTP请求，提供RESTful API接口。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -27,6 +28,7 @@ public class SciController {
     public SciController(ISciService sciService) {
         this.sciService = sciService;
     }
+
     // 添加购物车项 - 需要登录
     @PostMapping
     public Result<Sci> addSci(@RequestBody @Validated SciDTO sci) {

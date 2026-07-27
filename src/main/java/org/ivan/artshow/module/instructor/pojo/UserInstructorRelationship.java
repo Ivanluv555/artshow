@@ -1,7 +1,7 @@
 package org.ivan.artshow.module.instructor.pojo;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.ivan.artshow.common.config.SnowflakeId;
 
 import java.util.Date;
 
@@ -40,8 +40,7 @@ import java.util.Date;
 public class UserInstructorRelationship {
 
     @Id
-    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
-    @GeneratedValue(generator = "snowflake")
+    @SnowflakeId
     @Column(name = "relationship_id")
     private Long relationshipId;
 

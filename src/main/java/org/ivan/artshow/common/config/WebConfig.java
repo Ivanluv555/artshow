@@ -48,7 +48,7 @@ public class WebConfig implements WebMvcConfigurer {
         if (authInterceptor2 != null) {
             registry.addInterceptor(authInterceptor2)
                     .addPathPatterns("/**") // Intercept all paths
-                    .excludePathPatterns(   // Exclude paths that don't require authentication
+                    .excludePathPatterns( // Exclude paths that don't require authentication
                             "/user/login",
                             "/user/register",
                             "/v3/api-docs/**",
@@ -58,8 +58,7 @@ public class WebConfig implements WebMvcConfigurer {
                             "/swagger-resources/**",
                             "/webjars/**",
                             "/favicon.ico",
-                            "/error"
-                    );
+                            "/error");
         } else {
             // TODO handle null value
         }

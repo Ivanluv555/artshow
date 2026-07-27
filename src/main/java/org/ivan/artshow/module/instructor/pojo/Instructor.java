@@ -1,7 +1,7 @@
 package org.ivan.artshow.module.instructor.pojo;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.ivan.artshow.common.config.SnowflakeId;
 
 import java.util.Date;
 
@@ -18,8 +18,7 @@ import java.util.Date;
 public class Instructor {
     @Id
     @Column(name = "instructor_id")
-    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
-    @GeneratedValue(generator = "snowflake")
+    @SnowflakeId
     private Long id;
 
     @Column(name = "name")

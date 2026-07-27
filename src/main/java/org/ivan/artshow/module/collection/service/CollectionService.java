@@ -13,13 +13,15 @@ import java.util.List;
 /**
  * CollectionService - 业务服务实现类
  *
- * <p>CollectionService实现具体的业务逻辑。</p>
+ * <p>
+ * CollectionService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
  */
 @Service
-public class CollectionService implements ICollectionService{
+public class CollectionService implements ICollectionService {
     private final CollectionRepository collectionRepository;
 
     public CollectionService(CollectionRepository collectionRepository) {
@@ -27,12 +29,12 @@ public class CollectionService implements ICollectionService{
     }
 
     @Override
-    public Collection addCollection(CollectionDTO collection){
+    public Collection addCollection(CollectionDTO collection) {
         if (collection == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Collection ncollection = new Collection();
-        BeanUtils.copyProperties(collection,ncollection);
+        BeanUtils.copyProperties(collection, ncollection);
         return collectionRepository.save(ncollection);
     }
 
@@ -44,8 +46,9 @@ public class CollectionService implements ICollectionService{
         collectionRepository.deleteById(collectionId);
     }
 
+    @SuppressWarnings("null")
     @Override
-    public Collection updateCollection(CollectionDTO Collection){
+    public Collection updateCollection(CollectionDTO Collection) {
         if (Collection == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -53,8 +56,9 @@ public class CollectionService implements ICollectionService{
         if (collectionId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Collection ncollection = collectionRepository.findById(collectionId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(Collection,ncollection);
+        Collection ncollection = collectionRepository.findById(collectionId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(Collection, ncollection);
         return collectionRepository.save(ncollection);
     }
 
@@ -67,7 +71,7 @@ public class CollectionService implements ICollectionService{
     }
 
     @Override
-    public List<Collection> queryAllCollectionBatch(List<Long> collectionId){
+    public List<Collection> queryAllCollectionBatch(List<Long> collectionId) {
         if (collectionId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }

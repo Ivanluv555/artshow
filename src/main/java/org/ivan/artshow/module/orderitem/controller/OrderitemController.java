@@ -1,5 +1,5 @@
 package org.ivan.artshow.module.orderitem.controller;
-import org.ivan.artshow.common.auth.*;
+
 import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.orderitem.pojo.Orderitem;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 /**
  * OrderitemController - 控制器
  *
- * <p>OrderitemController负责处理HTTP请求，提供RESTful API接口。</p>
+ * <p>
+ * OrderitemController负责处理HTTP请求，提供RESTful API接口。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -24,6 +26,7 @@ public class OrderitemController {
     public OrderitemController(IOrderitemService orderItemService) {
         this.orderItemService = orderItemService;
     }
+
     // 添加订单项 - 需要登录
     @PostMapping
     public Result<Orderitem> addOrderItem(@RequestBody @Validated OrderitemDTO orderItem) {
@@ -47,7 +50,7 @@ public class OrderitemController {
     // 查询订单项 - 需要登录
     @GetMapping
     public Result<Orderitem> queryOrderItem(@RequestParam Long orderItemId) {
-         Orderitem norderitem = orderItemService.queryOrderItem(orderItemId);
+        Orderitem norderitem = orderItemService.queryOrderItem(orderItemId);
         return Result.success(norderitem);
     }
 }

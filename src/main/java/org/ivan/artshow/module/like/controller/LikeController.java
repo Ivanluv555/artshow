@@ -1,5 +1,5 @@
 package org.ivan.artshow.module.like.controller;
-import org.ivan.artshow.common.auth.*;
+
 import org.ivan.artshow.common.core.result.Result;
 
 import org.ivan.artshow.module.like.pojo.Like;
@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 /**
  * LikeController - 控制器
  *
- * <p>LikeController负责处理HTTP请求，提供RESTful API接口。</p>
+ * <p>
+ * LikeController负责处理HTTP请求，提供RESTful API接口。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0

@@ -70,6 +70,7 @@ public class UserService implements IUserService {
         userRepository.deleteById(userId);
     }
 
+    @SuppressWarnings("null")
     @Override
     public User updateUser(UserDTO userDTO) {
         if (userDTO == null) {
@@ -78,9 +79,12 @@ public class UserService implements IUserService {
         Long currentUserId = UserContext.getUserId();
         User nUser = userRepository.findById(currentUserId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
-        if (userDTO.getNickName() != null) nUser.setNickName(userDTO.getNickName());
-        if (userDTO.getUserAvatar() != null) nUser.setUserAvatar(userDTO.getUserAvatar());
-        if (userDTO.getUserBio() != null) nUser.setUserBio(userDTO.getUserBio());
+        if (userDTO.getNickName() != null)
+            nUser.setNickName(userDTO.getNickName());
+        if (userDTO.getUserAvatar() != null)
+            nUser.setUserAvatar(userDTO.getUserAvatar());
+        if (userDTO.getUserBio() != null)
+            nUser.setUserBio(userDTO.getUserBio());
         return userRepository.save(nUser);
     }
 

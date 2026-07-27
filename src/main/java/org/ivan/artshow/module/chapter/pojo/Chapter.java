@@ -1,7 +1,7 @@
 package org.ivan.artshow.module.chapter.pojo;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.ivan.artshow.common.config.SnowflakeId;
 
 import java.util.Date;
 
@@ -17,8 +17,7 @@ import java.util.Date;
 @Table(name = "course_outline")
 public class Chapter {
     @Id
-    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
-    @GeneratedValue(generator = "snowflake")
+    @SnowflakeId
     @Column(name = "chapter_id")
     private Long chapterId;
 

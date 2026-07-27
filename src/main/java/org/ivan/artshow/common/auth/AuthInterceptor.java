@@ -7,6 +7,7 @@ import org.ivan.artshow.common.exception.BizException;
 import org.ivan.artshow.common.utils.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,26 +15,34 @@ import org.springframework.web.servlet.HandlerInterceptor;
 /**
  * Authentication Interceptor
  *
- * <p>Implements Spring MVC HandlerInterceptor to intercept requests requiring authentication.
- * Validates JWT token before reaching the Controller and stores user ID in context.</p>
+ * <p>
+ * Implements Spring MVC HandlerInterceptor to intercept requests requiring
+ * authentication.
+ * Validates JWT token before reaching the Controller and stores user ID in
+ * context.
+ * </p>
  *
- * <p>Main Features:</p>
+ * <p>
+ * Main Features:
+ * </p>
  * <ul>
- *   <li>Extract JWT token from request headers</li>
- *   <li>Validate token validity</li>
- *   <li>Parse token and extract user ID</li>
- *   <li>Store user ID in UserContext</li>
- *   <li>Clean up ThreadLocal after request completion</li>
+ * <li>Extract JWT token from request headers</li>
+ * <li>Validate token validity</li>
+ * <li>Parse token and extract user ID</li>
+ * <li>Store user ID in UserContext</li>
+ * <li>Clean up ThreadLocal after request completion</li>
  * </ul>
  *
- * <p>Interceptor Processing Flow:</p>
+ * <p>
+ * Interceptor Processing Flow:
+ * </p>
  * <ol>
- *   <li>Skip OPTIONS preflight requests</li>
- *   <li>Get token from Authorization header</li>
- *   <li>Handle Bearer prefix</li>
- *   <li>Validate and parse token</li>
- *   <li>Store in user context</li>
- *   <li>Clean up context after request</li>
+ * <li>Skip OPTIONS preflight requests</li>
+ * <li>Get token from Authorization header</li>
+ * <li>Handle Bearer prefix</li>
+ * <li>Validate and parse token</li>
+ * <li>Store in user context</li>
+ * <li>Clean up context after request</li>
  * </ol>
  *
  * @author Ivan Horn
@@ -47,14 +56,16 @@ public class AuthInterceptor implements HandlerInterceptor {
     /**
      * Pre-handle method for request interception
      *
-     * @param request Current HTTP request
+     * @param request  Current HTTP request
      * @param response Current HTTP response
-     * @param handler Handler method object
+     * @param handler  Handler method object
      * @return true to allow, false to block
      * @throws BizException When token is missing or invalid
      */
+    @SuppressWarnings("null")
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+            @NonNull Object handler) throws Exception {
 
         String requestURI = request.getRequestURI();
         String method = request.getMethod();
@@ -74,14 +85,16 @@ public class AuthInterceptor implements HandlerInterceptor {
             // Check method-level @Public annotation
             Public publicAnnotation = handlerMethod.getMethodAnnotation(Public.class);
             if (publicAnnotation != null) {
-                log.debug("Method {} is marked as @Public, skipping authentication", handlerMethod.getMethod().getName());
+                log.debug("Method {} is marked as @Public, skipping authentication",
+                        handlerMethod.getMethod().getName());
                 return true;
             }
 
             // Check class-level @Public annotation
             publicAnnotation = handlerMethod.getBeanType().getAnnotation(Public.class);
             if (publicAnnotation != null) {
-                log.debug("Controller {} is marked as @Public, skipping authentication", handlerMethod.getBeanType().getSimpleName());
+                log.debug("Controller {} is marked as @Public, skipping authentication",
+                        handlerMethod.getBeanType().getSimpleName());
                 return true;
             }
         }
@@ -89,7 +102,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         // 3. Get Token from Authorization header
         String token = request.getHeader("Authorization");
 
-        log.debug("Authorization header: {}", token != null ? token.substring(0, Math.min(20, token.length())) + "..." : "null");
+        log.debug("Authorization header: {}",
+                token != null ? token.substring(0, Math.min(20, token.length())) + "..." : "null");
 
         if (!StringUtils.hasLength(token)) {
             log.warn("Request {} missing Authorization header", requestURI);
@@ -152,16 +166,21 @@ public class AuthInterceptor implements HandlerInterceptor {
     /**
      * Cleanup method after request completion
      *
-     * <p>Executed regardless of request success or failure.
-     * Used to clean up user ID in ThreadLocal to prevent memory leaks.</p>
+     * <p>
+     * Executed regardless of request success or failure.
+     * Used to clean up user ID in ThreadLocal to prevent memory leaks.
+     * </p>
      *
-     * @param request Current HTTP request
+     * @param request  Current HTTP request
      * @param response Current HTTP response
-     * @param handler Handler method object
-     * @param ex Exception object (if any)
+     * @param handler  Handler method object
+     * @param ex       Exception object (if any)
      */
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(@SuppressWarnings("null") HttpServletRequest request,
+            @SuppressWarnings("null") HttpServletResponse response, @SuppressWarnings("null") Object handler,
+            @SuppressWarnings("null") Exception ex)
+            throws Exception {
         // 7. Clean up ThreadLocal to prevent memory leaks
         UserContext.remove();
         log.debug("UserContext cleanup completed");

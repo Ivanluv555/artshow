@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 /**
  * LikeService - 业务服务实现类
  *
- * <p>LikeService实现具体的业务逻辑。</p>
+ * <p>
+ * LikeService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -30,10 +32,11 @@ public class LikeService implements ILikeService {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Like nlike = new Like();
-        BeanUtils.copyProperties(like,nlike);
+        BeanUtils.copyProperties(like, nlike);
         return likeRepository.save(nlike);
     }
 
+    @SuppressWarnings("null")
     @Override
     public Like updateLike(LikeDTO like) {
         if (like == null) {

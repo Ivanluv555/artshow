@@ -13,7 +13,9 @@ import java.util.List;
 /**
  * ArtsubService - 业务服务实现类
  *
- * <p>ArtsubService实现具体的业务逻辑。</p>
+ * <p>
+ * ArtsubService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -32,10 +34,11 @@ public class ArtsubService implements IArtsubService {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Artsubcategory artsub = new Artsubcategory();
-        BeanUtils.copyProperties(artSubCategory,artsub);
+        BeanUtils.copyProperties(artSubCategory, artsub);
         return artSubRepository.save(artsub);
     }
 
+    @SuppressWarnings("null")
     @Override
     public Artsubcategory updateArtSub(ArtsubcategoryDTO artsub) {
         if (artsub == null) {
@@ -45,8 +48,9 @@ public class ArtsubService implements IArtsubService {
         if (artsubId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Artsubcategory nartsub = artSubRepository.findById(artsubId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(artsub,nartsub);
+        Artsubcategory nartsub = artSubRepository.findById(artsubId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(artsub, nartsub);
         return artSubRepository.save(nartsub);
     }
 

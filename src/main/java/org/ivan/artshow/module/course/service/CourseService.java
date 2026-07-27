@@ -18,7 +18,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Service
-public class CourseService implements ICourseService{
+public class CourseService implements ICourseService {
     private final CourseRepository courseRepository;
 
     public CourseService(CourseRepository courseRepository) {
@@ -31,7 +31,7 @@ public class CourseService implements ICourseService{
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Course nCourse = new Course();
-        BeanUtils.copyProperties(course,nCourse);
+        BeanUtils.copyProperties(course, nCourse);
         return courseRepository.save(nCourse);
     }
 
@@ -43,6 +43,7 @@ public class CourseService implements ICourseService{
         courseRepository.deleteById(courseId);
     }
 
+    @SuppressWarnings("null")
     @Override
     public Course updateCourse(CourseDTO Course) {
         if (Course == null) {
@@ -52,8 +53,8 @@ public class CourseService implements ICourseService{
         if (courseId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Course nCourse = courseRepository.findById(courseId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(Course,nCourse);
+        Course nCourse = courseRepository.findById(courseId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(Course, nCourse);
         return courseRepository.save(nCourse);
     }
 
@@ -70,7 +71,7 @@ public class CourseService implements ICourseService{
         if (courseIdList == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        return  courseRepository.findAllById(courseIdList);
+        return courseRepository.findAllById(courseIdList);
     }
 
     @Override
