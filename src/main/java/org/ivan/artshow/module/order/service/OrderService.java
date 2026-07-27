@@ -33,7 +33,9 @@ import java.util.Random;
 /**
  * OrderService - 业务服务实现类
  *
- * <p>OrderService实现具体的业务逻辑。</p>
+ * <p>
+ * OrderService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -49,12 +51,12 @@ public class OrderService implements IOrderService {
     private final CourseRepository courseRepository;
 
     public OrderService(OrderRepository orderRepository,
-                        AddRepository addRepository,
-                        OrderShippingAddressRepository shippingAddressRepository,
-                        SciRepository sciRepository,
-                        ProductRepository productRepository,
-                        OrderitemRepository orderitemRepository,
-                        CourseRepository courseRepository) {
+            AddRepository addRepository,
+            OrderShippingAddressRepository shippingAddressRepository,
+            SciRepository sciRepository,
+            ProductRepository productRepository,
+            OrderitemRepository orderitemRepository,
+            CourseRepository courseRepository) {
         this.orderRepository = orderRepository;
         this.addRepository = addRepository;
         this.shippingAddressRepository = shippingAddressRepository;
@@ -80,6 +82,7 @@ public class OrderService implements IOrderService {
 
         // 处理地址快照
         if (orderDTO.getAddressId() != null) {
+            @SuppressWarnings("null")
             Address userAddr = addRepository.findById(orderDTO.getAddressId())
                     .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
 
@@ -126,6 +129,7 @@ public class OrderService implements IOrderService {
         // 订单通常不允许用户直接Update，通常是修改状态（取消/支付）
         // 这里仅做示例修复
         Long currentUserId = UserContext.getUserId();
+        @SuppressWarnings("null")
         Order order = orderRepository.findById(orderDTO.getOrderId())
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
 
@@ -160,6 +164,7 @@ public class OrderService implements IOrderService {
         return orderRepository.findByUserId(currentUserId);
     }
 
+    @SuppressWarnings("null")
     @Override
     public List<Order> queryAllOrderBatch(List<Integer> userIdlist) {
         if (userIdlist == null) {
@@ -222,6 +227,7 @@ public class OrderService implements IOrderService {
                 throw new BizException(ResultCodes.INVALID_PARAM, "购物车项数量无效");
             }
 
+            @SuppressWarnings("null")
             Product product = productRepository.findById(cartItem.getProductId())
                     .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在: " + cartItem.getProductId()));
 
@@ -233,7 +239,7 @@ public class OrderService implements IOrderService {
             // 检查库存
             if (product.getStock() == null || product.getStock() < cartItem.getQuantity()) {
                 throw new BizException(ResultCodes.INVALID_PARAM,
-                    "商品 [" + product.getName() + "] 库存不足，当前库存: " + product.getStock());
+                        "商品 [" + product.getName() + "] 库存不足，当前库存: " + product.getStock());
             }
 
             products.add(product);
@@ -277,7 +283,7 @@ public class OrderService implements IOrderService {
             int affectedRows = productRepository.deductStock(product.getId(), cartItem.getQuantity());
             if (affectedRows == 0) {
                 throw new BizException(ResultCodes.INVALID_PARAM,
-                    "商品 [" + product.getName() + "] 库存不足");
+                        "商品 [" + product.getName() + "] 库存不足");
             }
 
             // 创建订单项（保存价格快照和商品信息快照）
@@ -340,7 +346,8 @@ public class OrderService implements IOrderService {
         }
 
         // 5. 检查是否已购买
-        boolean hasPurchased = orderitemRepository.existsPaidCourseByUserIdAndCourseId(currentUserId, courseId.longValue());
+        boolean hasPurchased = orderitemRepository.existsPaidCourseByUserIdAndCourseId(currentUserId,
+                courseId.longValue());
         if (hasPurchased) {
             throw new BizException(ResultCodes.INVALID_PARAM, "您已经购买过该课程");
         }
@@ -394,7 +401,7 @@ public class OrderService implements IOrderService {
         // 状态检查
         if (!"pending".equals(order.getStatus()) && !"paid".equals(order.getStatus())) {
             throw new BizException(ResultCodes.INVALID_PARAM,
-                "只有待支付或已支付未发货的订单可以取消");
+                    "只有待支付或已支付未发货的订单可以取消");
         }
 
         // 恢复库存（仅对商品订单，课程订单无需恢复库存）

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 /**
  * ChapterService - 业务服务实现类
  *
- * <p>ChapterService实现具体的业务逻辑。</p>
+ * <p>
+ * ChapterService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -23,13 +25,14 @@ public class ChapterService implements IChapterService {
     public ChapterService(ChapterRepository chapterRepository) {
         this.chapterRepository = chapterRepository;
     }
+
     @Override
     public Chapter addChapter(ChapterDTO chapter) {
         if (chapter == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Chapter nChapter = new Chapter();
-        BeanUtils.copyProperties(chapter,nChapter);
+        BeanUtils.copyProperties(chapter, nChapter);
         return chapterRepository.save(nChapter);
     }
 
@@ -41,6 +44,7 @@ public class ChapterService implements IChapterService {
         chapterRepository.deleteById(chapterId);
     }
 
+    @SuppressWarnings("null")
     @Override
     public Chapter updateChapter(ChapterDTO Chapter) {
         if (Chapter == null) {
@@ -50,8 +54,9 @@ public class ChapterService implements IChapterService {
         if (chapterId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Chapter nChapter = chapterRepository.findById(chapterId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(Chapter,nChapter);
+        Chapter nChapter = chapterRepository.findById(chapterId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(Chapter, nChapter);
         return chapterRepository.save(nChapter);
     }
 
@@ -61,6 +66,6 @@ public class ChapterService implements IChapterService {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         return chapterRepository.findById(chapterId)
-            .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * InstructorService: 业务服务接口 定义业务方法规范
+ * 
  * @author Ivan Horn
  * @since 1.0.0
  */
@@ -28,11 +29,12 @@ public class InstructorService implements IInstructorService {
         if (instructor == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-         Instructor ninstructor = new Instructor();
-         BeanUtils.copyProperties(instructor,ninstructor);
-         return instructorRepository.save(ninstructor);
+        Instructor ninstructor = new Instructor();
+        BeanUtils.copyProperties(instructor, ninstructor);
+        return instructorRepository.save(ninstructor);
     }
 
+    @SuppressWarnings("null")
     @Override
     public Instructor updateInstructor(InstructorDTO instructor) {
         if (instructor == null) {
@@ -42,8 +44,9 @@ public class InstructorService implements IInstructorService {
         if (instructorId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Instructor ninstructor = instructorRepository.findById(instructorId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(instructor,ninstructor);
+        Instructor ninstructor = instructorRepository.findById(instructorId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(instructor, ninstructor);
         return instructorRepository.save(ninstructor);
     }
 

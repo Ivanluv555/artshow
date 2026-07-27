@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 /**
  * OrderitemService - 业务服务实现类
  *
- * <p>OrderitemService实现具体的业务逻辑。</p>
+ * <p>
+ * OrderitemService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -25,25 +27,26 @@ public class OrderitemService implements IOrderitemService {
     }
 
     @Override
-    public Orderitem addOrderItem(OrderitemDTO orderItem){
+    public Orderitem addOrderItem(OrderitemDTO orderItem) {
         if (orderItem == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Orderitem norderItem = new Orderitem();
-        BeanUtils.copyProperties(orderItem,norderItem);
+        BeanUtils.copyProperties(orderItem, norderItem);
         return orderItemRepository.save(norderItem);
     }
 
     @Override
-    public void deleteOrderItem(Long OrderItemId){
+    public void deleteOrderItem(Long OrderItemId) {
         if (OrderItemId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         orderItemRepository.deleteById(OrderItemId);
     }
 
+    @SuppressWarnings("null")
     @Override
-    public Orderitem updateOrderItem(OrderitemDTO OrderItem){
+    public Orderitem updateOrderItem(OrderitemDTO OrderItem) {
         if (OrderItem == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -51,10 +54,12 @@ public class OrderitemService implements IOrderitemService {
         if (OrderItemId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Orderitem norderItem = orderItemRepository.findById(OrderItemId).orElseThrow(()-> new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(OrderItem,norderItem);
+        Orderitem norderItem = orderItemRepository.findById(OrderItemId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(OrderItem, norderItem);
         return orderItemRepository.save(norderItem);
     }
+
     @Override
     public Orderitem queryOrderItem(Long orderItemId) {
         if (orderItemId == null) {

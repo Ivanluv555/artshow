@@ -13,19 +13,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * UserInstructorRelationshipService - 用户讲师关系服务实现类
  *
- * <p>实现用户与讲师关系的业务逻辑。</p>
+ * <p>
+ * 实现用户与讲师关系的业务逻辑。
+ * </p>
  *
- * <p>核心功能：</p>
+ * <p>
+ * 核心功能：
+ * </p>
  * <ul>
- *   <li>在课程报名时自动建立用户与讲师的关系</li>
- *   <li>防止重复创建关系</li>
- *   <li>提供关系查询功能</li>
- *   <li>统计用户的讲师数量和讲师的学生数量</li>
+ * <li>在课程报名时自动建立用户与讲师的关系</li>
+ * <li>防止重复创建关系</li>
+ * <li>提供关系查询功能</li>
+ * <li>统计用户的讲师数量和讲师的学生数量</li>
  * </ul>
  *
  * @author Ivan Horn
@@ -82,6 +85,7 @@ public class UserInstructorRelationshipService implements IUserInstructorRelatio
         return relationshipRepository.existsByUserIdAndInstructorId(userId, instructorId);
     }
 
+    @SuppressWarnings("null")
     @Override
     public List<Instructor> findInstructorsByUserId(Long userId) {
         if (userId == null) {

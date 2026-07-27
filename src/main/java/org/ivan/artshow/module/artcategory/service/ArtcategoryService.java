@@ -13,7 +13,9 @@ import java.util.List;
 /**
  * ArtcategoryService - 业务服务实现类
  *
- * <p>ArtcategoryService实现具体的业务逻辑。</p>
+ * <p>
+ * ArtcategoryService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -32,10 +34,11 @@ public class ArtcategoryService implements IArtcategoryService {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Artcategory artCategory = new Artcategory();
-        BeanUtils.copyProperties(artcategory,artCategory);
+        BeanUtils.copyProperties(artcategory, artCategory);
         return artCateRepository.save(artCategory);
     }
 
+    @SuppressWarnings("null")
     @Override
     public Artcategory updateCate(ArtcategoryDTO artcategory) {
         if (artcategory == null) {
@@ -45,8 +48,9 @@ public class ArtcategoryService implements IArtcategoryService {
         if (artcateId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Artcategory artCategory = artCateRepository.findById(artcateId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(artcategory,artCategory);
+        Artcategory artCategory = artCateRepository.findById(artcateId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(artcategory, artCategory);
         return artCateRepository.save(artCategory);
     }
 

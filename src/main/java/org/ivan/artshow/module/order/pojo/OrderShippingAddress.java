@@ -1,7 +1,7 @@
 package org.ivan.artshow.module.order.pojo;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.ivan.artshow.common.config.SnowflakeId;
 
 /**
  * OrderShippingAddress - 实体类
@@ -15,8 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "order_shipping_address")
 public class OrderShippingAddress {
     @Id
-    @GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
-    @GeneratedValue(generator = "snowflake")
+    @SnowflakeId
     @Column(name = "shipping_address_id")
     private Long shippingAddressId;
 

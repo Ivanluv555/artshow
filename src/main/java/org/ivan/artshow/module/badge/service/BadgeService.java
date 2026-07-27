@@ -13,13 +13,15 @@ import java.util.List;
 /**
  * BadgeService - 业务服务实现类
  *
- * <p>BadgeService实现具体的业务逻辑。</p>
+ * <p>
+ * BadgeService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
  */
 @Service
-public class BadgeService implements IBadgeService{
+public class BadgeService implements IBadgeService {
     private final BadgeRepository badgeRepository;
 
     public BadgeService(BadgeRepository badgeRepository) {
@@ -27,25 +29,26 @@ public class BadgeService implements IBadgeService{
     }
 
     @Override
-    public Badge addBadge(BadgeDTO badge){
+    public Badge addBadge(BadgeDTO badge) {
         if (badge == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Badge nbadge = new Badge();
-        BeanUtils.copyProperties(badge,nbadge);
+        BeanUtils.copyProperties(badge, nbadge);
         return badgeRepository.save(nbadge);
     }
 
     @Override
-    public void deleteBadge(Long badgeId){
+    public void deleteBadge(Long badgeId) {
         if (badgeId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         badgeRepository.deleteById(badgeId);
     }
 
+    @SuppressWarnings("null")
     @Override
-    public Badge updateBadge(BadgeDTO Badge){
+    public Badge updateBadge(BadgeDTO Badge) {
         if (Badge == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -53,16 +56,17 @@ public class BadgeService implements IBadgeService{
         if (BadgeId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        Badge nbadge = badgeRepository.findById(BadgeId).orElseThrow(()-> new BizException(ResultCodes.NOTFOUND));
-        BeanUtils.copyProperties(Badge,nbadge);
+        Badge nbadge = badgeRepository.findById(BadgeId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        BeanUtils.copyProperties(Badge, nbadge);
         return badgeRepository.save(nbadge);
     }
+
     @Override
     public Badge queryBadge(Long badgeId) {
         if (badgeId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        return badgeRepository.findById(badgeId).orElseThrow(()-> new BizException(ResultCodes.NOTFOUND));
+        return badgeRepository.findById(badgeId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 
     @Override

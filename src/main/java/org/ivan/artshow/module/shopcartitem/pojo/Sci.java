@@ -1,6 +1,7 @@
 package org.ivan.artshow.module.shopcartitem.pojo;
 
 import jakarta.persistence.*;
+import org.ivan.artshow.common.config.SnowflakeId;
 
 import java.util.Date;
 
@@ -16,8 +17,7 @@ import java.util.Date;
 @Table(name = "shopping_cart_item")
 public class Sci {
     @Id
-    @GeneratedValue(generator = "snowflake")
-    @org.hibernate.annotations.GenericGenerator(name = "snowflake", strategy = "org.ivan.artshow.common.config.SnowflakeIdentifierGenerator")
+    @SnowflakeId
     @Column(name = "cart_item_id")
     private Long cartItemId;
 

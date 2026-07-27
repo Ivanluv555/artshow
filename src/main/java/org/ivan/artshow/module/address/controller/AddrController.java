@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.ivan.artshow.common.auth.*;
 import org.ivan.artshow.common.core.result.Result;
 import org.ivan.artshow.module.address.pojo.Address;
 import org.ivan.artshow.module.address.pojo.dto.AddressDTO;
@@ -33,6 +32,7 @@ public class AddrController {
 
     /**
      * 添加用户地址 - 需要登录
+     * 
      * @param address 地址信息DTO
      * @return 新增的地址对象
      */
@@ -46,6 +46,7 @@ public class AddrController {
 
     /**
      * 删除用户地址 - 需要登录
+     * 
      * @param addressId 地址ID
      */
     @DeleteMapping
@@ -57,6 +58,7 @@ public class AddrController {
 
     /**
      * 更新用户地址 - 需要登录
+     * 
      * @param address 地址信息DTO
      * @return 更新后的地址对象
      */
@@ -70,6 +72,7 @@ public class AddrController {
 
     /**
      * 查询用户地址 - 需要登录
+     * 
      * @param addressId 地址ID
      * @return 地址对象
      */
@@ -83,12 +86,12 @@ public class AddrController {
 
     /**
      * 设置默认地址 - 需要登录
+     * 
      * @param addressId 地址ID
      * @return 设置后的地址对象
      */
     @PutMapping("/default")
-    @Operation(summary = "Set Default Address",
-               description = "Set an address as default, other addresses will be set as non-default")
+    @Operation(summary = "Set Default Address", description = "Set an address as default, other addresses will be set as non-default")
     @SecurityRequirement(name = "BearerAuth")
     public Result<Address> setDefaultAddress(@RequestParam @Parameter(description = "Address ID") Long addressId) {
         Address address = addrService.setDefaultAddress(addressId);
@@ -97,6 +100,7 @@ public class AddrController {
 
     /**
      * 查询我的所有地址 - 需要登录
+     * 
      * @return 地址列表
      */
     @GetMapping("/my")
@@ -109,6 +113,7 @@ public class AddrController {
 
     /**
      * 查询我的默认地址 - 需要登录
+     * 
      * @return 默认地址
      */
     @GetMapping("/my/default")
