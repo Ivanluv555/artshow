@@ -24,12 +24,7 @@ class CourseDetailScreen extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black45,
-                      blurRadius: 4,
-                    ),
-                  ],
+                  shadows: [Shadow(color: Colors.black45, blurRadius: 4)],
                 ),
               ),
               background: course.coverImageUrl != null
@@ -47,7 +42,11 @@ class CourseDetailScreen extends StatelessWidget {
                     )
                   : Container(
                       color: Colors.purple.shade300,
-                      child: const Icon(Icons.school, size: 64, color: Colors.white),
+                      child: const Icon(
+                        Icons.school,
+                        size: 64,
+                        color: Colors.white,
+                      ),
                     ),
             ),
           ),
@@ -66,14 +65,19 @@ class CourseDetailScreen extends StatelessWidget {
                       if (course.price != null)
                         Text(
                           '\$${course.price!.toStringAsFixed(2)}',
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          style: Theme.of(context).textTheme.headlineSmall
+                              ?.copyWith(
                                 color: Colors.purple.shade700,
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
                       Row(
                         children: [
-                          const Icon(Icons.people, size: 20, color: Colors.grey),
+                          const Icon(
+                            Icons.people,
+                            size: 20,
+                            color: Colors.grey,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             '${course.studentCount ?? 0} students',
@@ -99,8 +103,8 @@ class CourseDetailScreen extends StatelessWidget {
                   Text(
                     'About this course',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: UIConstants.paddingSmall),
                   Text(
@@ -126,7 +130,9 @@ class CourseDetailScreen extends StatelessWidget {
                         backgroundColor: Colors.purple.shade600,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(UIConstants.radiusMedium),
+                          borderRadius: BorderRadius.circular(
+                            UIConstants.radiusMedium,
+                          ),
                         ),
                       ),
                       child: const Text(

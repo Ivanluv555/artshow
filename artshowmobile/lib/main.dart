@@ -15,9 +15,7 @@ class ArtShowApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthService()..init()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => AuthService()..init())],
       child: MaterialApp(
         title: 'ArtShow Mobile',
         theme: ThemeData(
@@ -41,10 +39,7 @@ class ArtShowApp extends StatelessWidget {
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               elevation: 2,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 12,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
           ),
         ),
@@ -79,9 +74,8 @@ class _SplashScreenState extends State<SplashScreen> {
       // Navigate based on auth status
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => authService.isLoggedIn
-              ? const HomeScreen()
-              : const LoginScreen(),
+          builder: (_) =>
+              authService.isLoggedIn ? const HomeScreen() : const LoginScreen(),
         ),
       );
     }
@@ -95,21 +89,14 @@ class _SplashScreenState extends State<SplashScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.purple.shade400,
-              Colors.blue.shade600,
-            ],
+            colors: [Colors.purple.shade400, Colors.blue.shade600],
           ),
         ),
         child: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.palette,
-                size: 100,
-                color: Colors.white,
-              ),
+              Icon(Icons.palette, size: 100, color: Colors.white),
               SizedBox(height: 24),
               Text(
                 'ArtShow',
@@ -122,10 +109,7 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(height: 8),
               Text(
                 'Art Exhibition & Courses',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 16,
-                ),
+                style: TextStyle(color: Colors.white70, fontSize: 16),
               ),
               SizedBox(height: 48),
               CircularProgressIndicator(

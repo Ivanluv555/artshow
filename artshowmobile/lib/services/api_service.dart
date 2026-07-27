@@ -38,9 +38,7 @@ class ApiService {
 
   /// Get headers with authorization
   Map<String, String> _getHeaders() {
-    final headers = <String, String>{
-      'Content-Type': 'application/json',
-    };
+    final headers = <String, String>{'Content-Type': 'application/json'};
     if (_token != null && _token!.isNotEmpty) {
       headers['Authorization'] = 'Bearer $_token';
     }
@@ -63,10 +61,7 @@ class ApiService {
     final response = await http.post(
       Uri.parse(ApiConstants.url(ApiConstants.login)),
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'userName': username,
-        'password': password,
-      }),
+      body: json.encode({'userName': username, 'password': password}),
     );
 
     final jsonData = _handleResponse(response);
@@ -113,7 +108,8 @@ class ApiService {
     final jsonData = _handleResponse(response);
     final result = ApiResult<List<ArtCategory>>.fromJson(
       jsonData,
-      (data) => (data as List).map((item) => ArtCategory.fromJson(item)).toList(),
+      (data) =>
+          (data as List).map((item) => ArtCategory.fromJson(item)).toList(),
     );
 
     if (result.isSuccess && result.data != null) {
@@ -153,7 +149,8 @@ class ApiService {
     final jsonData = _handleResponse(response);
     final result = ApiResult<List<Instructor>>.fromJson(
       jsonData,
-      (data) => (data as List).map((item) => Instructor.fromJson(item)).toList(),
+      (data) =>
+          (data as List).map((item) => Instructor.fromJson(item)).toList(),
     );
 
     if (result.isSuccess && result.data != null) {
@@ -186,7 +183,9 @@ class ApiService {
   /// Get instructor by ID
   Future<Instructor> getInstructor(int instructorId) async {
     final response = await http.get(
-      Uri.parse('${ApiConstants.url(ApiConstants.instructor)}?instructorId=$instructorId'),
+      Uri.parse(
+        '${ApiConstants.url(ApiConstants.instructor)}?instructorId=$instructorId',
+      ),
       headers: _getHeaders(),
     );
 

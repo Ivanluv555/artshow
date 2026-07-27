@@ -4,11 +4,7 @@ class ApiResult<T> {
   final String msg;
   final T? data;
 
-  ApiResult({
-    required this.code,
-    required this.msg,
-    this.data,
-  });
+  ApiResult({required this.code, required this.msg, this.data});
 
   bool get isSuccess => code == 200;
 

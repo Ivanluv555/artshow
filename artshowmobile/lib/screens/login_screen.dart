@@ -66,10 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.purple.shade400,
-              Colors.blue.shade600,
-            ],
+            colors: [Colors.purple.shade400, Colors.blue.shade600],
           ),
         ),
         child: SafeArea(
@@ -97,7 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: UIConstants.paddingMedium),
                         Text(
                           AppConstants.appName,
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          style: Theme.of(context).textTheme.headlineMedium
+                              ?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.purple.shade700,
                               ),
@@ -105,9 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: UIConstants.paddingSmall),
                         Text(
                           'Art Exhibition & Courses',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey.shade600,
-                              ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: Colors.grey.shade600),
                         ),
                         const SizedBox(height: UIConstants.paddingLarge),
 
@@ -118,7 +115,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             labelText: 'Username',
                             prefixIcon: const Icon(Icons.person),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(UIConstants.radiusMedium),
+                              borderRadius: BorderRadius.circular(
+                                UIConstants.radiusMedium,
+                              ),
                             ),
                           ),
                           validator: (value) {
@@ -150,7 +149,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                             ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(UIConstants.radiusMedium),
+                              borderRadius: BorderRadius.circular(
+                                UIConstants.radiusMedium,
+                              ),
                             ),
                           ),
                           validator: (value) {
@@ -172,7 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               backgroundColor: Colors.purple.shade600,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(UIConstants.radiusMedium),
+                                borderRadius: BorderRadius.circular(
+                                  UIConstants.radiusMedium,
+                                ),
                               ),
                             ),
                             child: _isLoading
@@ -181,7 +184,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: 20,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
                                     ),
                                   )
                                 : const Text(
@@ -200,7 +205,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Registration feature coming soon'),
+                                content: Text(
+                                  'Registration feature coming soon',
+                                ),
                               ),
                             );
                           },

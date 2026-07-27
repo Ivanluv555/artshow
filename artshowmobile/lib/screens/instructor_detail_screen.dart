@@ -43,7 +43,8 @@ class InstructorDetailScreen extends StatelessWidget {
                               width: 120,
                               height: 120,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
                               errorWidget: (context, url, error) => const Icon(
                                 Icons.person,
                                 size: 60,
@@ -63,9 +64,9 @@ class InstructorDetailScreen extends StatelessWidget {
                   Text(
                     instructor.name,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
 
                   // Title
@@ -74,8 +75,8 @@ class InstructorDetailScreen extends StatelessWidget {
                     Text(
                       instructor.title!,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.white.withValues(alpha: 0.9),
-                          ),
+                        color: Colors.white.withValues(alpha: 0.9),
+                      ),
                     ),
                   ],
                 ],
@@ -91,8 +92,8 @@ class InstructorDetailScreen extends StatelessWidget {
                   Text(
                     'Biography',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: UIConstants.paddingSmall),
                   Text(
@@ -106,16 +107,14 @@ class InstructorDetailScreen extends StatelessWidget {
                   Text(
                     'Courses by ${instructor.name}',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: UIConstants.paddingMedium),
                   const Card(
                     child: Padding(
                       padding: EdgeInsets.all(UIConstants.paddingMedium),
-                      child: Center(
-                        child: Text('Course list coming soon'),
-                      ),
+                      child: Center(child: Text('Course list coming soon')),
                     ),
                   ),
                 ],

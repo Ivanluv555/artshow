@@ -162,89 +162,91 @@ class _HomeScreenState extends State<HomeScreen> {
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : _error != null
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.error_outline, size: 48, color: Colors.red),
-                        const SizedBox(height: 16),
-                        Text('Error: $_error'),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: _loadData,
-                          child: const Text('Retry'),
-                        ),
-                      ],
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: Colors.red,
                     ),
-                  )
-                : CustomScrollView(
-                    slivers: [
-                      // Banner Carousel
-                      SliverToBoxAdapter(
-                        child: _buildBannerCarousel(),
-                      ),
+                    const SizedBox(height: 16),
+                    Text('Error: $_error'),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: _loadData,
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              )
+            : CustomScrollView(
+                slivers: [
+                  // Banner Carousel
+                  SliverToBoxAdapter(child: _buildBannerCarousel()),
 
-                      // Categories Section
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.all(UIConstants.paddingMedium),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Art Categories',
-                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                              const SizedBox(height: UIConstants.paddingSmall),
-                              _buildCategoryChips(),
-                            ],
+                  // Categories Section
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(UIConstants.paddingMedium),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Art Categories',
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
+                          const SizedBox(height: UIConstants.paddingSmall),
+                          _buildCategoryChips(),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // Products Section
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: UIConstants.paddingMedium,
+                    ),
+                    sliver: SliverToBoxAdapter(
+                      child: Text(
+                        'Art Products',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
+                    ),
+                  ),
 
-                      // Products Section
-                      SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: UIConstants.paddingMedium,
-                        ),
-                        sliver: SliverToBoxAdapter(
-                          child: Text(
-                            'Art Products',
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
-                      ),
-
-                      // Product Grid
-                      SliverPadding(
-                        padding: const EdgeInsets.all(UIConstants.paddingMedium),
-                        sliver: _filteredProducts.isEmpty
-                            ? const SliverToBoxAdapter(
-                                child: Center(
-                                  child: Text('No products available'),
-                                ),
-                              )
-                            : SliverGrid(
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  // Product Grid
+                  SliverPadding(
+                    padding: const EdgeInsets.all(UIConstants.paddingMedium),
+                    sliver: _filteredProducts.isEmpty
+                        ? const SliverToBoxAdapter(
+                            child: Center(child: Text('No products available')),
+                          )
+                        : SliverGrid(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   childAspectRatio: 0.75,
                                   crossAxisSpacing: UIConstants.paddingMedium,
                                   mainAxisSpacing: UIConstants.paddingMedium,
                                 ),
-                                delegate: SliverChildBuilderDelegate(
-                                  (context, index) {
-                                    return ProductCard(product: _filteredProducts[index]);
-                                  },
-                                  childCount: _filteredProducts.length,
-                                ),
-                              ),
-                      ),
-                    ],
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              return ProductCard(
+                                product: _filteredProducts[index],
+                              );
+                            }, childCount: _filteredProducts.length),
+                          ),
                   ),
+                ],
+              ),
       ),
     );
   }
@@ -252,15 +254,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBannerCarousel() {
     final banners = [
       {
-        'image': 'https://via.placeholder.com/800x300/9C27B0/FFFFFF?text=Art+Exhibition',
+        'image':
+            'https://via.placeholder.com/800x300/9C27B0/FFFFFF?text=Art+Exhibition',
         'title': 'Explore Art',
       },
       {
-        'image': 'https://via.placeholder.com/800x300/3F51B5/FFFFFF?text=Online+Courses',
+        'image':
+            'https://via.placeholder.com/800x300/3F51B5/FFFFFF?text=Online+Courses',
         'title': 'Learn Art',
       },
       {
-        'image': 'https://via.placeholder.com/800x300/E91E63/FFFFFF?text=Art+Community',
+        'image':
+            'https://via.placeholder.com/800x300/E91E63/FFFFFF?text=Art+Community',
         'title': 'Join Community',
       },
     ];
@@ -293,9 +298,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CachedNetworkImage(
                   imageUrl: banner['image']!,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Container(
                     color: Colors.grey.shade300,
                     child: const Icon(Icons.error),

@@ -57,49 +57,52 @@ class _InstructorsScreenState extends State<InstructorsScreen> {
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : _error != null
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.error_outline, size: 48, color: Colors.red),
-                        const SizedBox(height: 16),
-                        Text('Error: $_error'),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: _loadInstructors,
-                          child: const Text('Retry'),
-                        ),
-                      ],
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: Colors.red,
                     ),
-                  )
-                : _instructors.isEmpty
-                    ? const Center(child: Text('No instructors available'))
-                    : GridView.builder(
-                        padding: const EdgeInsets.all(UIConstants.paddingMedium),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.8,
-                          crossAxisSpacing: UIConstants.paddingMedium,
-                          mainAxisSpacing: UIConstants.paddingMedium,
+                    const SizedBox(height: 16),
+                    Text('Error: $_error'),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: _loadInstructors,
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              )
+            : _instructors.isEmpty
+            ? const Center(child: Text('No instructors available'))
+            : GridView.builder(
+                padding: const EdgeInsets.all(UIConstants.paddingMedium),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.8,
+                  crossAxisSpacing: UIConstants.paddingMedium,
+                  mainAxisSpacing: UIConstants.paddingMedium,
+                ),
+                itemCount: _instructors.length,
+                itemBuilder: (context, index) {
+                  final instructor = _instructors[index];
+                  return InstructorCard(
+                    instructor: instructor,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              InstructorDetailScreen(instructor: instructor),
                         ),
-                        itemCount: _instructors.length,
-                        itemBuilder: (context, index) {
-                          final instructor = _instructors[index];
-                          return InstructorCard(
-                            instructor: instructor,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => InstructorDetailScreen(
-                                    instructor: instructor,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
+                      );
+                    },
+                  );
+                },
+              ),
       ),
     );
   }

@@ -7,11 +7,7 @@ class CourseCard extends StatelessWidget {
   final Course course;
   final VoidCallback onTap;
 
-  const CourseCard({
-    super.key,
-    required this.course,
-    required this.onTap,
-  });
+  const CourseCard({super.key, required this.course, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +40,21 @@ class CourseCard extends StatelessWidget {
                       errorWidget: (context, url, error) => Container(
                         height: 150,
                         color: Colors.grey.shade200,
-                        child: const Icon(Icons.school, size: 48, color: Colors.grey),
+                        child: const Icon(
+                          Icons.school,
+                          size: 48,
+                          color: Colors.grey,
+                        ),
                       ),
                     )
                   : Container(
                       height: 150,
                       color: Colors.grey.shade200,
-                      child: const Icon(Icons.school, size: 48, color: Colors.grey),
+                      child: const Icon(
+                        Icons.school,
+                        size: 48,
+                        color: Colors.grey,
+                      ),
                     ),
             ),
 
@@ -110,7 +114,11 @@ class CourseCard extends StatelessWidget {
                         ),
                       Row(
                         children: [
-                          const Icon(Icons.people, size: 16, color: Colors.grey),
+                          const Icon(
+                            Icons.people,
+                            size: 16,
+                            color: Colors.grey,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             '${course.studentCount ?? 0}',

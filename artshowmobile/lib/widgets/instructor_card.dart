@@ -38,7 +38,8 @@ class InstructorCard extends StatelessWidget {
                         width: 80,
                         height: 80,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
                         errorWidget: (context, url, error) => const Icon(
                           Icons.person,
                           size: 40,
@@ -46,18 +47,16 @@ class InstructorCard extends StatelessWidget {
                         ),
                       ),
                     )
-                  : const Icon(
-                      Icons.person,
-                      size: 40,
-                      color: Colors.grey,
-                    ),
+                  : const Icon(Icons.person, size: 40, color: Colors.grey),
             ),
 
             const SizedBox(height: UIConstants.paddingSmall),
 
             // Name
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: UIConstants.paddingSmall),
+              padding: const EdgeInsets.symmetric(
+                horizontal: UIConstants.paddingSmall,
+              ),
               child: Text(
                 instructor.name,
                 style: const TextStyle(
@@ -73,13 +72,12 @@ class InstructorCard extends StatelessWidget {
             // Title
             if (instructor.title != null)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: UIConstants.paddingSmall),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: UIConstants.paddingSmall,
+                ),
                 child: Text(
                   instructor.title!,
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,

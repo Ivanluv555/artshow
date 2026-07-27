@@ -39,12 +39,20 @@ class ProductCard extends StatelessWidget {
                           ),
                           errorWidget: (context, url, error) => Container(
                             color: Colors.grey.shade200,
-                            child: const Icon(Icons.image, size: 40, color: Colors.grey),
+                            child: const Icon(
+                              Icons.image,
+                              size: 40,
+                              color: Colors.grey,
+                            ),
                           ),
                         )
                       : Container(
                           color: Colors.grey.shade200,
-                          child: const Icon(Icons.image, size: 40, color: Colors.grey),
+                          child: const Icon(
+                            Icons.image,
+                            size: 40,
+                            color: Colors.grey,
+                          ),
                         ),
                 ),
                 // Certified badge
@@ -114,18 +122,12 @@ class ProductCard extends StatelessWidget {
                 if (product.stock <= 0)
                   const Text(
                     'Out of stock',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(color: Colors.red, fontSize: 12),
                   )
                 else if (product.stock < 10)
                   Text(
                     'Only ${product.stock} left',
-                    style: const TextStyle(
-                      color: Colors.orange,
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(color: Colors.orange, fontSize: 12),
                   ),
               ],
             ),
