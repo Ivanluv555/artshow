@@ -1,0 +1,9 @@
+{
+    "properties": [
+        {
+            "name": "jwt.secret",
+            "type": "java.lang.String",
+            "description": "就是JWT的密钥，JWT的签名和验证都需要这个密钥。"
+        }
+    ]
+}
