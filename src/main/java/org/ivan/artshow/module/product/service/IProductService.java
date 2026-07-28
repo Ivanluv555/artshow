@@ -48,4 +48,17 @@ public interface IProductService {
      * @param quantity 恢复数量
      */
     void restoreStock(Long productId, Integer quantity);
+
+    /**
+     * 为商品设置艺术子分类
+     * @param productId 商品ID
+     * @param subcategoryId 艺术子分类ID
+     */
+    void setProductSubcategory(Long productId, Long subcategoryId);
+
+    /**
+     * 移除商品的艺术子分类
+     * @param productId 商品ID
+     */
+    void removeProductSubcategory(Long productId);
 }

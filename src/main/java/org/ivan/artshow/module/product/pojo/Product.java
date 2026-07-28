@@ -25,6 +25,9 @@ public class Product {
     @Column(name = "merchant_id")
     private Long merchantId;
 
+    @Column(name = "subcategory_id")
+    private Long subcategoryId;
+
     @Column(name="name")
     private String name;
 
@@ -66,6 +69,14 @@ public class Product {
 
     public void setMerchantId(Long merchantId) {
         this.merchantId = merchantId;
+    }
+
+    public Long getSubcategoryId() {
+        return subcategoryId;
+    }
+
+    public void setSubcategoryId(Long subcategoryId) {
+        this.subcategoryId = subcategoryId;
     }
 
     public String getName() {

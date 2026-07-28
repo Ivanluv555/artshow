@@ -3,6 +3,8 @@ package org.ivan.artshow.module.product.service;
 import org.ivan.artshow.common.auth.UserContext;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 import org.ivan.artshow.common.exception.BizException;
+import org.ivan.artshow.module.artsubcategory.repository.ArtsubRepository;
+import org.ivan.artshow.module.merchant.repository.MerchantRepository;
 import org.ivan.artshow.module.product.pojo.dto.ProductDTO;
 import org.ivan.artshow.module.product.pojo.Product;
 import org.ivan.artshow.module.product.repository.ProductRepository;
@@ -14,16 +16,22 @@ import java.util.List;
 
 /**
  * ProductService - 业务服务实现类
- * 
+ *
  * @author Ivan Horn
  * @since 1.0.0
  */
 @Service
 public class ProductService implements IProductService {
     private final ProductRepository productRepository;
+    private final ArtsubRepository artsubRepository;
+    private final MerchantRepository merchantRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository,
+                         ArtsubRepository artsubRepository,
+                         MerchantRepository merchantRepository) {
         this.productRepository = productRepository;
+        this.artsubRepository = artsubRepository;
+        this.merchantRepository = merchantRepository;
     }
 
     @Override
@@ -165,5 +173,71 @@ public class ProductService implements IProductService {
         if (affectedRows == 0) {
             throw new BizException(ResultCodes.NOTFOUND, "商品不存在");
         }
+    }
+
+    @Override
+    @Transactional
+    public void setProductSubcategory(Long productId, Long subcategoryId) {
+        if (productId == null) {
+            throw new BizException(ResultCodes.NULLPOINT, "商品ID不能为空");
+        }
+        if (subcategoryId == null) {
+            throw new BizException(ResultCodes.NULLPOINT, "艺术子分类ID不能为空");
+        }
+
+        // 查询商品
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在"));
+
+        // 权限检查：只有商家本人或管理员可以修改
+        Long currentUserId = UserContext.getUserId();
+        boolean isAdmin = UserContext.isAdmin();
+
+        // 检查是否是商品所属商家
+        boolean isMerchantOwner = merchantRepository.findById(product.getMerchantId())
+                .map(merchant -> merchant.getUserId().equals(currentUserId))
+                .orElse(false);
+
+        if (!isAdmin && !isMerchantOwner) {
+            throw new BizException(ResultCodes.FORBIDDEN, "无权修改此商品的分类");
+        }
+
+        // 验证艺术子分类是否存在
+        if (!artsubRepository.existsById(subcategoryId)) {
+            throw new BizException(ResultCodes.NOTFOUND, "艺术子分类不存在");
+        }
+
+        // 设置子分类
+        product.setSubcategoryId(subcategoryId);
+        productRepository.save(product);
+    }
+
+    @Override
+    @Transactional
+    public void removeProductSubcategory(Long productId) {
+        if (productId == null) {
+            throw new BizException(ResultCodes.NULLPOINT, "商品ID不能为空");
+        }
+
+        // 查询商品
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在"));
+
+        // 权限检查：只有商家本人或管理员可以修改
+        Long currentUserId = UserContext.getUserId();
+        boolean isAdmin = UserContext.isAdmin();
+
+        // 检查是否是商品所属商家
+        boolean isMerchantOwner = merchantRepository.findById(product.getMerchantId())
+                .map(merchant -> merchant.getUserId().equals(currentUserId))
+                .orElse(false);
+
+        if (!isAdmin && !isMerchantOwner) {
+            throw new BizException(ResultCodes.FORBIDDEN, "无权修改此商品的分类");
+        }
+
+        // 移除子分类
+        product.setSubcategoryId(null);
+        productRepository.save(product);
     }
 }

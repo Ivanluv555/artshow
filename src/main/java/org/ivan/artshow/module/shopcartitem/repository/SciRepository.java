@@ -1,6 +1,8 @@
 package org.ivan.artshow.module.shopcartitem.repository;
 
 import org.ivan.artshow.module.shopcartitem.pojo.Sci;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -20,6 +22,21 @@ public interface SciRepository extends JpaRepository<Sci, Long> {
      * @return 购物车项列表
      */
     List<Sci> findByUserId(Long userId);
+
+    /**
+     * 查询用户的购物车（按创建时间倒序）
+     * @param userId 用户ID
+     * @return 购物车项列表
+     */
+    List<Sci> findByUserIdOrderByCreatedAtDesc(Long userId);
+
+    /**
+     * 分页查询用户的购物车（按创建时间倒序）
+     * @param userId 用户ID
+     * @param pageable 分页参数
+     * @return 购物车项分页结果
+     */
+    Page<Sci> findByUserIdOrderByCreatedAtDesc(Long userId, Pageable pageable);
 
     /**
      * 批量查询购物车项（用于结算）

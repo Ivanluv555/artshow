@@ -157,11 +157,29 @@ public class OrderService implements IOrderService {
         return order;
     }
 
-    // 🔒 新增：查我的订单（实现之前的讨论）
+    // 🔒 新增：查我的订单（按创建时间倒序）
     @Override
     public List<Order> findMyOrders() {
         Long currentUserId = UserContext.getUserId();
-        return orderRepository.findByUserId(currentUserId);
+        return orderRepository.findByUserIdOrderByCreatedAtDesc(currentUserId);
+    }
+
+    // 🔒 新增：按状态查询我的订单（按创建时间倒序）
+    @Override
+    public List<Order> findMyOrdersByStatus(String status) {
+        if (status == null || status.trim().isEmpty()) {
+            throw new BizException(ResultCodes.INVALID_PARAM, "订单状态不能为空");
+        }
+
+        // 验证状态值是否合法
+        List<String> validStatuses = List.of("pending", "paid", "shipped", "completed", "cancelled");
+        if (!validStatuses.contains(status.toLowerCase())) {
+            throw new BizException(ResultCodes.INVALID_PARAM,
+                "无效的订单状态，支持的状态：pending(待支付)、paid(已支付)、shipped(已发货)、completed(已完成)、cancelled(已取消)");
+        }
+
+        Long currentUserId = UserContext.getUserId();
+        return orderRepository.findByUserIdAndStatusOrderByCreatedAtDesc(currentUserId, status);
     }
 
     @SuppressWarnings("null")

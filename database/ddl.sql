@@ -157,6 +157,7 @@ CREATE TABLE `user_badge` (
 CREATE TABLE `product` (
                            `product_id` BIGINT NOT NULL COMMENT '产品ID（雪花ID）',
                            `merchant_id` BIGINT NOT NULL COMMENT '商家ID',
+                           `subcategory_id` BIGINT DEFAULT NULL COMMENT '艺术子分类ID',
                            `name` VARCHAR(200) NOT NULL COMMENT '产品名称',
                            `price` DECIMAL(10,2) NOT NULL COMMENT '价格',
                            `stock` INT DEFAULT '0' COMMENT '库存数量',
@@ -167,7 +168,9 @@ CREATE TABLE `product` (
                            `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                            PRIMARY KEY (`product_id`),
                            KEY `idx_merchant_id` (`merchant_id`),
-                           CONSTRAINT `product_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`) ON DELETE CASCADE
+                           KEY `idx_subcategory_id` (`subcategory_id`),
+                           CONSTRAINT `product_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`) ON DELETE CASCADE,
+                           CONSTRAINT `product_ibfk_2` FOREIGN KEY (`subcategory_id`) REFERENCES `art_subcategory` (`subcategory_id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='产品表';
 
 -- 课程表

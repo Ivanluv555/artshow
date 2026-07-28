@@ -20,7 +20,19 @@ public interface IOrderService {
     public Order queryOrder(Long orderId);
     public List<Order> queryAllOrderBatch(List<Integer> userIdlist);
     List<Order> findAllOrders();
+
+    /**
+     * 查询当前用户的所有订单（按创建时间倒序）
+     * @return 订单列表
+     */
     List<Order> findMyOrders();
+
+    /**
+     * 查询当前用户指定状态的订单（按创建时间倒序）
+     * @param status 订单状态：pending-待支付，paid-已支付，shipped-已发货，completed-已完成，cancelled-已取消
+     * @return 订单列表
+     */
+    List<Order> findMyOrdersByStatus(String status);
 
     /**
      * 从购物车创建订单（完整流程）

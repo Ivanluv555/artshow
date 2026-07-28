@@ -67,10 +67,26 @@ public class OrderController {
         return Result.success(orderService.findAllOrders());
     }
 
-    // 查询我的订单 - 需要登录
+    /**
+     * 查询我的订单 - 需要登录
+     * GET /order/my
+     *
+     * 支持按状态筛选，按创建时间倒序排列（最新的在前）
+     *
+     * @param status 可选，订单状态：pending-待支付，paid-已支付，shipped-已发货，completed-已完成，cancelled-已取消
+     * @return 订单列表
+     */
     @GetMapping("/my")
-    public Result<List<Order>> queryMyOrders() {
-        return Result.success(orderService.findMyOrders());
+    public Result<List<Order>> queryMyOrders(@RequestParam(required = false) String status) {
+        List<Order> orders;
+        if (status != null && !status.trim().isEmpty()) {
+            // 按状态筛选
+            orders = orderService.findMyOrdersByStatus(status.trim());
+        } else {
+            // 查询所有订单
+            orders = orderService.findMyOrders();
+        }
+        return Result.success(orders);
     }
 
     /**

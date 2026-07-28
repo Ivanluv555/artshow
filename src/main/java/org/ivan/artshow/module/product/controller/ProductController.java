@@ -76,4 +76,31 @@ public class ProductController {
     public Result<List<Product>> listProducts() {
         return Result.success(productService.findAllProducts());
     }
+
+    /**
+     * 为商品设置艺术子分类 - 需要认证（Service层检查权限：商家本人或管理员）
+     * PUT /product/{productId}/subcategory
+     *
+     * @param productId 商品ID
+     * @param subcategoryId 艺术子分类ID
+     */
+    @PutMapping("/{productId}/subcategory")
+    public Result<Void> setProductSubcategory(
+            @PathVariable Long productId,
+            @RequestParam Long subcategoryId) {
+        productService.setProductSubcategory(productId, subcategoryId);
+        return Result.success(null);
+    }
+
+    /**
+     * 移除商品的艺术子分类 - 需要认证（Service层检查权限：商家本人或管理员）
+     * DELETE /product/{productId}/subcategory
+     *
+     * @param productId 商品ID
+     */
+    @DeleteMapping("/{productId}/subcategory")
+    public Result<Void> removeProductSubcategory(@PathVariable Long productId) {
+        productService.removeProductSubcategory(productId);
+        return Result.success(null);
+    }
 }
