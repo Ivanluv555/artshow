@@ -12,14 +12,15 @@ import org.springframework.stereotype.Service;
 /**
  * CommentService - 业务服务实现类
  *
- * <p>CommentService实现具体的业务逻辑。</p>
+ * <p>
+ * CommentService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
  */
 @Service
-public class CommentService implements ICommentService
-{
+public class CommentService implements ICommentService {
     private final CommentRepository commentRepository;
 
     public CommentService(CommentRepository commentRepository) {
@@ -27,17 +28,17 @@ public class CommentService implements ICommentService
     }
 
     @Override
-    public Comment addComment(CommentDTO comment){
+    public Comment addComment(CommentDTO comment) {
         if (comment == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Comment nComment = new Comment();
-        BeanUtils.copyProperties(comment,nComment);
+        BeanUtils.copyProperties(comment, nComment);
         return commentRepository.save(nComment);
     }
 
     @Override
-    public void deleteComment(Long comment_id){
+    public void deleteComment(Long comment_id) {
         if (comment_id == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -48,6 +49,7 @@ public class CommentService implements ICommentService
 
         // 权限检查：只有评论作者或管理员可以删除
         Long currentUserId = UserContext.getUserId();
+        @SuppressWarnings("deprecation")
         String currentUserRole = UserContext.getRole();
 
         if (!comment.getUserId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
@@ -58,7 +60,7 @@ public class CommentService implements ICommentService
     }
 
     @Override
-    public Comment queryComment(Long comment_id){
+    public Comment queryComment(Long comment_id) {
         if (comment_id == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -66,7 +68,7 @@ public class CommentService implements ICommentService
     }
 
     @Override
-    public Comment updateComment(CommentDTO Comment){
+    public Comment updateComment(CommentDTO Comment) {
         if (Comment == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -81,6 +83,7 @@ public class CommentService implements ICommentService
 
         // 权限检查：只有评论作者或管理员可以修改
         Long currentUserId = UserContext.getUserId();
+        @SuppressWarnings("deprecation")
         String currentUserRole = UserContext.getRole();
 
         if (!nComent.getUserId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {

@@ -51,9 +51,9 @@ public class UserService implements IUserService {
             nUser.setPassword(encryptedPassword);
         }
 
-        // 新注册用户默认角色为USER
-        if (nUser.getRole() == null || nUser.getRole().isEmpty()) {
-            nUser.setRole("USER");
+        // 新注册用户默认为普通用户
+        if (nUser.getIsAdmin() == null) {
+            nUser.setIsAdmin(false);
         }
         return userRepository.save(nUser);
     }
@@ -125,7 +125,7 @@ public class UserService implements IUserService {
             throw new BizException(ResultCodes.ERROR, "用户名或密码错误");
         }
 
-        // 生成包含角色的JWT token
-        return JwtUtils.createToken(user.getUserId(), user.getRole());
+        // 生成包含isAdmin的JWT token
+        return JwtUtils.createToken(user.getUserId(), user.getIsAdmin());
     }
 }

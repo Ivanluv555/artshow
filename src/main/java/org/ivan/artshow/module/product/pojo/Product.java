@@ -22,8 +22,8 @@ public class Product {
     @Column(name="product_id")
     private Long id;
 
-    @Column(name = "seller_id")
-    private Long sellerId;
+    @Column(name = "merchant_id")
+    private Long merchantId;
 
     @Column(name="name")
     private String name;
@@ -60,12 +60,12 @@ public class Product {
         this.id = id;
     }
 
-    public Long getSellerId() {
-        return sellerId;
+    public Long getMerchantId() {
+        return merchantId;
     }
 
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
     }
 
     public String getName() {

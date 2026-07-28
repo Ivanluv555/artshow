@@ -14,13 +14,15 @@ import java.util.List;
 /**
  * PostService - 业务服务实现类
  *
- * <p>PostService实现具体的业务逻辑。</p>
+ * <p>
+ * PostService实现具体的业务逻辑。
+ * </p>
  *
  * @author Ivan Horn
  * @since 1.0.0
  */
 @Service
-public class PostService implements IPostService{
+public class PostService implements IPostService {
     private final PostRepository postRepository;
 
     public PostService(PostRepository postRepository) {
@@ -28,17 +30,17 @@ public class PostService implements IPostService{
     }
 
     @Override
-    public Post addPost(PostDTO post){
+    public Post addPost(PostDTO post) {
         if (post == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
         Post nPost = new Post();
-        BeanUtils.copyProperties(post,nPost);
+        BeanUtils.copyProperties(post, nPost);
         return postRepository.save(nPost);
     }
 
     @Override
-    public void deletePost(Long PostId){
+    public void deletePost(Long PostId) {
         if (PostId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -49,6 +51,7 @@ public class PostService implements IPostService{
 
         // 权限检查：只有帖子作者或管理员可以删除
         Long currentUserId = UserContext.getUserId();
+        @SuppressWarnings("deprecation")
         String currentUserRole = UserContext.getRole();
 
         if (!post.getUserId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
@@ -59,7 +62,7 @@ public class PostService implements IPostService{
     }
 
     @Override
-    public Post updatePost(PostDTO Post){
+    public Post updatePost(PostDTO Post) {
         if (Post == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
@@ -74,6 +77,7 @@ public class PostService implements IPostService{
 
         // 权限检查：只有帖子作者或管理员可以修改
         Long currentUserId = UserContext.getUserId();
+        @SuppressWarnings("deprecation")
         String currentUserRole = UserContext.getRole();
 
         if (!post.getUserId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
@@ -81,20 +85,24 @@ public class PostService implements IPostService{
         }
 
         // 更新帖子内容（不允许修改userId）
-        if (Post.getTitle() != null) post.setTitle(Post.getTitle());
-        if (Post.getDescription() != null) post.setDescription(Post.getDescription());
-        if (Post.getImageUrl() != null) post.setImageUrl(Post.getImageUrl());
-        if (Post.getSubcategoryId() != null) post.setSubcategoryId(Post.getSubcategoryId());
+        if (Post.getTitle() != null)
+            post.setTitle(Post.getTitle());
+        if (Post.getDescription() != null)
+            post.setDescription(Post.getDescription());
+        if (Post.getImageUrl() != null)
+            post.setImageUrl(Post.getImageUrl());
+        if (Post.getSubcategoryId() != null)
+            post.setSubcategoryId(Post.getSubcategoryId());
 
         return postRepository.save(post);
     }
 
     @Override
-    public Post queryPost(Long postId){
+    public Post queryPost(Long postId) {
         if (postId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        return postRepository.findById(postId).orElseThrow(()->new BizException(ResultCodes.NOTFOUND));
+        return postRepository.findById(postId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
     }
 
     @Override

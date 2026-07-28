@@ -58,28 +58,42 @@ public class JwtUtils {
      * @return JWT令牌字符串
      */
     public static String createToken(Long userId) {
-        return createToken(userId, null);
+        return createToken(userId, false);
     }
 
     /**
-     * 生成JWT令牌（包含角色）
+     * 生成JWT令牌（包含isAdmin）
      *
      * @param userId 用户ID
-     * @param role 用户角色
+     * @param isAdmin 是否为管理员
      * @return JWT令牌字符串
      */
-    public static String createToken(Long userId, String role) {
+    public static String createToken(Long userId, Boolean isAdmin) {
         var builder = Jwts.builder()
                 .subject(String.valueOf(userId))
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(getKey());
 
-        if (role != null && !role.isEmpty()) {
-            builder.claim("role", role);
+        if (isAdmin != null) {
+            builder.claim("isAdmin", isAdmin);
         }
 
         return builder.compact();
+    }
+
+    /**
+     * 生成JWT令牌（兼容旧版role参数）
+     *
+     * @param userId 用户ID
+     * @param role 用户角色
+     * @return JWT令牌字符串
+     * @deprecated 使用 createToken(Long, Boolean) 替代
+     */
+    @Deprecated
+    public static String createTokenWithRole(Long userId, String role) {
+        boolean isAdmin = "ADMIN".equals(role);
+        return createToken(userId, isAdmin);
     }
 
     /**

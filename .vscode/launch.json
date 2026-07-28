@@ -1,10 +1,13 @@
+// 启动配置
+// 你可以在此处添加更多的启动配置
+// 有关详细信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
 {
     "version": "0.2.0",
     "configurations": [
         {
             "type": "java",
-            "name": "Launch ArtshowApplication",
-            "request": "launch",
+            "name": "启动",
+            "request": "launch", // 启动请求
             "mainClass": "org.ivan.artshow.ArtshowApplication",
             "projectName": "artshow"
         }

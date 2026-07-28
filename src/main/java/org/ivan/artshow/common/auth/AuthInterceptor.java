@@ -120,15 +120,13 @@ public class AuthInterceptor implements HandlerInterceptor {
         try {
             io.jsonwebtoken.Claims claims = JwtUtils.parseClaims(token);
             Long userId = Long.parseLong(claims.getSubject());
-            String role = claims.get("role", String.class);
+            Boolean isAdmin = claims.get("isAdmin", Boolean.class);
 
-            log.debug("Token validated successfully, user ID: {}, role: {}", userId, role);
+            log.debug("Token validated successfully, user ID: {}, isAdmin: {}", userId, isAdmin);
 
             // 6. Store in context
             UserContext.setUserId(userId);
-            if (role != null) {
-                UserContext.setRole(role);
-            }
+            UserContext.setIsAdmin(isAdmin != null ? isAdmin : false);
 
             // 7. Check role-based access control
             if (handler instanceof org.springframework.web.method.HandlerMethod) {
@@ -147,8 +145,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                     boolean hasRequiredRole = UserContext.hasAnyRole(requiredRoles);
 
                     if (!hasRequiredRole) {
-                        log.warn("User {} with role {} does not have required role for {}",
-                                userId, role, requestURI);
+                        log.warn("User {} (isAdmin: {}) does not have required role for {}",
+                                userId, isAdmin, requestURI);
                         throw new BizException(ResultCodes.FORBIDDEN);
                     }
 

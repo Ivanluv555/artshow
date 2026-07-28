@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * ProductService - 业务服务实现类
+ * 
  * @author Ivan Horn
  * @since 1.0.0
  */
@@ -49,21 +50,28 @@ public class ProductService implements IProductService {
         Product nProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在"));
 
-        // 权限检查：只有卖家本人或管理员可以修改
+        // 权限检查：只有商家本人或管理员可以修改
         Long currentUserId = UserContext.getUserId();
+        @SuppressWarnings("deprecation")
         String currentUserRole = UserContext.getRole();
 
-        if (!nProduct.getSellerId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
+        if (!nProduct.getMerchantId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
             throw new BizException(ResultCodes.FORBIDDEN, "无权修改此商品");
         }
 
-        // 更新商品信息（不允许修改sellerId）
-        if (product.getName() != null) nProduct.setName(product.getName());
-        if (product.getPrice() != null) nProduct.setPrice(product.getPrice());
-        if (product.getStock() != null) nProduct.setStock(product.getStock());
-        if (product.getImageUrl() != null) nProduct.setImageUrl(product.getImageUrl());
-        if (product.getDescription() != null) nProduct.setDescription(product.getDescription());
-        if (product.getIsCertified() != null) nProduct.setIsCertified(product.getIsCertified());
+        // 更新商品信息（不允许修改merchantId）
+        if (product.getName() != null)
+            nProduct.setName(product.getName());
+        if (product.getPrice() != null)
+            nProduct.setPrice(product.getPrice());
+        if (product.getStock() != null)
+            nProduct.setStock(product.getStock());
+        if (product.getImageUrl() != null)
+            nProduct.setImageUrl(product.getImageUrl());
+        if (product.getDescription() != null)
+            nProduct.setDescription(product.getDescription());
+        if (product.getIsCertified() != null)
+            nProduct.setIsCertified(product.getIsCertified());
 
         return productRepository.save(nProduct);
     }
@@ -86,11 +94,11 @@ public class ProductService implements IProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND, "商品不存在"));
 
-        // 权限检查：只有卖家本人或管理员可以删除
+        // 权限检查：只有商家本人或管理员可以删除
         Long currentUserId = UserContext.getUserId();
         String currentUserRole = UserContext.getRole();
 
-        if (!product.getSellerId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
+        if (!product.getMerchantId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
             throw new BizException(ResultCodes.FORBIDDEN, "无权删除此商品");
         }
 
@@ -159,4 +167,3 @@ public class ProductService implements IProductService {
         }
     }
 }
-

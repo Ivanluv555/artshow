@@ -24,22 +24,19 @@ public class ChapterController {
     public ChapterController(IChapterService chapterService) {
         this.chapterService = chapterService;
     }
-    // 添加章节 - 讲师或管理员
-    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
+    // 添加章节 - 需要认证（Service层检查讲师身份）
     @PostMapping
     public Result<Chapter> addChapter(@RequestBody @Validated ChapterDTO chapter){
         Chapter nchapter = chapterService.addChapter(chapter);
         return Result.success(nchapter);
     }
 
-    // 删除章节 - 讲师或管理员
-    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
+    // 删除章节 - 需要认证（Service层检查讲师身份）
     @DeleteMapping
     public void deleteChapter(@RequestParam Long chapterId){ chapterService.deleteChapter(chapterId);}
 
 
-    // 更新章节 - 讲师或管理员
-    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
+    // 更新章节 - 需要认证（Service层检查讲师身份）
     @PutMapping
     public Result<Chapter> updateChapter(@RequestBody @Validated ChapterDTO chapter){
         Chapter nchapter = chapterService.updateChapter(chapter);

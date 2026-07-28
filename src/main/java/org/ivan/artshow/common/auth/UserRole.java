@@ -3,14 +3,15 @@ package org.ivan.artshow.common.auth;
 /**
  * 用户角色枚举
  *
- * <p>定义系统中的三种用户角色及其权限级别。</p>
+ * <p>定义系统中的用户角色。</p>
  *
  * <p>角色说明：</p>
  * <ul>
  *   <li><strong>USER</strong>: 普通用户 - 可以浏览内容、购买课程/商品、发帖、评论、点赞等</li>
- *   <li><strong>INSTRUCTOR</strong>: 讲师 - 拥有用户的所有权限 + 可以创建和管理自己的课程</li>
  *   <li><strong>ADMIN</strong>: 管理员 - 拥有系统的所有权限，可以管理用户、课程、商品等</li>
  * </ul>
+ *
+ * <p>注意：讲师和商家是独立的身份表，不是角色。</p>
  *
  * @author Ivan Horn
  * @since 1.0.0
@@ -20,11 +21,6 @@ public enum UserRole {
      * 普通用户
      */
     USER("USER", "普通用户"),
-
-    /**
-     * 讲师
-     */
-    INSTRUCTOR("INSTRUCTOR", "讲师"),
 
     /**
      * 管理员

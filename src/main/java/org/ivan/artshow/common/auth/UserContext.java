@@ -21,7 +21,7 @@ package org.ivan.artshow.common.auth;
  */
 public class UserContext {
     private static final ThreadLocal<Long> userIdHolder = new ThreadLocal<>();
-    private static final ThreadLocal<String> roleHolder = new ThreadLocal<>();
+    private static final ThreadLocal<Boolean> isAdminHolder = new ThreadLocal<>();
 
     /**
      * 设置当前请求的用户ID
@@ -42,21 +42,51 @@ public class UserContext {
     }
 
     /**
-     * 设置当前请求的用户角色
+     * 设置当前用户是否为管理员
      *
-     * @param role 用户角色
+     * @param isAdmin 是否为管理员
      */
-    public static void setRole(String role) {
-        roleHolder.set(role);
+    public static void setIsAdmin(Boolean isAdmin) {
+        isAdminHolder.set(isAdmin);
     }
 
     /**
-     * 获取当前请求的用户角色
+     * 获取当前用户是否为管理员
      *
-     * @return 用户角色，如果未设置则返回null
+     * @return 是否为管理员，如果未设置则返回false
      */
+    public static Boolean getIsAdmin() {
+        Boolean isAdmin = isAdminHolder.get();
+        return isAdmin != null ? isAdmin : false;
+    }
+
+    /**
+     * 检查当前用户是否为管理员
+     *
+     * @return 如果用户是管理员返回true，否则返回false
+     */
+    public static boolean isAdmin() {
+        return Boolean.TRUE.equals(isAdminHolder.get());
+    }
+
+    /**
+     * 获取当前请求的用户角色（兼容旧代码）
+     *
+     * @return 用户角色，管理员返回"ADMIN"，普通用户返回"USER"
+     */
+    @Deprecated
     public static String getRole() {
-        return roleHolder.get();
+        return isAdmin() ? "ADMIN" : "USER";
+    }
+
+    /**
+     * 设置当前请求的用户角色（兼容旧代码）
+     *
+     * @param role 用户角色
+     */
+    @Deprecated
+    public static void setRole(String role) {
+        isAdminHolder.set("ADMIN".equals(role));
     }
 
     /**
@@ -66,8 +96,10 @@ public class UserContext {
      * @return 如果用户拥有该角色返回true，否则返回false
      */
     public static boolean hasRole(UserRole role) {
-        String currentRole = roleHolder.get();
-        return currentRole != null && currentRole.equals(role.getCode());
+        if (role == UserRole.ADMIN) {
+            return isAdmin();
+        }
+        return true; // 普通用户角色
     }
 
     /**
@@ -77,12 +109,8 @@ public class UserContext {
      * @return 如果用户拥有其中任意一个角色返回true，否则返回false
      */
     public static boolean hasAnyRole(UserRole... roles) {
-        String currentRole = roleHolder.get();
-        if (currentRole == null) {
-            return false;
-        }
         for (UserRole role : roles) {
-            if (currentRole.equals(role.getCode())) {
+            if (hasRole(role)) {
                 return true;
             }
         }
@@ -97,6 +125,6 @@ public class UserContext {
      */
     public static void remove() {
         userIdHolder.remove();
-        roleHolder.remove();
+        isAdminHolder.remove();
     }
 }

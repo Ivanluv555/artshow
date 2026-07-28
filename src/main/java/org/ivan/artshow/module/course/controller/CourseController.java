@@ -29,11 +29,10 @@ public class CourseController {
     }
 
     /**
-     * 添加课程 - 讲师或管理员
+     * 添加课程 - 需要认证（Service层检查讲师身份）
      * @param course 课程信息DTO
      * @return 新增的课程对象
      */
-    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
     @PostMapping
     public Result<Course> addCourse(@RequestBody CourseDTO course){
         Course ncourse = courseService.addCourse(course);
@@ -51,11 +50,10 @@ public class CourseController {
     }
 
     /**
-     * 更新课程信息 - 讲师或管理员
+     * 更新课程信息 - 需要认证（Service层检查讲师身份）
      * @param course 课程信息DTO
      * @return 更新后的课程对象
      */
-    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
     @PutMapping
     public Result<Course> updateCourse(@RequestBody @Validated CourseDTO course){
         Course ncourse = courseService.updateCourse(course);

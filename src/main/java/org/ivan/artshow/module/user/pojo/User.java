@@ -49,8 +49,8 @@ public class User {
     @Column(name="bio")
     private String userBio;
 
-    @Column(name="role")
-    private String role;
+    @Column(name="is_admin")
+    private Boolean isAdmin;
 
     @Column(name="created_at")
     private Date createdAt;
@@ -114,11 +114,11 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public String getRole() {
-        return role;
+    public Boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

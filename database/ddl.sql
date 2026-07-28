@@ -1,9 +1,9 @@
 -- ============================================================================
 -- 数据库完整重建脚本
 -- ============================================================================
--- 版本: 2.1.0
--- 日期: 2026-07-13
--- 更新内容: 添加用户角色字段以支持RBAC
+-- 版本: 3.0.0
+-- 日期: 2026-07-27
+-- 更新内容: 重构用户角色系统 - 讲师和商家身份独立，支持多端应用架构
 -- 警告: 此脚本会删除现有数据库，请确保已备份数据！
 -- 使用方法: mysql -u root -p < rebuild_database.sql
 -- ============================================================================
@@ -30,23 +30,23 @@ SELECT '数据库artshow已创建，开始创建表结构...' AS STATUS;
 
 -- 用户表
 CREATE TABLE `user` (
-                        `user_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                        `user_id` BIGINT NOT NULL COMMENT '用户ID（雪花ID）',
                         `username` VARCHAR(50) NOT NULL COMMENT '用户名',
                         `password_hash` VARCHAR(255) NOT NULL COMMENT '密码哈希',
                         `nickname` VARCHAR(100) DEFAULT NULL COMMENT '昵称',
                         `avatar_url` VARCHAR(500) DEFAULT NULL COMMENT '头像URL',
                         `bio` TEXT COMMENT '个人简介',
-                        `role` VARCHAR(20) NOT NULL DEFAULT 'USER' COMMENT '用户角色: USER-普通用户, INSTRUCTOR-讲师, ADMIN-管理员',
+                        `is_admin` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否为管理员：0-普通用户，1-管理员',
                         `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                         PRIMARY KEY (`user_id`),
                         UNIQUE KEY `username` (`username`),
                         KEY `idx_username` (`username`),
-                        KEY `idx_role` (`role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
+                        KEY `idx_is_admin` (`is_admin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表（基础用户信息，讲师和商家身份独立）';
 
 -- 艺术品分类表
 CREATE TABLE `art_category` (
-                                `category_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '分类ID',
+                                `category_id` BIGINT NOT NULL COMMENT '分类ID（雪花ID）',
                                 `category_name` VARCHAR(100) NOT NULL COMMENT '分类名称',
                                 `icon_url` VARCHAR(500) DEFAULT NULL COMMENT '图标URL',
                                 `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -55,7 +55,7 @@ CREATE TABLE `art_category` (
 
 -- 徽章表
 CREATE TABLE `badge` (
-                         `badge_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '徽章ID',
+                         `badge_id` BIGINT NOT NULL COMMENT '徽章ID（雪花ID）',
                          `name` VARCHAR(100) NOT NULL COMMENT '徽章名称',
                          `description` TEXT COMMENT '徽章描述',
                          `icon_url` VARCHAR(500) DEFAULT NULL COMMENT '图标URL',
@@ -63,16 +63,44 @@ CREATE TABLE `badge` (
                          PRIMARY KEY (`badge_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='徽章表';
 
--- 讲师表
-CREATE TABLE `course_instructor` (
-                                     `instructor_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '讲师ID',
-                                     `name` VARCHAR(100) NOT NULL COMMENT '讲师姓名',
-                                     `title` VARCHAR(100) DEFAULT NULL COMMENT '职称',
-                                     `avatar_url` VARCHAR(500) DEFAULT NULL COMMENT '头像URL',
-                                     `bio` TEXT COMMENT '讲师简介',
-                                     `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                     PRIMARY KEY (`instructor_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='讲师表';
+-- 讲师表（讲师身份信息）
+CREATE TABLE `instructor` (
+                              `instructor_id` BIGINT NOT NULL COMMENT '讲师ID（雪花ID）',
+                              `user_id` BIGINT NOT NULL COMMENT '关联的用户ID',
+                              `title` VARCHAR(100) DEFAULT NULL COMMENT '职称：教授、讲师等',
+                              `specialization` VARCHAR(200) DEFAULT NULL COMMENT '专业领域',
+                              `bio` TEXT COMMENT '讲师简介',
+                              `total_students` INT DEFAULT 0 COMMENT '总学生数',
+                              `total_courses` INT DEFAULT 0 COMMENT '总课程数',
+                              `rating` DECIMAL(3,2) DEFAULT NULL COMMENT '评分（1.00-5.00）',
+                              `status` VARCHAR(20) DEFAULT 'active' COMMENT '状态：pending-待审核，active-活跃，suspended-暂停',
+                              `approved_at` TIMESTAMP NULL DEFAULT NULL COMMENT '审核通过时间',
+                              `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              PRIMARY KEY (`instructor_id`),
+                              UNIQUE KEY `uk_user_id` (`user_id`),
+                              KEY `idx_status` (`status`),
+                              CONSTRAINT `instructor_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='讲师表（讲师身份信息，关联到user表）';
+
+-- 商家表（商家身份信息）
+CREATE TABLE `merchant` (
+                            `merchant_id` BIGINT NOT NULL COMMENT '商家ID（雪花ID）',
+                            `user_id` BIGINT NOT NULL COMMENT '关联的用户ID',
+                            `shop_name` VARCHAR(200) DEFAULT NULL COMMENT '店铺名称',
+                            `shop_logo` VARCHAR(500) DEFAULT NULL COMMENT '店铺Logo URL',
+                            `shop_description` TEXT COMMENT '店铺简介',
+                            `business_license` VARCHAR(100) DEFAULT NULL COMMENT '营业执照号',
+                            `total_products` INT DEFAULT 0 COMMENT '总商品数',
+                            `total_sales` DECIMAL(15,2) DEFAULT 0.00 COMMENT '总销售额',
+                            `rating` DECIMAL(3,2) DEFAULT NULL COMMENT '评分（1.00-5.00）',
+                            `status` VARCHAR(20) DEFAULT 'active' COMMENT '状态：pending-待审核，active-活跃，suspended-暂停',
+                            `approved_at` TIMESTAMP NULL DEFAULT NULL COMMENT '审核通过时间',
+                            `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            PRIMARY KEY (`merchant_id`),
+                            UNIQUE KEY `uk_user_id` (`user_id`),
+                            KEY `idx_status` (`status`),
+                            CONSTRAINT `merchant_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='商家表（商家身份信息，关联到user表）';
 
 SELECT '基础表创建完成' AS STATUS;
 
@@ -82,7 +110,7 @@ SELECT '基础表创建完成' AS STATUS;
 
 -- 艺术品子分类表
 CREATE TABLE `art_subcategory` (
-                                   `subcategory_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '子分类ID',
+                                   `subcategory_id` BIGINT NOT NULL COMMENT '子分类ID（雪花ID）',
                                    `category_id` BIGINT NOT NULL COMMENT '父分类ID',
                                    `name` VARCHAR(100) NOT NULL COMMENT '子分类名称',
                                    `cover_image_url` VARCHAR(500) DEFAULT NULL COMMENT '封面图片URL',
@@ -98,7 +126,7 @@ CREATE TABLE `art_subcategory` (
 
 -- 用户地址表
 CREATE TABLE `user_address` (
-                                `address_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '地址ID',
+                                `address_id` BIGINT NOT NULL COMMENT '地址ID（雪花ID）',
                                 `user_id` BIGINT NOT NULL COMMENT '用户ID',
                                 `recipient_name` VARCHAR(50) NOT NULL COMMENT '收货人姓名',
                                 `phone` VARCHAR(20) NOT NULL COMMENT '联系电话',
@@ -113,7 +141,7 @@ CREATE TABLE `user_address` (
 
 -- 用户徽章表
 CREATE TABLE `user_badge` (
-                              `user_badge_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '用户徽章ID',
+                              `user_badge_id` BIGINT NOT NULL COMMENT '用户徽章ID（雪花ID）',
                               `user_id` BIGINT NOT NULL COMMENT '用户ID',
                               `badge_id` BIGINT NOT NULL COMMENT '徽章ID',
                               `earned_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '获得时间',
@@ -127,8 +155,8 @@ CREATE TABLE `user_badge` (
 
 -- 产品表
 CREATE TABLE `product` (
-                           `product_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '产品ID',
-                           `seller_id` BIGINT NOT NULL COMMENT '卖家ID',
+                           `product_id` BIGINT NOT NULL COMMENT '产品ID（雪花ID）',
+                           `merchant_id` BIGINT NOT NULL COMMENT '商家ID',
                            `name` VARCHAR(200) NOT NULL COMMENT '产品名称',
                            `price` DECIMAL(10,2) NOT NULL COMMENT '价格',
                            `stock` INT DEFAULT '0' COMMENT '库存数量',
@@ -138,13 +166,13 @@ CREATE TABLE `product` (
                            `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                            `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                            PRIMARY KEY (`product_id`),
-                           KEY `idx_seller_id` (`seller_id`),
-                           CONSTRAINT `product_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE
+                           KEY `idx_merchant_id` (`merchant_id`),
+                           CONSTRAINT `product_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='产品表';
 
 -- 课程表
 CREATE TABLE `course` (
-                          `course_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '课程ID',
+                          `course_id` BIGINT NOT NULL COMMENT '课程ID（雪花ID）',
                           `instructor_id` BIGINT NOT NULL COMMENT '讲师ID',
                           `title` VARCHAR(200) NOT NULL COMMENT '课程标题',
                           `cover_image_url` VARCHAR(500) DEFAULT NULL COMMENT '封面图片',
@@ -157,12 +185,12 @@ CREATE TABLE `course` (
                           PRIMARY KEY (`course_id`),
                           KEY `idx_instructor_id` (`instructor_id`),
                           KEY `idx_course_type` (`type`),
-                          CONSTRAINT `course_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `course_instructor` (`instructor_id`) ON DELETE CASCADE
+                          CONSTRAINT `course_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `instructor` (`instructor_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='课程表';
 
 -- 帖子表
 CREATE TABLE `post` (
-                        `post_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '帖子ID',
+                        `post_id` BIGINT NOT NULL COMMENT '帖子ID（雪花ID）',
                         `user_id` BIGINT NOT NULL COMMENT '用户ID',
                         `subcategory_id` BIGINT DEFAULT NULL COMMENT '子分类ID',
                         `title` VARCHAR(200) DEFAULT NULL COMMENT '标题',
@@ -178,7 +206,7 @@ CREATE TABLE `post` (
 
 -- 订单表
 CREATE TABLE `order` (
-                         `order_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '订单ID',
+                         `order_id` BIGINT NOT NULL COMMENT '订单ID（雪花ID）',
                          `order_number` VARCHAR(50) NOT NULL COMMENT '订单号',
                          `user_id` BIGINT NOT NULL COMMENT '买家ID',
                          `total_price` DECIMAL(10,2) NOT NULL COMMENT '订单总金额',
@@ -201,7 +229,7 @@ SELECT '二级表创建完成' AS STATUS;
 
 -- 购物车表
 CREATE TABLE `shopping_cart_item` (
-                                      `cart_item_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '购物车项ID',
+                                      `cart_item_id` BIGINT NOT NULL COMMENT '购物车项ID（雪花ID）',
                                       `user_id` BIGINT NOT NULL COMMENT '用户ID',
                                       `product_id` BIGINT NOT NULL COMMENT '产品ID',
                                       `quantity` INT NOT NULL DEFAULT '1' COMMENT '数量',
@@ -216,7 +244,7 @@ CREATE TABLE `shopping_cart_item` (
 
 -- 课程章节表
 CREATE TABLE `course_outline` (
-                                  `chapter_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '章节ID',
+                                  `chapter_id` BIGINT NOT NULL COMMENT '章节ID（雪花ID）',
                                   `course_id` BIGINT NOT NULL COMMENT '课程ID',
                                   `chapter_stand_id` INT DEFAULT NULL COMMENT '章节标准ID',
                                   `title` VARCHAR(200) NOT NULL COMMENT '章节标题',
@@ -229,7 +257,7 @@ CREATE TABLE `course_outline` (
 
 -- 用户课程注册表
 CREATE TABLE `user_course_enrollment` (
-                                          `enrollment_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '注册ID',
+                                          `enrollment_id` BIGINT NOT NULL COMMENT '注册ID（雪花ID）',
                                           `user_id` BIGINT NOT NULL COMMENT '用户ID',
                                           `course_id` BIGINT NOT NULL COMMENT '课程ID',
                                           `certificate_awarded` TINYINT(1) DEFAULT '0' COMMENT '是否颁发证书',
@@ -245,7 +273,7 @@ CREATE TABLE `user_course_enrollment` (
 
 -- 订单项表（支持商品和课程）
 CREATE TABLE `order_item` (
-                              `order_item_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '订单项ID',
+                              `order_item_id` BIGINT NOT NULL COMMENT '订单项ID（雪花ID）',
                               `order_id` BIGINT NOT NULL COMMENT '订单ID',
                               `product_id` BIGINT DEFAULT NULL COMMENT '产品ID（商品订单）',
                               `course_id` BIGINT DEFAULT NULL COMMENT '课程ID（课程订单）',
@@ -264,7 +292,7 @@ CREATE TABLE `order_item` (
 
 -- 订单收货地址表
 CREATE TABLE `order_shipping_address` (
-                                          `shipping_address_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '收货地址ID',
+                                          `shipping_address_id` BIGINT NOT NULL COMMENT '收货地址ID（雪花ID）',
                                           `order_id` BIGINT NOT NULL COMMENT '订单ID',
                                           `recipient_name` VARCHAR(50) NOT NULL COMMENT '收货人',
                                           `phone` VARCHAR(20) NOT NULL COMMENT '联系电话',
@@ -277,7 +305,7 @@ CREATE TABLE `order_shipping_address` (
 
 -- 评论表
 CREATE TABLE `post_comment` (
-                                `comment_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+                                `comment_id` BIGINT NOT NULL COMMENT '评论ID（雪花ID）',
                                 `post_id` BIGINT NOT NULL COMMENT '帖子ID',
                                 `user_id` BIGINT NOT NULL COMMENT '用户ID',
                                 `content` TEXT NOT NULL COMMENT '评论内容',
@@ -291,7 +319,7 @@ CREATE TABLE `post_comment` (
 
 -- 点赞表
 CREATE TABLE `post_like` (
-                             `like_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '点赞ID',
+                             `like_id` BIGINT NOT NULL COMMENT '点赞ID（雪花ID）',
                              `post_id` BIGINT NOT NULL COMMENT '帖子ID',
                              `user_id` BIGINT NOT NULL COMMENT '用户ID',
                              `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -305,7 +333,7 @@ CREATE TABLE `post_like` (
 
 -- 收藏表
 CREATE TABLE `post_collection` (
-                                   `collection_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '收藏ID',
+                                   `collection_id` BIGINT NOT NULL COMMENT '收藏ID（雪花ID）',
                                    `post_id` BIGINT NOT NULL COMMENT '帖子ID',
                                    `user_id` BIGINT NOT NULL COMMENT '用户ID',
                                    `create_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '收藏时间',
@@ -325,7 +353,7 @@ SELECT '三级表创建完成' AS STATUS;
 
 -- 用户章节完成记录表
 CREATE TABLE `user_course_chapter_completed` (
-                                                 `completion_id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '完成记录ID',
+                                                 `completion_id` BIGINT NOT NULL COMMENT '完成记录ID（雪花ID）',
                                                  `enrollment_id` BIGINT NOT NULL COMMENT '注册ID',
                                                  `chapter_id` BIGINT NOT NULL COMMENT '章节ID',
                                                  `completed_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '完成时间',
@@ -408,9 +436,9 @@ SELECT '视图创建完成' AS STATUS;
 -- ============================================================================
 SELECT
     '数据库重建完成！' AS message,
-    '版本: 2.1.0' AS version,
-    '更新日期: 2026-07-13' AS update_date,
-    '主要更新: 添加用户角色字段(role)以支持RBAC' AS changelog,
+    '版本: 3.0.0' AS version,
+    '更新日期: 2026-07-27' AS update_date,
+    '主要更新: 重构用户角色系统 - 讲师和商家身份独立，支持多端应用架构' AS changelog,
     CONCAT('共创建 ',
            (SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'artshow' AND TABLE_TYPE = 'BASE TABLE'),
            ' 个表') AS tables_created,

@@ -26,24 +26,21 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // 添加商品 - 讲师或管理员
-    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
+    // 添加商品 - 需要认证（Service层检查商家身份）
     @PostMapping
     public Result<Product> addOneProduct(@RequestBody ProductDTO product) {
         Product nProduct = productService.addOneProduct(product);
         return Result.success(nProduct);
     }
 
-    // 批量添加商品 - 讲师或管理员
-    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
+    // 批量添加商品 - 需要认证（Service层检查商家身份）
     @PostMapping("/batch")
     public Result<Product> addProducts(@RequestBody Iterable<Product> product) {
         productService.addProducts(product);
         return Result.success(null);
     }
 
-    // 删除商品 - 仅管理员
-    @RequireRole(UserRole.ADMIN)
+    // 删除商品 - Service层检查权限（商家本人或管理员）
     @DeleteMapping
     public Result<Product> deleteOneProduct(@RequestParam Long productId) {
         productService.deleteOneProduct(productId);
@@ -58,8 +55,7 @@ public class ProductController {
         return Result.success(null);
     }
 
-    // 更新商品 - 讲师或管理员
-    @RequireRole({UserRole.INSTRUCTOR, UserRole.ADMIN})
+    // 更新商品 - Service层检查权限（商家本人或管理员）
     @PutMapping
     public Result<Product> updateOneProduct(@RequestBody ProductDTO product) {
         Product nProduct = productService.updateOneProduct(product);

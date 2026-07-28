@@ -1,21 +1,21 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "java.server.launchMode": "Standard",
-    "java.import.gradle.enabled": true,
-    "java.import.gradle.wrapper.enabled": true,
-    "java.import.gradle.home": null,
-    "java.import.gradle.user.home": null,
-    "java.import.gradle.jvmArguments": null,
-    "java.import.gradle.offline.enabled": false,
-    "java.jdt.ls.java.home": "C:\\Program Files\\Microsoft\\jdk-25.0.3.9-hotspot",
-    "java.configuration.runtimes": [
+    "java.compile.nullAnalysis.mode": "automatic", // 就是 null 检查的自动模式
+    "java.configuration.updateBuildConfiguration": "automatic", // 自动更新构建配置
+    "java.server.launchMode": "Standard", // 启动模式为标准模式
+    "java.import.gradle.enabled": true, // 启用 Gradle 导入
+    "java.import.gradle.wrapper.enabled": true, // 启用 Gradle Wrapper 导入
+    "java.import.gradle.home": "", // Gradle 安装路径，null 表示使用默认路径
+    "java.import.gradle.user.home": "", // Gradle 用户主目录，null 表示使用默认路径
+    "java.import.gradle.jvmArguments": null, // Gradle JVM 参数，null 表示使用默认参数
+    "java.import.gradle.offline.enabled": false, // 是否启用 Gradle 离线模式，false 表示不启用
+    "java.jdt.ls.java.home": "/usr/lib/jvm/java-25-openjdk", // JDT LS 使用的 Java 主目录
+    "java.configuration.runtimes": [ // 配置 Java 运行时环境
         {
             "name": "JavaSE-25",
-            "path": "C:\\Program Files\\Microsoft\\jdk-25.0.3.9-hotspot",
+            "path": "/usr/lib/jvm/java-25-openjdk",
             "default": true
         }
     ],
-    "java.project.sourcePaths": [],
-    "java.project.referencedLibraries": []
+    "java.project.sourcePaths": [], // 配置 Java 项目的源代码路径
+    "java.project.referencedLibraries": [] // 配置 Java 项目引用的库
 }
