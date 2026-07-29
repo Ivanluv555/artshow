@@ -2,6 +2,8 @@ package org.ivan.artshow.module.course.repository;
 
 import org.ivan.artshow.module.course.pojo.UserCourseEnrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,4 +21,12 @@ public interface UserCourseEnrollmentRepository extends JpaRepository<UserCourse
 
     // 查询我的所有课程
     List<UserCourseEnrollment> findAllByUserId(Long userId);
+
+    /**
+     * 统计课程的学生数量
+     * @param courseId 课程ID
+     * @return 学生数量
+     */
+    @Query("SELECT COUNT(e) FROM UserCourseEnrollment e WHERE e.courseId = :courseId")
+    Long countStudentsByCourseId(@Param("courseId") Long courseId);
 }

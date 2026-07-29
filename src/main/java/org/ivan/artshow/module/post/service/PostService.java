@@ -3,6 +3,7 @@ package org.ivan.artshow.module.post.service;
 import org.ivan.artshow.common.auth.UserContext;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 import org.ivan.artshow.common.exception.BizException;
+import org.ivan.artshow.common.service.StatisticsService;
 import org.ivan.artshow.module.post.pojo.Post;
 import org.ivan.artshow.module.post.pojo.dto.PostDTO;
 import org.ivan.artshow.module.post.repository.PostRepository;
@@ -24,9 +25,11 @@ import java.util.List;
 @Service
 public class PostService implements IPostService {
     private final PostRepository postRepository;
+    private final StatisticsService statisticsService;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, StatisticsService statisticsService) {
         this.postRepository = postRepository;
+        this.statisticsService = statisticsService;
     }
 
     @Override
@@ -36,7 +39,12 @@ public class PostService implements IPostService {
         }
         Post nPost = new Post();
         BeanUtils.copyProperties(post, nPost);
-        return postRepository.save(nPost);
+        Post savedPost = postRepository.save(nPost);
+
+        // 初始化帖子统计数据到Redis
+        statisticsService.initPostStats(savedPost.getPostId(), 0L, 0L, 0L);
+
+        return savedPost;
     }
 
     @Override
@@ -57,6 +65,9 @@ public class PostService implements IPostService {
         if (!post.getUserId().equals(currentUserId) && !"ADMIN".equals(currentUserRole)) {
             throw new BizException(ResultCodes.FORBIDDEN, "无权删除此帖子");
         }
+
+        // 删除帖子统计数据
+        statisticsService.deletePostStats(PostId);
 
         postRepository.deleteById(PostId);
     }
@@ -102,7 +113,13 @@ public class PostService implements IPostService {
         if (postId == null) {
             throw new BizException(ResultCodes.NULLPOINT);
         }
-        return postRepository.findById(postId).orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BizException(ResultCodes.NOTFOUND));
+
+        // 增加浏览数
+        statisticsService.incrementPostViewCount(postId);
+
+        return post;
     }
 
     @Override

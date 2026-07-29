@@ -98,12 +98,28 @@ public class CourseEnrollmentService implements ICourseEnrollmentService {
 
         UserCourseEnrollment savedEnrollment = enrollmentRepository.save(enrollment);
 
-        // 6. 自动建立用户与讲师的关系
+        // 6. 更新课程学生数
+        updateCourseStudentCount(courseId);
+
+        // 7. 自动建立用户与讲师的关系
         if (course.getInstructorId() != null) {
             relationshipService.createRelationship(userId, course.getInstructorId());
         }
 
         return savedEnrollment;
+    }
+
+    /**
+     * 更新课程学生数
+     * @param courseId 课程ID
+     */
+    private void updateCourseStudentCount(Long courseId) {
+        Long studentCount = enrollmentRepository.countStudentsByCourseId(courseId);
+        Course course = courseRepository.findById(courseId).orElse(null);
+        if (course != null) {
+            course.setStudentCount(studentCount.intValue());
+            courseRepository.save(course);
+        }
     }
 
     @Override

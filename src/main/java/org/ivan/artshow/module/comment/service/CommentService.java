@@ -3,6 +3,7 @@ package org.ivan.artshow.module.comment.service;
 import org.ivan.artshow.common.auth.UserContext;
 import org.ivan.artshow.common.core.resultcode.ResultCodes;
 import org.ivan.artshow.common.exception.BizException;
+import org.ivan.artshow.common.service.StatisticsService;
 import org.ivan.artshow.module.comment.pojo.Comment;
 import org.ivan.artshow.module.comment.pojo.dto.CommentDTO;
 import org.ivan.artshow.module.comment.repository.CommentRepository;
@@ -22,9 +23,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentService implements ICommentService {
     private final CommentRepository commentRepository;
+    private final StatisticsService statisticsService;
 
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, StatisticsService statisticsService) {
         this.commentRepository = commentRepository;
+        this.statisticsService = statisticsService;
     }
 
     @Override
@@ -34,7 +37,14 @@ public class CommentService implements ICommentService {
         }
         Comment nComment = new Comment();
         BeanUtils.copyProperties(comment, nComment);
-        return commentRepository.save(nComment);
+        Comment savedComment = commentRepository.save(nComment);
+
+        // 增加帖子评论数
+        if (savedComment.getPostId() != null) {
+            statisticsService.incrementPostCommentCount(savedComment.getPostId());
+        }
+
+        return savedComment;
     }
 
     @Override
@@ -56,7 +66,15 @@ public class CommentService implements ICommentService {
             throw new BizException(ResultCodes.FORBIDDEN, "无权删除此评论");
         }
 
+        // 保存postId用于更新统计
+        Long postId = comment.getPostId();
+
         commentRepository.deleteById(comment_id);
+
+        // 减少帖子评论数
+        if (postId != null) {
+            statisticsService.decrementPostCommentCount(postId);
+        }
     }
 
     @Override
