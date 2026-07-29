@@ -27,8 +27,8 @@ public class ProductService implements IProductService {
     private final MerchantRepository merchantRepository;
 
     public ProductService(ProductRepository productRepository,
-                         ArtsubRepository artsubRepository,
-                         MerchantRepository merchantRepository) {
+            ArtsubRepository artsubRepository,
+            MerchantRepository merchantRepository) {
         this.productRepository = productRepository;
         this.artsubRepository = artsubRepository;
         this.merchantRepository = merchantRepository;
@@ -194,6 +194,7 @@ public class ProductService implements IProductService {
         boolean isAdmin = UserContext.isAdmin();
 
         // 检查是否是商品所属商家
+        @SuppressWarnings("null")
         boolean isMerchantOwner = merchantRepository.findById(product.getMerchantId())
                 .map(merchant -> merchant.getUserId().equals(currentUserId))
                 .orElse(false);
